@@ -19,10 +19,15 @@ class Client
     private:
         int                 _fd;
         std::string         _hostname;
+
+        std::string         _recvBuf;
     public:
         Client(int fd, const struct sockaddr_in &addr);
         ~Client();
 
         int                 getFd() const;
         const std::string & getHostname() const;
+
+        void                appendToBuffer(const char *data, int len);
+        bool                getNextLine(std::string &line);
 };

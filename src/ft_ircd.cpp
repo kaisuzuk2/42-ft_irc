@@ -93,8 +93,10 @@ int main(int argc, char *argv[])
                 }
                 else
                 {
-                    buf[n] = '\0';
-                    std::cout << "fd = " << fd << "says: " << buf << std::endl;
+                    clients[fd]->appendToBuffer(buf, n);
+                    std::string line;
+                    while (clients[fd]->getNextLine(line))
+                        std::cout << "fd = " << fd << "says: " << line << std::endl;
                 }
             }
         }

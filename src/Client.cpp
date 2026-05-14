@@ -40,3 +40,25 @@ const std::string &Client::getHostname() const
 {
     return (this->_hostname);
 }
+
+void Client::appendToBuffer(const char *data, int len)
+{
+    this->_recvBuf.append(data, len);
+}
+
+bool Client::getNextLine(std::string &line)
+{
+    size_t pos;
+
+    pos = this->_recvBuf.find('\n');
+    if (pos == std::string::npos)
+        return (false);
+
+    line = this->_recvBuf.substr(0, pos);
+    this->_recvBuf.erase(0, pos + 1);
+
+    if (!line.empty() && line[line.size() -1] == '\r')
+        line.erase(line.size() -1);
+
+    return (true);
+}
