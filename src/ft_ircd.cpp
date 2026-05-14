@@ -70,7 +70,11 @@ int main(int argc, char *argv[])
                 struct sockaddr_in client_addr;
                 socklen_t client_len = sizeof(client_addr);
                 int client_fd = accept4(server_fd, (struct sockaddr *)&client_addr, &client_len, SOCK_NONBLOCK);
-
+                if (client_fd < 0)
+                {
+                    std::cerr << "accept4() failed: " << std::strerror(errno) << std::endl;
+                    continue ;
+                }
                 socketEngine.addFd(client_fd, EPOLLIN);
 
                 clients[client_fd] = new Client(client_fd, client_addr);
