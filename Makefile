@@ -5,7 +5,8 @@ INC			=	-Iincludes
 
 SRCS		=	src/ft_ircd.cpp \
 				src/SocketEngine.cpp \
-				src/Client.cpp
+				src/Client.cpp \
+				src/ClientManager.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
 

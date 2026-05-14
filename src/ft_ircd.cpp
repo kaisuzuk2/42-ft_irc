@@ -53,7 +53,8 @@ int main(int argc, char *argv[])
     SocketEngine socketEngine;
     socketEngine.addFd(server_fd, EPOLLIN);
 
-    std::map<int, Client *> clients;
+    // std::map<int, Client *> clients;
+    ClientManager clients;
 
     char buf[512];
 
@@ -77,13 +78,12 @@ int main(int argc, char *argv[])
                     continue ;
                 }
                 socketEngine.addFd(client_fd, EPOLLIN);
-
-                clients[client_fd] = new Client(client_fd, client_addr);
+                clients.addClient(client_fd, new Client(client_fd, client_addr));
 
                 std::cout << "client connected: " << clients[client_fd]->getHostname() << std::endl;
 
-                clients[client_fd]->send("hello");
-                clients[client_fd]->flushSendBuf();
+                clients.findByFd(client_fd)->send("hello");
+                clients.findByFd(client_fd)->flushSendBuf();
             }
             else
             {
@@ -92,9 +92,7 @@ int main(int argc, char *argv[])
                 {
                     std::cout << "client disconnected: fd = " << fd << std::endl;
                     socketEngine.delFd(fd);
-                    delete clients[fd];
-                    clients.erase(fd);
-                    close(fd);
+                    clients.removeClient(fd);
                 }
                 else
                 {
