@@ -12,18 +12,17 @@
 
 #include <string>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 
 class Client
 {
     private:
         int                 _fd;
-        struct sockaddr_in  _addr;
-        std::string         _nick;
         std::string         _hostname;
     public:
         Client(int fd, const struct sockaddr_in &addr);
         ~Client();
 
         int                 getFd() const;
-        const std::string&  getNick() const;
+        const std::string & getHostname() const;
 };

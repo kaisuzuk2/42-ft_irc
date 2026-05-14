@@ -14,6 +14,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <unistd.h>
+#include <map>
 
 #include <cerrno>
 
@@ -22,6 +23,7 @@
 #include <sys/socket.h>
 
 #include "SocketEngine.hpp"
+#include "Client.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -51,6 +53,8 @@ int main(int argc, char *argv[])
     SocketEngine socketEngine;
     socketEngine.addFd(server_fd, EPOLLIN);
 
+    std::map<int, Client *> clients;
+
     char buf[512];
 
     while (true)
@@ -69,7 +73,9 @@ int main(int argc, char *argv[])
 
                 socketEngine.addFd(client_fd, EPOLLIN);
 
-                std::cout << "client connected: fd = " << client_fd << std::endl;
+                clients[client_fd] = new Client(client_fd, client_addr);
+
+                std::cout << "client connected: " << clients[client_fd]->getHostname() << std::endl;
 
                 const char *msg = "hello\r\n";
                 send(client_fd, msg, strlen(msg), 0);
@@ -81,6 +87,8 @@ int main(int argc, char *argv[])
                 {
                     std::cout << "client disconnected: fd = " << fd << std::endl;
                     socketEngine.delFd(fd);
+                    delete clients[fd];
+                    clients.erase(fd);
                     close(fd);
                 }
                 else

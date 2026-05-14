@@ -4,7 +4,8 @@ CXXFLAGS	=	-Wall -Werror -Wextra -std=c++98
 INC			=	-Iincludes
 
 SRCS		=	src/ft_ircd.cpp \
-				src/SocketEngine.cpp
+				src/SocketEngine.cpp \
+				src/Client.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
 

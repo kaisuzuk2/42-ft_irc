@@ -34,7 +34,7 @@ void SocketEngine::addFd(int fd, uint32_t events)
 
     ev.events = events;
     ev.data.fd = fd;
-    epoll_ctl(this->_epfd, EPOLL_CTL_ADD, fd, &ev);
+    epoll_ctl(this->_epfd, EPOLL_CTL_ADD, fd, &ev); // ### TODO: エラー処理
     this->_fds.insert(fd);
 }
 
@@ -42,7 +42,7 @@ void SocketEngine::delFd(int fd)
 {
     if (this->_fds.find(fd) == this->_fds.end())
         return ;
-    epoll_ctl(this->_epfd, EPOLL_CTL_DEL, fd, NULL);
+    epoll_ctl(this->_epfd, EPOLL_CTL_DEL, fd, NULL); // ### TODO: エラー処理
     this->_fds.erase(fd);
 }
 
