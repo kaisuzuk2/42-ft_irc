@@ -69,6 +69,7 @@ int main(int argc, char *argv[])
             {
                 struct sockaddr_in client_addr;
                 socklen_t client_len = sizeof(client_addr);
+                // ### TODO: accept4使っていいかな
                 int client_fd = accept4(server_fd, (struct sockaddr *)&client_addr, &client_len, SOCK_NONBLOCK);
                 if (client_fd < 0)
                 {
@@ -81,8 +82,8 @@ int main(int argc, char *argv[])
 
                 std::cout << "client connected: " << clients[client_fd]->getHostname() << std::endl;
 
-                const char *msg = "hello\r\n";
-                send(client_fd, msg, strlen(msg), 0);
+                clients[client_fd]->send("hello");
+                clients[client_fd]->flushSendBuf();
             }
             else
             {
@@ -100,7 +101,7 @@ int main(int argc, char *argv[])
                     clients[fd]->appendToBuffer(buf, n);
                     std::string line;
                     while (clients[fd]->getNextLine(line))
-                        std::cout << "fd = " << fd << "says: " << line << std::endl;
+                        std::cout << "fd = " << fd << " says: " << line << std::endl;
                 }
             }
         }

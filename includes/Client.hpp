@@ -21,6 +21,7 @@ class Client
         std::string         _hostname;
 
         std::string         _recvBuf;
+        std::string         _sendBuf;
     public:
         Client(int fd, const struct sockaddr_in &addr);
         ~Client();
@@ -30,4 +31,6 @@ class Client
 
         void                appendToBuffer(const char *data, int len);
         bool                getNextLine(std::string &line);
+        void                send(const std::string &msg);
+        void                flushSendBuf();
 };

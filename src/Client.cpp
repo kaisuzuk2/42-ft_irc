@@ -16,6 +16,9 @@
 #include <cstring>
 #include <unistd.h>
 
+#include <sys/types.h>
+#include <sys/socket.h> 
+
 Client::Client(int fd, const struct sockaddr_in &addr)
     : _fd(fd)
 {
@@ -61,4 +64,22 @@ bool Client::getNextLine(std::string &line)
         line.erase(line.size() -1);
 
     return (true);
+}
+
+void Client::send(const std::string &msg)
+{
+    this->_sendBuf += msg + "\r\n";
+}
+
+void Client::flushSendBuf()
+{
+    ssize_t sent;
+
+    if (this->_sendBuf.empty())
+        return ;
+    // sigpipeを無視する　signal(SIGPIPE, SIG_IGN)するなら不要
+    sent = ::send(this->_fd, this->_sendBuf.c_str(), this->_sendBuf.size(), MSG_NOSIGNAL);
+    if (sent <= 0)
+        return ;
+    this->_sendBuf.erase(0, sent);
 }
