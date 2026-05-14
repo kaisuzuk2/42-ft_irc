@@ -57,7 +57,7 @@ std::vector<int> SocketEngine::dispatch(int timeout_ms)
         // シグナル割り込みのケース
         // if (errno == EINTR)
         //     return (ready);
-        throw std:;runtime_error("epoll_wait() failed: " + std::string(std::strerror(errno)));
+        throw std::runtime_error("epoll_wait() failed: " + std::string(std::strerror(errno)));
     }
 
     for (int i = 0; i < nfds; ++i)

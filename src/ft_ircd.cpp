@@ -15,9 +15,13 @@
 #include <cstring>
 #include <unistd.h>
 
+#include <cerrno>
+
 #include <sys/epoll.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
+
+#include "SocketEngine.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -44,22 +48,18 @@ int main(int argc, char *argv[])
     listen(server_fd, 10);
     std::cout << "Listening on port " << port << std::endl;
 
-    int epfd = epoll_create1(0);
+    SocketEngine socketEngine;
+    socketEngine.addFd(server_fd, EPOLLIN);
 
-    struct epoll_event ev;
-    ev.events = EPOLLIN;
-    ev.data.fd = server_fd;
-    epoll_ctl(epfd, EPOLL_CTL_ADD, server_fd, &ev);
-
-    struct epoll_event events[64];
+    char buf[512];
 
     while (true)
     {
-        int nfds = epoll_wait(epfd, events, 64, -1);
+        std::vector<int> readyFds = socketEngine.dispatch(-1);
         
-        for (int i = 0; i < nfds; ++i)
+        for (size_t i = 0; i < readyFds.size(); ++i)
         {
-            int fd = events[i].data.fd;
+            int fd = readyFds[i];
 
             if (fd == server_fd)
             {
@@ -67,9 +67,7 @@ int main(int argc, char *argv[])
                 socklen_t client_len = sizeof(client_addr);
                 int client_fd = accept4(server_fd, (struct sockaddr *)&client_addr, &client_len, SOCK_NONBLOCK);
 
-                ev.events = EPOLLIN;
-                ev.data.fd = client_fd;
-                epoll_ctl(epfd, EPOLL_CTL_ADD, client_fd, &ev);
+                socketEngine.addFd(client_fd, EPOLLIN);
 
                 std::cout << "client connected: fd = " << client_fd << std::endl;
 
@@ -78,12 +76,11 @@ int main(int argc, char *argv[])
             }
             else
             {
-                char buf[512];
                 int n = recv(fd, buf, sizeof(buf) - 1, 0);
                 if (n <= 0)
                 {
                     std::cout << "client disconnected: fd = " << fd << std::endl;
-                    epoll_ctl(epfd, EPOLL_CTL_DEL, fd, NULL);
+                    socketEngine.delFd(fd);
                     close(fd);
                 }
                 else
@@ -95,6 +92,5 @@ int main(int argc, char *argv[])
         }
     }
     close(server_fd);
-    close(epfd);
     return (EXIT_SUCCESS);
 }

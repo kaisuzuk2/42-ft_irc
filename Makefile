@@ -1,18 +1,20 @@
 NAME		=	ircserv
 CXX			=	c++
 CXXFLAGS	=	-Wall -Werror -Wextra -std=c++98
+INC			=	-Iincludes
 
-SRCS		=	src/ft_ircd.cpp
+SRCS		=	src/ft_ircd.cpp \
+				src/SocketEngine.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $(INC) $(OBJS) -o $(NAME)
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
 
 clean:
 	rm -rf $(OBJS)

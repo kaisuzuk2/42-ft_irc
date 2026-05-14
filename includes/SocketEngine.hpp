@@ -17,6 +17,8 @@
 #include <vector>
 #include <sys/epoll.h>
 
+#include <cerrno>
+
 class SocketEngine 
 {
     private:
