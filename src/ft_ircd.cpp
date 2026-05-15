@@ -22,88 +22,132 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
+#include "ft_ircd.hpp"
 #include "SocketEngine.hpp"
 #include "Client.hpp"
 
-int main(int argc, char *argv[])
+std::string FtIRCd::_parsePassword(const std::string &str) const 
 {
-    if (argc != 3)
-    {
-        std::cerr << "Usage: " << argv[0] << " <port> <password>" << std::endl;
-        return (EXIT_FAILURE);
-    }
+    if (str.empty())
+        throw std::invalid_argument("Error: password cannot be empty");
+    return (str);
+}
 
-    int port = std::atoi(argv[1]);
+int FtIRCd::_parsePort(const char *str) const
+{
+    char *endptr;
+    long res;
 
-    int server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    errno = 0;
+    endptr = NULL;
+    res = std::strtol(str, &endptr, 10);
+    if (str == endptr)
+        throw std::invalid_argument("Error: Port is not a number: " + std::string(str));
+    else if (errno == ERANGE)
+        throw std::overflow_error("Error: Port number overflow: " + std::string(str));
+    if (*endptr != '\0')
+        throw std::invalid_argument("Error: Port contains invalid characters: " + std::string(str));
+    if (res <= 1023 || res > 65535) // ### TODO: 定数化すべき
+        throw std::out_of_range("Port out of range (1024 - 65535): " + std::string(str));
+    return (static_cast<int>(res));
+}
+
+void FtIRCd::_parseConfig(int argc, char **argv)
+{
+    // ### TODO: 定数マクロ化する
+    if (argc < 3)
+        throw std::invalid_argument("Usage: ./ircserv <port> <password>");
+    this->_port = this->_parsePort(argv[1]);
+    this->_password = this->_parsePassword(argv[2]);
+
+}
+
+FtIRCd::~FtIRCd() 
+{
+    if (this->_serverFd >= 0)
+        close(this->_serverFd);
+}
+
+FtIRCd::FtIRCd(int argc, char **argv)
+{
+    this->_parseConfig(argc, argv);
+
+    this->_serverFd = socket(AF_INET, SOCK_STREAM, 0);
 
     int opt = 1;
-    setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+    setsockopt(this->_serverFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     addr.sin_family = AF_INET;
-    addr.sin_port = htons(port);
+    addr.sin_port = htons(this->_port);
     
-    bind(server_fd, (struct sockaddr *)&addr, sizeof(addr));
+    bind(this->_serverFd, (struct sockaddr *)&addr, sizeof(addr));
 
-    listen(server_fd, 10);
-    std::cout << "Listening on port " << port << std::endl;
+    listen(this->_serverFd, 10);
+    std::cout << "Listening on port " << this->_port << std::endl;
 
-    SocketEngine socketEngine;
-    socketEngine.addFd(server_fd, EPOLLIN);
+    this->_socketEngine.addFd(this->_serverFd, EPOLLIN);
+}
 
-    // std::map<int, Client *> clients;
-    ClientManager clients;
-
-    char buf[512];
-
-    while (true)
+int main(int argc, char *argv[])
+{
+    try 
     {
-        std::vector<int> readyFds = socketEngine.dispatch(-1);
-        
-        for (size_t i = 0; i < readyFds.size(); ++i)
-        {
-            int fd = readyFds[i];
-
-            if (fd == server_fd)
-            {
-                struct sockaddr_in client_addr;
-                socklen_t client_len = sizeof(client_addr);
-                // ### TODO: accept4使っていいかな
-                int client_fd = accept4(server_fd, (struct sockaddr *)&client_addr, &client_len, SOCK_NONBLOCK);
-                if (client_fd < 0)
-                {
-                    std::cerr << "accept4() failed: " << std::strerror(errno) << std::endl;
-                    continue ;
-                }
-                socketEngine.addFd(client_fd, EPOLLIN);
-                clients.addClient(client_fd, new Client(client_fd, client_addr));
-
-                std::cout << "client connected: " << clients[client_fd]->getHostname() << std::endl;
-
-                clients.findByFd(client_fd)->send("hello");
-                clients.findByFd(client_fd)->flushSendBuf();
-            }
-            else
-            {
-                int n = recv(fd, buf, sizeof(buf) - 1, 0);
-                if (n <= 0)
-                {
-                    std::cout << "client disconnected: fd = " << fd << std::endl;
-                    socketEngine.delFd(fd);
-                    clients.removeClient(fd);
-                }
-                else
-                {
-                    clients[fd]->appendToBuffer(buf, n);
-                    std::string line;
-                    while (clients[fd]->getNextLine(line))
-                        std::cout << "fd = " << fd << " says: " << line << std::endl;
-                }
-            }
-        }
+        FtIRCd ServerInstance(argc, argv);
+    } 
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << std::endl;
     }
-    close(server_fd);
+
+    // char buf[512];
+
+    // while (true)
+    // {
+    //     std::vector<int> readyFds = socketEngine.dispatch(-1);
+        
+    //     for (size_t i = 0; i < readyFds.size(); ++i)
+    //     {
+    //         int fd = readyFds[i];
+
+    //         if (fd == server_fd)
+    //         {
+    //             struct sockaddr_in client_addr;
+    //             socklen_t client_len = sizeof(client_addr);
+    //             // ### TODO: accept4使っていいかな
+    //             int client_fd = accept4(server_fd, (struct sockaddr *)&client_addr, &client_len, SOCK_NONBLOCK);
+    //             if (client_fd < 0)
+    //             {
+    //                 std::cerr << "accept4() failed: " << std::strerror(errno) << std::endl;
+    //                 continue ;
+    //             }
+    //             socketEngine.addFd(client_fd, EPOLLIN);
+    //             clients.addClient(client_fd, new Client(client_fd, client_addr));
+
+    //             std::cout << "client connected: " << clients[client_fd]->getHostname() << std::endl;
+
+    //             clients.findByFd(client_fd)->send("hello");
+    //             clients.findByFd(client_fd)->flushSendBuf();
+    //         }
+    //         else
+    //         {
+    //             int n = recv(fd, buf, sizeof(buf) - 1, 0);
+    //             if (n <= 0)
+    //             {
+    //                 std::cout << "client disconnected: fd = " << fd << std::endl;
+    //                 socketEngine.delFd(fd);
+    //                 clients.removeClient(fd);
+    //             }
+    //             else
+    //             {
+    //                 clients[fd]->appendToBuffer(buf, n);
+    //                 std::string line;
+    //                 while (clients[fd]->getNextLine(line))
+    //                     std::cout << "fd = " << fd << " says: " << line << std::endl;
+    //             }
+    //         }
+    //     }
+    // }
     return (EXIT_SUCCESS);
 }

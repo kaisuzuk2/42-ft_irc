@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef CLIENT_HPP
+# define CLIENT_HPP
+
 #include <string>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -34,3 +37,5 @@ class Client
         void                send(const std::string &msg);
         void                flushSendBuf();
 };
+
+#endif
