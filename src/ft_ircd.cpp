@@ -59,7 +59,101 @@ void FtIRCd::_parseConfig(int argc, char **argv)
         throw std::invalid_argument("Usage: ./ircserv <port> <password>");
     this->_port = this->_parsePort(argv[1]);
     this->_password = this->_parsePassword(argv[2]);
+}
 
+void FtIRCd::_disconnectClient(int fd) 
+{
+    std::cout << "client disconnected: fd = " << fd << std::endl;
+    this->_socketEngine.delFd(fd);
+    this->_clients.removeClient(fd);
+}
+
+void FtIRCd::_handleClient(int fd) 
+{
+    char buf[512];
+    int n;
+    std::string line;
+    
+    n = recv(fd, buf, sizeof(buf) - 1, 0);
+    if (n <= 0)
+    {
+        this->_disconnectClient(fd);
+        return ;
+    }
+
+    this->_clients.findByFd(fd)->appendToBuffer(buf, n);
+    while (this->_clients.findByFd(fd)->getNextLine(line))
+        std::cout << "fd = " << fd << " says: " << line << std::endl;
+}
+
+void FtIRCd::_acceptClient()
+{
+    struct sockaddr_in client_addr;
+    socklen_t client_len;
+    int client_fd;
+
+    client_len = sizeof(client_addr);
+    // ### TODO: accept4使っていいかな
+    client_fd = accept4(this->_serverFd, (struct sockaddr *)&client_addr, &client_len, SOCK_NONBLOCK);
+    if (client_fd < 0)
+    {
+        std::cerr << "accept4() failed: " << std::strerror(errno) << std::endl;
+        return ;
+    }
+    this->_socketEngine.addFd(client_fd, EPOLLIN);
+    this->_clients.addClient(client_fd, new Client(client_fd, client_addr));
+
+    std::cout << "client connected: " << this->_clients.findByFd(client_fd)->getHostname() << std::endl;
+
+    this->_clients.findByFd(client_fd)->send("hello");
+    this->_clients.findByFd(client_fd)->flushSendBuf();
+}
+
+void FtIRCd::_run() 
+{
+    int fd;
+
+    while (1)
+    {
+        // ### TODO: -1でいいか再考すること
+        std::vector<int> readyFds = this->_socketEngine.dispatch(-1);
+        for (size_t i = 0; i < readyFds.size(); ++i)
+        {
+            fd = readyFds[i];
+            if (fd == this->_serverFd)
+                this->_acceptClient();
+            else
+                this->_handleClient(fd);        
+        }
+    }
+
+    // while (true)
+    // {
+    //     std::vector<int> readyFds = socketEngine.dispatch(-1);
+        
+    //     for (size_t i = 0; i < readyFds.size(); ++i)
+    //     {
+    //         int fd = readyFds[i];
+
+    //         else
+    //         {
+    //             int n = recv(fd, buf, sizeof(buf) - 1, 0);
+    //             if (n <= 0)
+    //             {
+    //                 std::cout << "client disconnected: fd = " << fd << std::endl;
+    //                 socketEngine.delFd(fd);
+    //                 clients.removeClient(fd);
+    //             }
+    //             else
+    //             {
+    //                 clients[fd]->appendToBuffer(buf, n);
+    //                 std::string line;
+    //                 while (clients[fd]->getNextLine(line))
+    //                     std::cout << "fd = " << fd << " says: " << line << std::endl;
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 FtIRCd::~FtIRCd() 
@@ -95,59 +189,12 @@ int main(int argc, char *argv[])
     try 
     {
         FtIRCd ServerInstance(argc, argv);
+        ServerInstance._run();
     } 
     catch (const std::exception &e)
     {
         std::cerr << e.what() << std::endl;
     }
 
-    // char buf[512];
-
-    // while (true)
-    // {
-    //     std::vector<int> readyFds = socketEngine.dispatch(-1);
-        
-    //     for (size_t i = 0; i < readyFds.size(); ++i)
-    //     {
-    //         int fd = readyFds[i];
-
-    //         if (fd == server_fd)
-    //         {
-    //             struct sockaddr_in client_addr;
-    //             socklen_t client_len = sizeof(client_addr);
-    //             // ### TODO: accept4使っていいかな
-    //             int client_fd = accept4(server_fd, (struct sockaddr *)&client_addr, &client_len, SOCK_NONBLOCK);
-    //             if (client_fd < 0)
-    //             {
-    //                 std::cerr << "accept4() failed: " << std::strerror(errno) << std::endl;
-    //                 continue ;
-    //             }
-    //             socketEngine.addFd(client_fd, EPOLLIN);
-    //             clients.addClient(client_fd, new Client(client_fd, client_addr));
-
-    //             std::cout << "client connected: " << clients[client_fd]->getHostname() << std::endl;
-
-    //             clients.findByFd(client_fd)->send("hello");
-    //             clients.findByFd(client_fd)->flushSendBuf();
-    //         }
-    //         else
-    //         {
-    //             int n = recv(fd, buf, sizeof(buf) - 1, 0);
-    //             if (n <= 0)
-    //             {
-    //                 std::cout << "client disconnected: fd = " << fd << std::endl;
-    //                 socketEngine.delFd(fd);
-    //                 clients.removeClient(fd);
-    //             }
-    //             else
-    //             {
-    //                 clients[fd]->appendToBuffer(buf, n);
-    //                 std::string line;
-    //                 while (clients[fd]->getNextLine(line))
-    //                     std::cout << "fd = " << fd << " says: " << line << std::endl;
-    //             }
-    //         }
-    //     }
-    // }
     return (EXIT_SUCCESS);
 }
