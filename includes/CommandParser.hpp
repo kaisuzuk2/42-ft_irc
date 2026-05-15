@@ -22,6 +22,8 @@ class Client;
 class CommandParser
 {
     public:
+        CommandParser();
+        ~CommandParser();
         void                        _process(FtIRCd &serverInstance, Client &client, const std::string &line);
     
     private:

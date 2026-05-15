@@ -17,6 +17,10 @@
 
 #include <algorithm>
 
+CommandParser::CommandParser() {}
+
+CommandParser::~CommandParser() {}
+
 std::vector<std::string> CommandParser::_split(const std::string &line)
 {
     std::vector<std::string> params;
