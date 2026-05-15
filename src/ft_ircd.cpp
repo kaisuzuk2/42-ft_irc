@@ -25,6 +25,7 @@
 #include "ft_ircd.hpp"
 #include "SocketEngine.hpp"
 #include "Client.hpp"
+#include "CommandParser.hpp"
 
 std::string FtIRCd::_parsePassword(const std::string &str) const 
 {
@@ -70,10 +71,12 @@ void FtIRCd::_disconnectClient(int fd)
 
 void FtIRCd::_handleClient(int fd) 
 {
+    Client *client;
     char buf[512];
     int n;
     std::string line;
-    
+
+    client = this->_clients.findByFd(fd);
     n = recv(fd, buf, sizeof(buf) - 1, 0);
     if (n <= 0)
     {
@@ -81,9 +84,10 @@ void FtIRCd::_handleClient(int fd)
         return ;
     }
 
-    this->_clients.findByFd(fd)->appendToBuffer(buf, n);
-    while (this->_clients.findByFd(fd)->getNextLine(line))
-        std::cout << "fd = " << fd << " says: " << line << std::endl;
+    client->appendToBuffer(buf, n);
+    while (client->getNextLine(line))
+        this->_parser._process(*this, *client, line);
+        // std::cout << "fd = " << fd << " says: " << line << std::endl;
 }
 
 void FtIRCd::_acceptClient()

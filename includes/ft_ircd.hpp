@@ -17,6 +17,7 @@
 
 #include "SocketEngine.hpp"
 #include "ClientManager.hpp"
+#include "CommandParser.hpp"
 
 class FtIRCd 
 {
@@ -26,6 +27,7 @@ class FtIRCd
         int             _serverFd;
         SocketEngine    _socketEngine;
         ClientManager   _clients;
+        CommandParser   _parser;
 
     public:
         FtIRCd(int argc, char **argv);
