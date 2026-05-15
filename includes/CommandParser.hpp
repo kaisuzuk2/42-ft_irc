@@ -22,7 +22,7 @@ class Client;
 class CommandParser
 {
     public:
-        void                        process(FtIRCd &serverInstance, Client &client, const std::string &line);
+        void                        _process(FtIRCd &serverInstance, Client &client, const std::string &line);
     
     private:
         std::vector<std::string>    _split(const std::string &line);
