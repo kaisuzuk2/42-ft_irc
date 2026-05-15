@@ -48,7 +48,7 @@ int FtIRCd::_parsePort(const char *str) const
         throw std::overflow_error("Error: Port number overflow: " + std::string(str));
     if (*endptr != '\0')
         throw std::invalid_argument("Error: Port contains invalid characters: " + std::string(str));
-    if (res <= 1023 || res > 65535) // ### TODO: 定数化すべき
+    if (res < kPortMin || res > kPortMax) // ### TODO: kPortMaxとkPortMinを使うべき
         throw std::out_of_range("Port out of range (1024 - 65535): " + std::string(str));
     return (static_cast<int>(res));
 }
@@ -56,10 +56,10 @@ int FtIRCd::_parsePort(const char *str) const
 void FtIRCd::_parseConfig(int argc, char **argv)
 {
     // ### TODO: 定数マクロ化する
-    if (argc < 3)
+    if (argc < kArgNum)
         throw std::invalid_argument("Usage: ./ircserv <port> <password>");
-    this->_port = this->_parsePort(argv[1]);
-    this->_password = this->_parsePassword(argv[2]);
+    this->_port = this->_parsePort(argv[kArgIdxPort]);
+    this->_password = this->_parsePassword(argv[kArgIdxPassword]);
 }
 
 void FtIRCd::_disconnectClient(int fd) 
@@ -87,7 +87,6 @@ void FtIRCd::_handleClient(int fd)
     client->appendToBuffer(buf, n);
     while (client->getNextLine(line))
         this->_parser._process(*this, *client, line);
-        // std::cout << "fd = " << fd << " says: " << line << std::endl;
 }
 
 void FtIRCd::_acceptClient()
