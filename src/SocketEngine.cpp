@@ -28,7 +28,7 @@ SocketEngine::~SocketEngine()
         close(this->_epfd);
 }
 
-void SocketEngine::addFd(int fd, uint32_t events)
+void SocketEngine::_addFd(int fd, uint32_t events)
 {
     struct epoll_event ev;
 
@@ -39,7 +39,7 @@ void SocketEngine::addFd(int fd, uint32_t events)
     this->_fds.insert(fd);
 }
 
-void SocketEngine::delFd(int fd)
+void SocketEngine::_delFd(int fd)
 {
     if (this->_fds.find(fd) == this->_fds.end())
         return ;
@@ -48,7 +48,7 @@ void SocketEngine::delFd(int fd)
     this->_fds.erase(fd);
 }
 
-std::vector<int> SocketEngine::dispatch(int timeout_ms)
+std::vector<int> SocketEngine::_dispatch(int timeout_ms)
 {
     std::vector<int> ready;
     int nfds;

@@ -29,13 +29,13 @@ class Client
         Client(int fd, const struct sockaddr_in &addr);
         ~Client();
 
-        int                 getFd() const;
-        const std::string & getHostname() const;
+        int                 _getFd() const;
+        const std::string & _getHostname() const;
 
-        void                appendToBuffer(const char *data, int len);
-        bool                getNextLine(std::string &line);
-        void                send(const std::string &msg);
-        void                flushSendBuf();
+        void                _appendToBuffer(const char *data, int len);
+        bool                _getNextLine(std::string &line);
+        void                _send(const std::string &msg);
+        void                _flushSendBuf();
 };
 
 #endif

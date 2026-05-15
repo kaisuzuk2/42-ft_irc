@@ -21,12 +21,12 @@ ClientManager::~ClientManager()
     this->_clients.clear();
 }
 
-void ClientManager::addClient(int fd, Client *client)
+void ClientManager::_addClient(int fd, Client *client)
 {
     this->_clients[fd] = client;
 }
 
-void ClientManager::removeClient(int fd)
+void ClientManager::_removeClient(int fd)
 {
     std::map<int, Client *>::iterator it = this->_clients.find(fd);
     if (it == this->_clients.end())
@@ -35,7 +35,7 @@ void ClientManager::removeClient(int fd)
     this->_clients.erase(it);
 }
 
-Client *ClientManager::findByFd(int fd) const 
+Client *ClientManager::_findByFd(int fd) const 
 {
     std::map<int, Client *>::const_iterator it = this->_clients.find(fd);
     if (it == this->_clients.end())

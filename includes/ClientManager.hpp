@@ -24,9 +24,9 @@ class ClientManager
         ClientManager();
         ~ClientManager();
 
-        void                    addClient(int fd, Client *client);
-        void                    removeClient(int fd);
-        Client                  *findByFd(int fd) const;
+        void                    _addClient(int fd, Client *client);
+        void                    _removeClient(int fd);
+        Client                  *_findByFd(int fd) const;
 };  
 
 #endif

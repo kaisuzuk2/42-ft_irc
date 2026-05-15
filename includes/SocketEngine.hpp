@@ -29,9 +29,9 @@ class SocketEngine
         SocketEngine();
         ~SocketEngine();
 
-        void                addFd(int fd, uint32_t events);
-        void                delFd(int fd);
-        std::vector<int>    dispatch(int timeout_ms);
+        void                _addFd(int fd, uint32_t events);
+        void                _delFd(int fd);
+        std::vector<int>    _dispatch(int timeout_ms);
 };
 
 #endif

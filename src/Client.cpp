@@ -34,22 +34,22 @@ Client::~Client()
         close(this->_fd);
 }
 
-int Client::getFd() const 
+int Client::_getFd() const 
 {
     return (this->_fd);
 }
 
-const std::string &Client::getHostname() const 
+const std::string &Client::_getHostname() const 
 {
     return (this->_hostname);
 }
 
-void Client::appendToBuffer(const char *data, int len)
+void Client::_appendToBuffer(const char *data, int len)
 {
     this->_recvBuf.append(data, len);
 }
 
-bool Client::getNextLine(std::string &line)
+bool Client::_getNextLine(std::string &line)
 {
     size_t pos;
 
@@ -66,12 +66,12 @@ bool Client::getNextLine(std::string &line)
     return (true);
 }
 
-void Client::send(const std::string &msg)
+void Client::_send(const std::string &msg)
 {
     this->_sendBuf += msg + "\r\n";
 }
 
-void Client::flushSendBuf()
+void Client::_flushSendBuf()
 {
     ssize_t sent;
 
