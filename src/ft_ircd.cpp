@@ -126,34 +126,6 @@ void FtIRCd::_run()
                 this->_handleClient(fd);        
         }
     }
-
-    // while (true)
-    // {
-    //     std::vector<int> readyFds = socketEngine.dispatch(-1);
-        
-    //     for (size_t i = 0; i < readyFds.size(); ++i)
-    //     {
-    //         int fd = readyFds[i];
-
-    //         else
-    //         {
-    //             int n = recv(fd, buf, sizeof(buf) - 1, 0);
-    //             if (n <= 0)
-    //             {
-    //                 std::cout << "client disconnected: fd = " << fd << std::endl;
-    //                 socketEngine.delFd(fd);
-    //                 clients.removeClient(fd);
-    //             }
-    //             else
-    //             {
-    //                 clients[fd]->appendToBuffer(buf, n);
-    //                 std::string line;
-    //                 while (clients[fd]->getNextLine(line))
-    //                     std::cout << "fd = " << fd << " says: " << line << std::endl;
-    //             }
-    //         }
-    //     }
-    // }
 }
 
 FtIRCd::~FtIRCd() 
