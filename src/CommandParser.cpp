@@ -63,9 +63,13 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     cmd = params[0];
     std::transform(cmd.begin(), cmd.end(), cmd.begin(), ::toupper);
 
-    std::cout << "Command: " << cmd << std::endl;
-
-
-    (void)serverInstance;
-    (void)client;
+    // ### TODO: 定数化すべきかな
+    if (cmd == "PASS")
+        this->_cmdPass(serverInstance, client, params);
+    else if (cmd == "NICK")
+        this->_cmdNick(serverInstance, client, params);
+    else if (cmd == "USER")
+        this->_cmdUser(serverInstance, client, params);
+    else
+        std::cout << "Unknown command: " << cmd << std::endl;
 }
