@@ -28,6 +28,10 @@ class CommandParser
     
     private:
         std::vector<std::string>    _split(const std::string &line);
+
+        void                        _cmdPass(FtIRCd &server, Client &client, const std::vector<std::string> &params);
+        void                        _cmdNick(FtIRCd &server, Client &client, const std::vector<std::string> &params);
+        void                        _cmdUser(FtIRCd &server, Client &client, const std::vector<std::string> &params);
 };
 
 #endif

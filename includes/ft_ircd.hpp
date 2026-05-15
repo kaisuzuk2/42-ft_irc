@@ -25,6 +25,7 @@ class FtIRCd
         int                 _port;
         std::string         _password;
         int                 _serverFd;
+        
         SocketEngine        _socketEngine;
         ClientManager       _clients;
         CommandParser       _parser;
