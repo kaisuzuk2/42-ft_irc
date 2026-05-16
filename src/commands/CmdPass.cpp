@@ -15,4 +15,7 @@
 #include "Client.hpp"
 
 CmdPass::CmdPass() 
-    : Command("PASS", 1, 1);
+    : Command("PASS", 1, 1, false)
+{
+
+};

@@ -33,11 +33,13 @@ class ACommand
 
         virtual void        execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params) = 0;
 
-        const std:;string   &_getName() const;
+        const std::string   &_getName() const;
         unsigned int        _getMinParams() const;
         unsigned int        _getMaxParams() const;
-        bool                _getworkBeforeReg() const;
-        void                _setWorkBeforeReg(bool);
+        bool                _getWorksBeforeReg() const;
+
+    protected:
+        void                _setWorksBeforeReg(bool);
 };
 
 #endif
