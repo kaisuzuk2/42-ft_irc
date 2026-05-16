@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ACommand.hpp"
+#include "commands/ACommand.hpp"
 
 ACommand::ACommand(const std::string &name, const unsigned int min_params, const unsigned int max_params, const bool works_before_reg)
     : _name(name)

@@ -16,6 +16,21 @@
 
 CmdPass::CmdPass() 
     : Command("PASS", 1, 1, false)
-{
+{};
 
-};
+CmdPass::~CmdPass() {}
+
+void CmdPass:execute(FtIRCd &serverInstance, Client &client, const std::vector<string> &params)
+{
+    if (client._isRegistered())
+    {
+        client._send(": " + serverInstance._getServername() + "462 " + client._getNick() + ": Unauthorized command (already registered)");
+        return ;
+    }
+    if (params.size() < 2)
+    {
+        client._send(":" + serverInstance._getServername() + "461 " + client._getNick() + "PASS :Not enough parameters");
+        return ;
+    }
+    client._setPassword(params[1]); // ### TODO: 定数化すべき
+}
