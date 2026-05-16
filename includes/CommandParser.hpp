@@ -15,12 +15,18 @@
 
 #include <string>
 #include <vector>
+#include <map>
+
+#include "Command.hpp"
 
 class FtIRCd;
 class Client;
 
 class CommandParser
 {
+    private:
+        std::map<std::string, Command *>_commands;
+
     public:
         CommandParser();
         ~CommandParser();
@@ -28,11 +34,6 @@ class CommandParser
     
     private:
         std::vector<std::string>    _split(const std::string &line, size_t max_params = 0);
-
-        void                        _cmdPass(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
-        void                        _cmdNick(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
-        void                        _cmdUser(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
-
 };
 
 #endif
