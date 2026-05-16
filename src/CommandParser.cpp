@@ -80,12 +80,12 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     std::transform(cmd.begin(), cmd.end(), cmd.begin(), ::toupper);
 
     // ### TODO: 定数化すべきかな
-    if (cmd == "PASS")
-        this->_cmdPass(serverInstance, client, params);
-    else if (cmd == "NICK")
-        this->_cmdNick(serverInstance, client, params);
-    else if (cmd == "USER")
-        this->_cmdUser(serverInstance, client, params);
+    if (cmd == "PASS") // パラメータが多い場合結合する
+        this->_cmdPass(serverInstance, client, this->_split(line, 2));
+    else if (cmd == "NICK") // パラメータが多い場合無視する
+        this->_cmdNick(serverInstance, client, this->_split(line));
+    else if (cmd == "USER") // パラメータが多い場合結合する
+        this->_cmdUser(serverInstance, client, this->_split(line, 5));
     else
         std::cout << cmd <<  " :Unknown command" << std::endl;
 }
