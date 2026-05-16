@@ -46,13 +46,14 @@ class FtIRCd
         void                _handleClient(int fd);
         void                _disconnectClient(int fd);
 
-        const std::string   &_getServername() const;
-
         static const int    kPortMin = 1024;
         static const int    kPortMax = 65535; // ### TODO: これ正しいかチェックする
         static const int    kArgNum = 3;
         static const int    kArgIdxPort = 1;
         static const int    kArgIdxPassword = 2;
+
+    public:
+        const std::string   &_getServername() const;
 };
 
 #endif

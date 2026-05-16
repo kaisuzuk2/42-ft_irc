@@ -22,6 +22,7 @@
 Client::Client(int fd, const struct sockaddr_in &addr)
     : _fd(fd)
     , _nick("*")
+    , _isregistered(false)
 {
     char ip[INET_ADDRSTRLEN];
     if ( inet_ntop(AF_INET, &addr.sin_addr, ip, sizeof(ip)) == NULL)
@@ -50,9 +51,24 @@ void Client::_setPassword(const std::string &pass)
     this->_password = pass;
 }
 
-const std::string Client::&_getPassword() const
+const std::string &Client::_getPassword() const
 {
     return (this->_password);
+}
+
+void Client::_setNick(const std::string &nick)
+{
+    this->_nick = nick;
+}
+
+const std::string &Client::_getNick() const
+{
+    return (this->_nick);
+}
+
+bool Client::_isRegistered() const
+{
+    return (this->_isregistered);
 }
 
 void Client::_appendToBuffer(const char *data, int len)

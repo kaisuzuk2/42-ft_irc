@@ -23,19 +23,20 @@ CommandParser::~CommandParser() {}
 
 void CommandParser::_cmdPass(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
-    if (client.isRegistered())
+    if (client._isRegistered())
     {
-        client.send(": " + this->serverInstance._getServername() + "462 " + client.getNick() + ": Unauthorized command (already registered)")
+        client._send(": " + serverInstance._getServername() + "462 " + client._getNick() + ": Unauthorized command (already registered)");
+        return ;
     }
     if (params.size() < 2)
     {
-        clients.send(":" + this->serverInstance._getServername() + "461 " + client.getNick() + "PASS :Not enough parameters");
+        client._send(":" + serverInstance._getServername() + "461 " + client._getNick() + "PASS :Not enough parameters");
         return ;
     }
     client._setPassword(params[1]); // ### TODO: 定数化すべき
 }
 
-std::vector<std::string> CommandParser::_split(const std::string &line)
+std::vector<std::string> CommandParser::_split(const std::string &line, size_t max_params)
 {
     std::vector<std::string> params;
     std::string::size_type i;
@@ -91,10 +92,10 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     // ### TODO: 定数化すべきかな
     if (cmd == "PASS") // パラメータが多い場合結合する
         this->_cmdPass(serverInstance, client, this->_split(line, 2));
-    else if (cmd == "NICK") // パラメータが多い場合無視する
-        this->_cmdNick(serverInstance, client, this->_split(line));
-    else if (cmd == "USER") // パラメータが多い場合結合する
-        this->_cmdUser(serverInstance, client, this->_split(line, 5));
+    // else if (cmd == "NICK") // パラメータが多い場合無視する
+    //     this->_cmdNick(serverInstance, client, this->_split(line));
+    // else if (cmd == "USER") // パラメータが多い場合結合する
+    //     this->_cmdUser(serverInstance, client, this->_split(line, 5));
     else
         std::cout << cmd <<  " :Unknown command" << std::endl;
 }

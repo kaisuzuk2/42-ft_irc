@@ -24,6 +24,7 @@ class Client
         std::string         _nick;
         std::string         _hostname;
         std::string         _password;
+        bool                _isregistered;
 
         std::string         _recvBuf;
         std::string         _sendBuf;
@@ -39,9 +40,10 @@ class Client
         int                 _getFd() const;
         const std::string   &_getHostname() const;    
         void                _setPassword(const std::string &pass);
-        const std::string   &_getpassword() const;
+        const std::string   &_getPassword() const;
         void                _setNick(const std::string &nick);
         const std::string   &_getNick() const;
+        bool                _isRegistered() const;
 
 };
 

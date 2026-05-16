@@ -27,7 +27,7 @@
 #include "Client.hpp"
 #include "CommandParser.hpp"
 
-const std::string FtIRCd::_getServername() const 
+const std::string &FtIRCd::_getServername() const 
 {
     return (this->_servername);
 }
