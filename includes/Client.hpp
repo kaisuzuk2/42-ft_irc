@@ -22,6 +22,7 @@ class Client
     private:
         int                 _fd;
         std::string         _hostname;
+        std::string         _password;
 
         std::string         _recvBuf;
         std::string         _sendBuf;
@@ -30,7 +31,9 @@ class Client
         ~Client();
 
         int                 _getFd() const;
-        const std::string & _getHostname() const;
+        const std::string   &_getHostname() const;
+        void                _setPassword(const std::string &pass);
+        const std::string   &_getpassword() const;
 
         void                _appendToBuffer(const char *data, int len);
         bool                _getNextLine(std::string &line);

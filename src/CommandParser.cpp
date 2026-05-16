@@ -21,6 +21,11 @@ CommandParser::CommandParser() {}
 
 CommandParser::~CommandParser() {}
 
+void CommandParser::_cmdPass(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
+{
+
+}
+
 std::vector<std::string> CommandParser::_split(const std::string &line)
 {
     std::vector<std::string> params;
@@ -30,6 +35,11 @@ std::vector<std::string> CommandParser::_split(const std::string &line)
     i = 0;
     while (i < line.size())
     {
+        if (line[i] == ' ')
+        {
+            ++i;
+            continue ;
+        }
         if (line[i] == ':')
         {
             params.push_back(line.substr(i + 1));
@@ -44,6 +54,12 @@ std::vector<std::string> CommandParser::_split(const std::string &line)
         }
         params.push_back(line.substr(i, end - i));
         i = end + 1;
+
+        if (max_params && params.size() == max_params)
+        {
+            params.back() + " " + line.substr(i);
+            break;
+        }
     }
     return (params);
 }
@@ -71,5 +87,5 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     else if (cmd == "USER")
         this->_cmdUser(serverInstance, client, params);
     else
-        std::cout << "Unknown command: " << cmd << std::endl;
+        std::cout << cmd <<  " :Unknown command" << std::endl;
 }

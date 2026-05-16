@@ -44,6 +44,16 @@ const std::string &Client::_getHostname() const
     return (this->_hostname);
 }
 
+void Client::_setPassword(const std::string &pass)
+{
+    this->_password = pass;
+}
+
+const std::string Client::&_getPassword() const
+{
+    return (this->_password);
+}
+
 void Client::_appendToBuffer(const char *data, int len)
 {
     this->_recvBuf.append(data, len);
