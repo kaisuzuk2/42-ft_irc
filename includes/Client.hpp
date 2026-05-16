@@ -21,6 +21,7 @@ class Client
 {
     private:
         int                 _fd;
+        std::string         _nick;
         std::string         _hostname;
         std::string         _password;
 
@@ -30,15 +31,18 @@ class Client
         Client(int fd, const struct sockaddr_in &addr);
         ~Client();
 
-        int                 _getFd() const;
-        const std::string   &_getHostname() const;
-        void                _setPassword(const std::string &pass);
-        const std::string   &_getpassword() const;
-
         void                _appendToBuffer(const char *data, int len);
         bool                _getNextLine(std::string &line);
         void                _send(const std::string &msg);
         void                _flushSendBuf();
+
+        int                 _getFd() const;
+        const std::string   &_getHostname() const;    
+        void                _setPassword(const std::string &pass);
+        const std::string   &_getpassword() const;
+        void                _setNick(const std::string &nick);
+        const std::string   &_getNick() const;
+
 };
 
 #endif

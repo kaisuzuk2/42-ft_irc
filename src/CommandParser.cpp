@@ -25,7 +25,7 @@ void CommandParser::_cmdPass(FtIRCd &serverInstance, Client &client, const std::
 {
     if (params.size() < 2)
     {
-        clients.send("461 PASS :Not enough parameters.");
+        clients.send(":" + this->serverInstance._getServername() + "461 " + client.getNick() + "PASS :Not enough parameters.");
         return ;
     }
 }

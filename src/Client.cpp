@@ -21,6 +21,7 @@
 
 Client::Client(int fd, const struct sockaddr_in &addr)
     : _fd(fd)
+    , _nick("*")
 {
     char ip[INET_ADDRSTRLEN];
     if ( inet_ntop(AF_INET, &addr.sin_addr, ip, sizeof(ip)) == NULL)
