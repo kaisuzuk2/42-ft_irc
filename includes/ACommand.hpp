@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Command.hpp                                        :+:      :+:    :+:   */
+/*   ACommand.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaisuzuk <kaisuzuk@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026-05-16 22:24:25 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026-05-16 22:24:25 by kaisuzuk         ###   ########.fr       */
+/*   Created: 2026-05-16 23:15:30 by kaisuzuk          #+#    #+#             */
+/*   Updated: 2026-05-16 23:15:30 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMAND_HPP
-# define COMMAND_HPP
+#ifndef ACOMMAND_HPP
+# define ACOMMAND_HPP
 
 #include <string>
 #include <vector>
@@ -19,7 +19,7 @@
 class FtIRCd;
 class Client;
 
-class Command  
+class ACommand  
 {
     private:
         const std::string   _name;
@@ -28,8 +28,8 @@ class Command
         bool                works_before_reg;
     public:
 
-        Command(const std::string &name, const unsigned int min_params, const unsigned int max_params);
-        virtual ~Command();
+        ACommand(const std::string &name, const unsigned int min_params, const unsigned int max_params, const bool works_before_reg);
+        virtual ~ACommand();
 
         virtual void        execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params) = 0;
 

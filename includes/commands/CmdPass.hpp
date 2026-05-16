@@ -13,9 +13,9 @@
 #ifndef CMDPASS_HPP
 # define CMDPASS_HPP
 
-#include "Comamnd.hpp"
+#include "AComamnd.hpp"
 
-class CmdPass: public Command
+class CmdPass: public ACommand
 {
     public:
         CmdPass();
