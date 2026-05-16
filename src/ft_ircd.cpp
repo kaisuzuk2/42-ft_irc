@@ -27,6 +27,11 @@
 #include "Client.hpp"
 #include "CommandParser.hpp"
 
+const std::string FtIRCd::_getServername() const 
+{
+    return (this->_servername);
+}
+
 std::string FtIRCd::_parsePassword(const std::string &str) const 
 {
     if (str.empty())
@@ -138,6 +143,7 @@ FtIRCd::~FtIRCd()
 }
 
 FtIRCd::FtIRCd(int argc, char **argv)
+    : _servername("ft_irc.local")
 {
     this->_parseConfig(argc, argv);
 

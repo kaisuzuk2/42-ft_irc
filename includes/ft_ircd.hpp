@@ -25,6 +25,7 @@ class FtIRCd
         int                 _port;
         std::string         _password;
         int                 _serverFd;
+        std::string         _servername;
         
         SocketEngine        _socketEngine;
         ClientManager       _clients;
@@ -44,6 +45,8 @@ class FtIRCd
         void                _acceptClient();
         void                _handleClient(int fd);
         void                _disconnectClient(int fd);
+
+        const std::string   &_getServername() const;
 
         static const int    kPortMin = 1024;
         static const int    kPortMax = 65535; // ### TODO: これ正しいかチェックする

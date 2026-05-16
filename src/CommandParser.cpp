@@ -23,7 +23,11 @@ CommandParser::~CommandParser() {}
 
 void CommandParser::_cmdPass(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
-
+    if (params.size() < 2)
+    {
+        clients.send("461 PASS :Not enough parameters.");
+        return ;
+    }
 }
 
 std::vector<std::string> CommandParser::_split(const std::string &line)
