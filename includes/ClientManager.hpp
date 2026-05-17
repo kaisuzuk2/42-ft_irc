@@ -26,7 +26,9 @@ class ClientManager
 
         void                    _addClient(int fd, Client *client);
         void                    _removeClient(int fd);
+
         Client                  *_findByFd(int fd) const;
+        Client                  *_findByNick(const std::stirng &nick) const;
 };  
 
 #endif

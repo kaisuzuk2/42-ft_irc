@@ -43,3 +43,13 @@ Client *ClientManager::_findByFd(int fd) const
     return (it->second);
 }
 
+Client &ClientManager::_findByNick(const std::string &nick) const
+{
+    for (std::map<int, Client *>::const_iterator it = this->_clients.begin(); it != this->_clients.end(); ++it)
+    {
+        if (it->second == nick)
+            return (it->second);
+    }
+    return (NULL);
+}
+
