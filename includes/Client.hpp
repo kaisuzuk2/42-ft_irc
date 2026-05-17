@@ -37,6 +37,8 @@ class Client
         void                _send(const std::string &msg);
         void                _flushSendBuf();
 
+        bool                _changeNick(const std::string &newnick, FtIRCd &serverInstance);
+
         int                 _getFd() const;
         const std::string   &_getHostname() const;    
         void                _setPassword(const std::string &pass);

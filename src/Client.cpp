@@ -36,6 +36,18 @@ Client::~Client()
         close(this->_fd);
 }
 
+bool Client::_changeNick(const std::string &newnick, FtIRCd &serverInstance)
+{
+    Client *const InUse;
+
+    InUse = serverInstance._findByNick(newnick);
+    if (InUse == this)
+    {
+        if (newnick == this->_nick)
+            return (true);
+    }
+}
+
 int Client::_getFd() const 
 {
     return (this->_fd);
