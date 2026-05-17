@@ -46,6 +46,14 @@ bool Client::_changeNick(const std::string &newnick, FtIRCd &serverInstance)
         if (newnick == this->_nick)
             return (true);
     }
+    else if (InUse)
+    {
+        this->_send(":" + serverInstance._getServername() + " 433 " + this->_getNick() + " " + newnick + " :Nickname is already in use");
+        return (false);
+    }
+    this->_nick = newnick;
+    return (true);
+    
 }
 
 int Client::_getFd() const 
