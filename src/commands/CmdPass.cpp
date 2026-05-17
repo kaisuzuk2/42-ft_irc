@@ -15,22 +15,17 @@
 #include "Client.hpp"
 
 CmdPass::CmdPass() 
-    : Command("PASS", 1, 1, true)
+    : ACommand("PASS", 1, 1, true)
 {};
 
 CmdPass::~CmdPass() {}
 
-void CmdPass:_execute(FtIRCd &serverInstance, Client &client, const std::vector<string> &params)
+void CmdPass::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
     if (client._isRegistered())
     {
-        client._send(": " + serverInstance._getServername() + "462 " + client._getNick() + ": Unauthorized command (already registered)");
+        client._send(": " + serverInstance._getServername() + " 462 " + client._getNick() + ": Unauthorized command (already registered)");
         return ;
     }
-    if (params.size() < 2)
-    {
-        client._send(":" + serverInstance._getServername() + "461 " + client._getNick() + "PASS :Not enough parameters");
-        return ;
-    }
-    client._setPassword(params[0]); // ### TODO: 定数化すべき
+    client._setPassword(params[0]);
 }

@@ -25,7 +25,7 @@ class ACommand
         const std::string   _name;
         const unsigned int _min_params;
         const unsigned int _max_params;
-        bool                works_before_reg;
+        bool               _works_before_reg;
     public:
 
         ACommand(const std::string &name, const unsigned int min_params, const unsigned int max_params, const bool works_before_reg);

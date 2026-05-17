@@ -27,27 +27,12 @@ CommandParser::CommandParser()
 CommandParser::~CommandParser() 
 {
     std::map<std::string, ACommand*>::iterator it = this->_commands.begin();
-    while (it != this->_command.end())
+    while (it != this->_commands.end())
     {
         delete it->second;
         ++it;
     }
     this->_commands.clear();
-}
-
-void CommandParser::_cmdPass(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
-{
-    if (client._isRegistered())
-    {
-        client._send(": " + serverInstance._getServername() + "462 " + client._getNick() + ": Unauthorized command (already registered)");
-        return ;
-    }
-    if (params.size() < 2)
-    {
-        client._send(":" + serverInstance._getServername() + "461 " + client._getNick() + "PASS :Not enough parameters");
-        return ;
-    }
-    client._setPassword(params[1]); // ### TODO: 定数化すべき
 }
 
 std::vector<std::string> CommandParser::_split(const std::string &line, size_t max_params)
@@ -108,7 +93,7 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     {
         // 登録が済んでいたらエラーにする
         if (client._isRegistered())
-            client.send(": " + server._getServername() + "421 " + client.getNick() + " " + cmd + " :Unknown commmand");
+            client._send(": " + serverInstance._getServername() + " 421 " + client._getNick() + " " + cmd + " :Unknown commmand");
         return ;
     }
 
@@ -121,14 +106,14 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     // 登録前に使えない
     if (!command->_getWorksBeforeReg() && !client._isRegistered())
     {
-        client.send(": " + serverInstance._getServername() + "451 " + client.getNick() + " :You have not registered");
+        client._send(": " + serverInstance._getServername() + " 451 " + client._getNick() + " :You have not registered");
         return;
     }
 
     // min paramチェック
     if (params.size() < command->_getMinParams())
     {
-        client.send(": " + serverInstance._getServername + "461 " + client.getNick() + " " + cmd + " :Not enough parameters.");
+        client._send(": " + serverInstance._getServername() + " 461 " + client._getNick() + " " + cmd + " :Not enough parameters.");
         return ;
     }
     

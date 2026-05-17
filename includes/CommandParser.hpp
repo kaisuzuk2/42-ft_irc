@@ -17,7 +17,7 @@
 #include <vector>
 #include <map>
 
-#include "commands/Command.hpp"
+#include "commands/ACommand.hpp"
 
 class FtIRCd;
 class Client;

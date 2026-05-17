@@ -13,7 +13,7 @@
 #ifndef CMDPASS_HPP
 # define CMDPASS_HPP
 
-#include "AComamnd.hpp"
+#include "commands/ACommand.hpp"
 
 class CmdPass: public ACommand
 {
@@ -21,7 +21,7 @@ class CmdPass: public ACommand
         CmdPass();
         ~CmdPass();
 
-        void _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> params);
+        void _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
 };
 
 #endif
