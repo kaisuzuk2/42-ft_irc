@@ -43,11 +43,26 @@ Client *ClientManager::_findByFd(int fd) const
     return (it->second);
 }
 
+char ClientManager::_toLower(char c)
+{
+    if (c >= 'A' && c <= 'Z')
+        return c + ('a' - 'A');
+    return (c);
+}
+
+// ### TODO: {と}[] rfc1459
 Client *ClientManager::_findByNick(const std::string &nick) const
 {
+    std::string lowerNick;
+    std::string clientNick;
+
+    lowerNick = nick;
+    std::transform(lowerNick.begin(), lowerNick.end(), lowerNick.begin(), ClientManager::_tolower);
     for (std::map<int, Client *>::const_iterator it = this->_clients.begin(); it != this->_clients.end(); ++it)
     {
-        if (it->second._getNick() == nick)
+        clientNick = it->second->_getNick();
+        std::transform(clientNick.begin(), clientNick.end(), clientNick.begin(), ClientManager::_tolower);
+        if (clientNick == lowerNick)
             return (it->second);
     }
     return (NULL);

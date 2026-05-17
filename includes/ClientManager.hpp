@@ -20,6 +20,7 @@ class ClientManager
 {
     private:
         std::map<int, Client*>  _clients;
+        static char             _toLower(char c);
     public:
         ClientManager();
         ~ClientManager();
