@@ -32,6 +32,16 @@ const std::string &FtIRCd::_getServername() const
     return (this->_servername);
 }
 
+ClientManager &FtIRCd::_getCLients()
+{
+    return (this->_clients);
+}
+
+ClientManager &FtIRCd::_getClients() const
+{
+    return (this->_clients);
+}
+
 std::string FtIRCd::_parsePassword(const std::string &str) const 
 {
     if (str.empty())

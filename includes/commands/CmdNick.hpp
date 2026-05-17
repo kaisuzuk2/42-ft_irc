@@ -24,6 +24,8 @@ class CmdNick: public ACommand
         void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
 
     private:
+        bool    _changeNick(const std::string &newnick);
+
         bool    _isValidNick(const std::string &n) const;
         bool    _isLetter(const char c) const;
         bool    _isSpecial(const char c) const;

@@ -56,6 +56,8 @@ class FtIRCd
 
     public:
         const std::string   &_getServername() const;
+        ClientManager       &_getClients();
+        ClientManager       &_getClients() const;
 };
 
 #endif
