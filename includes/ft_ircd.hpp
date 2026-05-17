@@ -52,7 +52,7 @@ class FtIRCd
         static const int    kArgIdxPort = 1;
         static const int    kArgIdxPassword = 2;
 
-        static const int    kMaxNickLen = 9;
+        static const size_t kMaxNickLen = 9;
 
     public:
         const std::string   &_getServername() const;

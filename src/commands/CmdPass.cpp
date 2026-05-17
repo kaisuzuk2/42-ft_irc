@@ -24,7 +24,7 @@ void CmdPass::_execute(FtIRCd &serverInstance, Client &client, const std::vector
 {
     if (client._isRegistered())
     {
-        client._send(": " + serverInstance._getServername() + " 462 " + client._getNick() + ": Unauthorized command (already registered)");
+        client._send(":" + serverInstance._getServername() + " 462 " + client._getNick() + ": Unauthorized command (already registered)");
         return ;
     }
     client._setPassword(params[0]);
