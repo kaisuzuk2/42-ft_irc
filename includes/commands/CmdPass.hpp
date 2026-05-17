@@ -21,7 +21,7 @@ class CmdPass: public ACommand
         CmdPass();
         ~CmdPass();
 
-        void execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> params);
+        void _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> params);
 };
 
 #endif

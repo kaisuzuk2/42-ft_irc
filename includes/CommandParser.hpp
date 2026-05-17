@@ -17,7 +17,7 @@
 #include <vector>
 #include <map>
 
-#include "Command.hpp"
+#include "commands/Command.hpp"
 
 class FtIRCd;
 class Client;
@@ -25,7 +25,7 @@ class Client;
 class CommandParser
 {
     private:
-        std::map<std::string, Command *>_commands;
+        std::map<std::string, ACommand *>_commands;
 
     public:
         CommandParser();

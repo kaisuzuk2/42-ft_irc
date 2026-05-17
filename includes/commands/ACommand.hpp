@@ -31,7 +31,7 @@ class ACommand
         ACommand(const std::string &name, const unsigned int min_params, const unsigned int max_params, const bool works_before_reg);
         virtual ~ACommand();
 
-        virtual void        execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params) = 0;
+        virtual void        _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params) = 0;
 
         const std::string   &_getName() const;
         unsigned int        _getMinParams() const;

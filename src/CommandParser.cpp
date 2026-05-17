@@ -11,15 +11,29 @@
 /* ************************************************************************** */
 
 #include "CommandParser.hpp"
+#include "commands/CmdPass.hpp"
+
 #include "ft_ircd.hpp"
 #include "Client.hpp"
 #include <iostream>
 
 #include <algorithm>
 
-CommandParser::CommandParser() {}
+CommandParser::CommandParser() 
+{
+    this->_commands["PASS"] = new CmdPass();
+}
 
-CommandParser::~CommandParser() {}
+CommandParser::~CommandParser() 
+{
+    std::map<std::string, ACommand*>::iterator it = this->_commands.begin();
+    while (it != this->_command.end())
+    {
+        delete it->second;
+        ++it;
+    }
+    this->_commands.clear();
+}
 
 void CommandParser::_cmdPass(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
@@ -76,26 +90,47 @@ std::vector<std::string> CommandParser::_split(const std::string &line, size_t m
 
 void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::string &line)
 {
-    std::vector<std::string> params;
+    std::vector<std::string> tokens;
     std::string cmd;
 
     if (line.empty())
         return ;
     
-    params = this->_split(line);
-    if (params.empty())
+    tokens = this->_split(line);
+    if (tokens.empty())
         return ;
 
-    cmd = params[0];
+    cmd = tokens[0];
     std::transform(cmd.begin(), cmd.end(), cmd.begin(), ::toupper);
 
-    // ### TODO: 定数化すべきかな
-    if (cmd == "PASS") // パラメータが多い場合結合する
-        this->_cmdPass(serverInstance, client, this->_split(line, 2));
-    // else if (cmd == "NICK") // パラメータが多い場合無視する
-    //     this->_cmdNick(serverInstance, client, this->_split(line));
-    // else if (cmd == "USER") // パラメータが多い場合結合する
-    //     this->_cmdUser(serverInstance, client, this->_split(line, 5));
-    else
-        std::cout << cmd <<  " :Unknown command" << std::endl;
+    std::map<std::string, ACommand *>::iterator it = this->_commands.find(cmd);
+    if (it == this->_commands.end())
+    {
+        // 登録が済んでいたらエラーにする
+        if (client._isRegistered())
+            client.send(": " + server._getServername() + "421 " + client.getNick() + " " + cmd + " :Unknown commmand");
+        return ;
+    }
+
+    ACommand *command = it->second;
+
+    // ### TODO: command分 +1している　改善しよう
+    std::vector<std::string> params = this->_split(line, command->_getMaxParams() + 1);
+    params.erase(params.begin());
+
+    // 登録前に使えない
+    if (!command->_getWorksBeforeReg() && !client._isRegistered())
+    {
+        client.send(": " + serverInstance._getServername() + "451 " + client.getNick() + " :You have not registered");
+        return;
+    }
+
+    // min paramチェック
+    if (params.size() < command->_getMinParams())
+    {
+        client.send(": " + serverInstance._getServername + "461 " + client.getNick() + " " + cmd + " :Not enough parameters.");
+        return ;
+    }
+    
+    command->_execute(serverInstance, client, params);
 }
