@@ -19,6 +19,8 @@
 #include <sys/types.h>
 #include <sys/socket.h> 
 
+#include "ClientManager.hpp"
+
 Client::Client(int fd, const struct sockaddr_in &addr)
     : _fd(fd)
     , _nick("*")
@@ -38,9 +40,8 @@ Client::~Client()
 
 bool Client::_changeNick(const std::string &newnick, const ClientManager &clients, const std::string &servername)
 {
-    Client *const InUse;
+    Client *const InUse = clients._findByNick(newnick);
 
-    InUse = clients._findByNick(newnick);
     if (InUse == this)
     {
         if (newnick == this->_nick)

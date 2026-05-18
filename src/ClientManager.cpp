@@ -57,11 +57,11 @@ Client *ClientManager::_findByNick(const std::string &nick) const
     std::string clientNick;
 
     lowerNick = nick;
-    std::transform(lowerNick.begin(), lowerNick.end(), lowerNick.begin(), ClientManager::_tolower);
+    std::transform(lowerNick.begin(), lowerNick.end(), lowerNick.begin(), ClientManager::_toLower);
     for (std::map<int, Client *>::const_iterator it = this->_clients.begin(); it != this->_clients.end(); ++it)
     {
         clientNick = it->second->_getNick();
-        std::transform(clientNick.begin(), clientNick.end(), clientNick.begin(), ClientManager::_tolower);
+        std::transform(clientNick.begin(), clientNick.end(), clientNick.begin(), ClientManager::_toLower);
         if (clientNick == lowerNick)
             return (it->second);
     }

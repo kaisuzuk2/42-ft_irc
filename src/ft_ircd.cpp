@@ -32,15 +32,20 @@ const std::string &FtIRCd::_getServername() const
     return (this->_servername);
 }
 
-ClientManager &FtIRCd::_getCLients()
+ClientManager &FtIRCd::_getClients()
 {
     return (this->_clients);
 }
 
-ClientManager &FtIRCd::_getClients() const
+const ClientManager &FtIRCd::_getClients() const
 {
     return (this->_clients);
 }
+
+// void FtIRCd::_checkRegister(Client &client) const
+// {
+
+// }
 
 std::string FtIRCd::_parsePassword(const std::string &str) const 
 {

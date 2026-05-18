@@ -12,6 +12,7 @@
 
 #include "CommandParser.hpp"
 #include "commands/CmdPass.hpp"
+#include "commands/CmdNick.hpp"
 
 #include "ft_ircd.hpp"
 #include "Client.hpp"
@@ -22,6 +23,7 @@
 CommandParser::CommandParser() 
 {
     this->_commands["PASS"] = new CmdPass();
+    this->_commands["NICK"] = new CmdNick();
 }
 
 CommandParser::~CommandParser() 
@@ -77,6 +79,9 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
 {
     std::vector<std::string> tokens;
     std::string cmd;
+    size_t sp;
+    std::vector<std::string> params;
+    std::string args;
 
     if (line.empty())
         return ;
@@ -100,8 +105,16 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     ACommand *command = it->second;
 
     // ### TODO: command分 +1している　改善しよう
-    std::vector<std::string> params = this->_split(line, command->_getMaxParams() + 1);
-    params.erase(params.begin());
+    // std::vector<std::string> params = this->_split(line, command->_getMaxParams() + 1);
+    // params.erase(params.begin());
+    sp = line.find(' ');
+    if (sp == std::string::npos)
+    {
+        command->_execute(serverInstance, client, params);
+        return ;
+    }
+    args = line.substr(sp + 1);
+    params = this->_split(args, command->_getMaxParams());
 
     // 登録前に使えない
     if (!command->_getWorksBeforeReg() && !client._isRegistered())

@@ -36,6 +36,7 @@ class FtIRCd
         ~FtIRCd();
 
         void                _run();
+        // void                _checkRegister(Client &client);
 
     private:
         void                _parseConfig(int argc, char **argv);
@@ -52,12 +53,13 @@ class FtIRCd
         static const int    kArgIdxPort = 1;
         static const int    kArgIdxPassword = 2;
 
-        static const size_t kMaxNickLen = 9;
 
     public:
         const std::string   &_getServername() const;
         ClientManager       &_getClients();
-        ClientManager       &_getClients() const;
+        const ClientManager &_getClients() const;
+
+        static const size_t kMaxNickLen = 9;
 };
 
 #endif

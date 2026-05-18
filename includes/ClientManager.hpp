@@ -14,6 +14,8 @@
 # define CLIENTMANAGER_HPP
 
 #include <map>
+#include <algorithm>
+
 #include "Client.hpp"
 
 class ClientManager 
@@ -29,7 +31,7 @@ class ClientManager
         void                    _removeClient(int fd);
 
         Client                  *_findByFd(int fd) const;
-        Client                  *_findByNick(const std::stirng &nick) const;
+        Client                  *_findByNick(const std::string &nick) const;
 };  
 
 #endif

@@ -17,6 +17,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+class ClientManager;
+
 class Client
 {
     private:
@@ -37,7 +39,7 @@ class Client
         void                _send(const std::string &msg);
         void                _flushSendBuf();
 
-        bool                _changeNick(const std::string &newnick, const ClientManager &clients, const std::string servername);
+        bool                _changeNick(const std::string &newnick, const ClientManager &clients, const std::string &servername);
 
         int                 _getFd() const;
         const std::string   &_getHostname() const;    

@@ -45,7 +45,7 @@ bool CmdNick::_isValidNick(const std::string &n) const
     return (true);
 }
 
-void CmdNick::_execute(FtIRCd &serverInstance, Client &client, std::vector<std::string> &params)
+void CmdNick::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
     const std::string &newnick = params[0];
 
@@ -64,4 +64,5 @@ void CmdNick::_execute(FtIRCd &serverInstance, Client &client, std::vector<std::
     if (!client._changeNick(newnick, serverInstance._getClients(), serverInstance._getServername()))
         return ;
 
+    
 }
