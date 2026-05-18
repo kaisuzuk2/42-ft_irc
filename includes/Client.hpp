@@ -41,6 +41,7 @@ class Client
         void                _flushSendBuf();
 
         bool                _changeNick(const std::string &newnick, const ClientManager &clients, const std::string &servername);
+        void                _setFullyRegistered();
 
         int                 _getFd() const;
         const std::string   &_getHostname() const;    
@@ -50,8 +51,8 @@ class Client
         const std::string   &_getNick() const;
         bool                _isRegistered() const;
         const std::string   &_getUsername() const;
-        void                setUsername(const std::string &username);
-        const std::string   &_getPrefix() const;
+        void                _setUsername(const std::string &username);
+        const std::string   _getPrefix() const;
 
 };
 

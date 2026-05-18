@@ -36,7 +36,7 @@ class FtIRCd
         ~FtIRCd();
 
         void                _run();
-        void                _checkRegister(Client &client);
+        void                _checkRegister(Client &client) const;
 
     private:
         void                _parseConfig(int argc, char **argv);

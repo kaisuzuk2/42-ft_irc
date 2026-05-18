@@ -93,17 +93,22 @@ bool Client::_isRegistered() const
     return (this->_isregistered);
 }
 
+void Client::_setFullyRegistered() 
+{
+    this->_isregistered = true;
+}
+
 const std::string &Client::_getUsername() const
 {
     return (this->_username);
 }
 
-void Client::_setUsername(const std::string &username) const
+void Client::_setUsername(const std::string &username)
 {
     this->_username = username;
 }
 
-const std::string &Client::_getPrefix() const
+const std::string Client::_getPrefix() const
 {
     return (this->_nick + "!" + this->_username + "@" + this->_hostname);
 }
