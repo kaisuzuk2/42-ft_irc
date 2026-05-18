@@ -60,4 +60,8 @@ void CmdNick::_execute(FtIRCd &serverInstance, Client &client, std::vector<std::
         client._send(":" + serverInstance._getServername() + " 432 " + client._getNick() + " " + newnick + " :Erroneous nickname");
         return ;
     }
+
+    if (!client._changeNick(newnick, serverInstance._getClients(), serverInstance._getServername()))
+        return ;
+
 }

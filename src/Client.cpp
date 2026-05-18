@@ -36,11 +36,11 @@ Client::~Client()
         close(this->_fd);
 }
 
-bool Client::_changeNick(const std::string &newnick, FtIRCd &serverInstance)
+bool Client::_changeNick(const std::string &newnick, const ClientManager &clients, const std::string &servername)
 {
     Client *const InUse;
 
-    InUse = serverInstance._findByNick(newnick);
+    InUse = clients._findByNick(newnick);
     if (InUse == this)
     {
         if (newnick == this->_nick)
@@ -48,7 +48,7 @@ bool Client::_changeNick(const std::string &newnick, FtIRCd &serverInstance)
     }
     else if (InUse)
     {
-        this->_send(":" + serverInstance._getServername() + " 433 " + this->_getNick() + " " + newnick + " :Nickname is already in use");
+        this->_send(":" + servername + " 433 " + this->_getNick() + " " + newnick + " :Nickname is already in use");
         return (false);
     }
     this->_nick = newnick;
