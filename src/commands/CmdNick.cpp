@@ -63,6 +63,8 @@ void CmdNick::_execute(FtIRCd &serverInstance, Client &client, const std::vector
 
     if (!client._changeNick(newnick, serverInstance._getClients(), serverInstance._getServername()))
         return ;
-        
+    
+    if (!client._isRegistered())
+        serverInstance._checkRegister(client);
     
 }
