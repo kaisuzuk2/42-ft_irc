@@ -93,6 +93,16 @@ bool Client::_isRegistered() const
     return (this->_isregistered);
 }
 
+const std::string &Client::_getUsername() const
+{
+    return (this->_username);
+}
+
+void Client::_setUsername(const std::string &username) const
+{
+    this->_username = username;
+}
+
 void Client::_appendToBuffer(const char *data, int len)
 {
     this->_recvBuf.append(data, len);

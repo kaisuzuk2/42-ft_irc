@@ -49,7 +49,7 @@ class Client
         void                _setNick(const std::string &nick);
         const std::string   &_getNick() const;
         bool                _isRegistered() const;
-        const std::string   _getUsername() const;
+        const std::string   &_getUsername() const;
         void                setUsername(const std::string &username);
 
 };
