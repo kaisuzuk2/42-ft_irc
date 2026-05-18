@@ -51,6 +51,7 @@ class Client
         bool                _isRegistered() const;
         const std::string   &_getUsername() const;
         void                setUsername(const std::string &username);
+        const std::string   &_getPrefix() const;
 
 };
 

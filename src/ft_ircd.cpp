@@ -42,10 +42,23 @@ const ClientManager &FtIRCd::_getClients() const
     return (this->_clients);
 }
 
-// void FtIRCd::_checkRegister(Client &client) const
-// {
+void FtIRCd::_checkRegister(Client &client) const
+{
+    if (client._getNick() == "*" || client.getUsername().empty)
+        return ;
 
-// }
+    if (!this->_password.empty() && client._getPassword() != this->_password)
+    {
+        client.send(":" + this->_servername + " 464 " + client._getNick() + " :Password incorrect");
+        // ### TODO: 切断処理
+        return ;
+    }
+
+    
+    client.send(":" + this->_servername +  "001 " + client._getNick() + " Welcome to the Internet Relay Network " + client._getPrefix());
+
+
+}
 
 std::string FtIRCd::_parsePassword(const std::string &str) const 
 {

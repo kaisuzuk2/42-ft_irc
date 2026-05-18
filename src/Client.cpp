@@ -103,6 +103,11 @@ void Client::_setUsername(const std::string &username) const
     this->_username = username;
 }
 
+const std::string &Client::_getPrefix() const
+{
+    return (this->_nick + "!" + this->_username + "@" + this->_hostname);
+}
+
 void Client::_appendToBuffer(const char *data, int len)
 {
     this->_recvBuf.append(data, len);
