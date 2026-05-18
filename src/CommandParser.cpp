@@ -108,14 +108,11 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     // std::vector<std::string> params = this->_split(line, command->_getMaxParams() + 1);
     // params.erase(params.begin());
     sp = line.find(' ');
-    if (sp == std::string::npos)
+    if (sp != std::string::npos)
     {
-        command->_execute(serverInstance, client, params);
-        return ;
+        args = line.substr(sp + 1);
+        params = this->_split(args, command->_getMaxParams());
     }
-    args = line.substr(sp + 1);
-    params = this->_split(args, command->_getMaxParams());
-
     // 登録前に使えない
     if (!command->_getWorksBeforeReg() && !client._isRegistered())
     {
