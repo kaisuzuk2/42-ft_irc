@@ -24,6 +24,7 @@ class Client
     private:
         int                 _fd;
         std::string         _nick;
+        std::string         _username;
         std::string         _hostname;
         std::string         _password;
         bool                _isregistered;
@@ -48,6 +49,8 @@ class Client
         void                _setNick(const std::string &nick);
         const std::string   &_getNick() const;
         bool                _isRegistered() const;
+        const std::string   _getUsername() const;
+        void                setUsername(const std::string &username);
 
 };
 
