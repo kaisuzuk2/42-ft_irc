@@ -25,8 +25,8 @@ class CmdNick: public ACommand
 
     private: 
         bool    _isValidNick(const std::string &n) const;
-        bool    _isLetter(const char c) const;
-        bool    _isSpecial(const char c) const;
+        bool    _isLetter(int c) const;
+        bool    _isSpecial(int c) const;
 };
 
 #endif

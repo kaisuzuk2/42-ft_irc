@@ -26,6 +26,33 @@ CmdUser::CmdUser()
     : ACommand("USER", 4, 4, true);
 {}
 
+/*
+FRC2812
+user       =  1*( %x01-09 / %x0B-0C / %x0E-1F / %x21-3F / %x41-FF )
+                ; NUL、CR、LF、" "、"@" を除く任意のオクテット
+*/
+bool CmdUser::_isValidUser(const std::string &user) const
+{
+
+}
+
+void CmdUser::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
+{
+    const std::string &newreal = params[3]; // ### TODO: 定数化した方がいいかな
+
+    if (client._getUsername().empty())
+    {
+        std::string newuser = params[0]; // ### TODO: 定数化した方がいいかな
+        if (newuser.length() > FtIRCd::kMaxUserLen)
+            newuser.erase(FtIRCd::kMaxUserLen);
+    }
+    else
+    {
+       client._writeNumeric(ERR_ALREADYREGISTERED, serverInstance._getServername(), ":Unauthorized command (already registered)");
+       return ; 
+    }
+}
+
 
 
 

@@ -19,7 +19,10 @@ class CmdUser: public ACommand
         CmdUser();
         ~CmdUser();
 
-        void _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
+        void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
+    
+    private:
+        bool    _isValidUser(const std::string &user) const;
 };
 
 #endif

@@ -20,12 +20,12 @@ CmdNick::CmdNick()
 
 CmdNick::~CmdNick() {}
 
-bool CmdNick::_isLetter(const char c) const 
+bool CmdNick::_isLetter(int c) const 
 {
     return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
 }
 
-bool CmdNick::_isSpecial(const char c) const 
+bool CmdNick::_isSpecial(int c) const 
 {
     return ((c >= 0x5B && c <= 0x60) || (c >= 0x7B && c <= 0x7D));
 }
