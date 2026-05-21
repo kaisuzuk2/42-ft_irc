@@ -51,13 +51,15 @@ void CmdNick::_execute(FtIRCd &serverInstance, Client &client, const std::vector
 
     if (newnick.empty())
     {
-        client._send(":" + serverInstance._getServername() + " 431 " + client._getNick() + " :No nickname given");
+        // client._send(":" + serverInstance._getServername() + " 431 " + client._getNick() + " :No nickname given");
+        client._writeNumeric(ERR_NONICKNAMEGIVEN, serverInstance._getServername(), ":No nickname given");
         return ;
     }
 
     if (!this->_isValidNick(newnick))
     {
-        client._send(":" + serverInstance._getServername() + " 432 " + client._getNick() + " " + newnick + " :Erroneous nickname");
+        // client._send(":" + serverInstance._getServername() + " 432 " + client._getNick() + " " + newnick + " :Erroneous nickname");
+        client._writeNumeric(ERR_ERRONEUSNICKNAME, serverInstance._getServername(), ":Erroneous nickname");
         return ;
     }
 

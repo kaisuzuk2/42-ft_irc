@@ -21,6 +21,7 @@
 #include <sys/types.h>
 #include <sys/socket.h> 
 
+#include "ft_ircd.hpp"
 #include "ClientManager.hpp"
 
 Client::Client(int fd, const struct sockaddr_in &addr)
@@ -124,7 +125,7 @@ void Client::_writeNumeric(const int num, const std::string &servername, const s
         << std::setw(3) << std::setfill('0') << num
         << " "
         << this->_nick
-        << " :"
+        << " "
         << msg;
     this->_send(oss.str());
 }

@@ -98,7 +98,10 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     {
         // 登録が済んでいたらエラーにする
         if (client._isRegistered())
-            client._send(": " + serverInstance._getServername() + " 421 " + client._getNick() + " " + cmd + " :Unknown commmand");
+        {
+            // client._send(": " + serverInstance._getServername() + " 421 " + client._getNick() + " " + cmd + " :Unknown commmand");
+            client._writeNumeric(ERR_UNKNOWNCOMMAND, serverInstance._getServername(), ":Unknown commmand");
+        }
         return ;
     }
 
@@ -116,14 +119,16 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     // 登録前に使えない
     if (!command->_getWorksBeforeReg() && !client._isRegistered())
     {
-        client._send(": " + serverInstance._getServername() + " 451 " + client._getNick() + " :You have not registered");
+        // client._send(": " + serverInstance._getServername() + " 451 " + client._getNick() + " :You have not registered");
+        client._writeNumeric(ERR_NOTREGISTERED, serverInstance._getServername(), ":You have not registered");
         return;
     }
 
     // min paramチェック
     if (params.size() < command->_getMinParams())
     {
-        client._send(": " + serverInstance._getServername() + " 461 " + client._getNick() + " " + cmd + " :Not enough parameters.");
+        // client._send(": " + serverInstance._getServername() + " 461 " + client._getNick() + " " + cmd + " :Not enough parameters.");
+        client._writeNumeric(ERR_NEEDMOREPARAMS, serverInstance._getServername(), cmd + " :Not enough parameters.");
         return ;
     }
     

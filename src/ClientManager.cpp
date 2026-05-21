@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_ircd.hpp"
 #include "ClientManager.hpp"
 
 ClientManager::ClientManager() {}

@@ -49,14 +49,15 @@ void FtIRCd::_checkRegister(Client &client) const
 
     if (!this->_password.empty() && client._getPassword() != this->_password)
     {
-        client._send(":" + this->_servername + " 464 " + client._getNick() + " :Password incorrect");
+        // client._send(":" + this->_servername + " 464 " + client._getNick() + " :Password incorrect");
+        client._writeNumeric(ERR_PASSWDMISMATCH, this->_servername, ":Password incorrect");
         // ### TODO: 切断処理
         return ;
     }
 
     client._setFullyRegistered();
-    client._send(":" + this->_servername +  " 001 " + client._getNick() + ":Welcome to the Internet Relay Network " + client._getPrefix());
-
+    // client._send(":" + this->_servername +  " 001 " + client._getNick() + ":Welcome to the Internet Relay Network " + client._getPrefix());
+    client._writeNumeric(RPL_WELCOME, this->_servername, ":Welcome to the Internet Relay Network " + client._getPrefix());
 
 }
 

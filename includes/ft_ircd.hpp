@@ -18,6 +18,7 @@
 #include "SocketEngine.hpp"
 #include "ClientManager.hpp"
 #include "CommandParser.hpp"
+#include "Numeric.hpp"
 
 class FtIRCd 
 {

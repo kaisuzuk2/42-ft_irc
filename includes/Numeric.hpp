@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifncef NUMERIC_HPP
+#ifndef NUMERIC_HPP
 # define NUMERIC_HPP
 
 enum Numeric 
