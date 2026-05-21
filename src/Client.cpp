@@ -15,6 +15,8 @@
 #include <cerrno>
 #include <cstring>
 #include <unistd.h>
+#include <sstream>
+#include <iomanip>
 
 #include <sys/types.h>
 #include <sys/socket.h> 
@@ -111,6 +113,20 @@ void Client::_setUsername(const std::string &username)
 const std::string Client::_getPrefix() const
 {
     return (this->_nick + "!" + this->_username + "@" + this->_hostname);
+}
+
+void Client::_writeNumeric(const int num, const std::string &servername, const std::string &msg)
+{
+    std::ostringstream oss;
+    oss << ":" 
+        << servername 
+        << " "
+        << std::setw(3) << std::setfill('0') << num
+        << " "
+        << this->_nick
+        << " :"
+        << msg;
+    this->_send(oss.str());
 }
 
 void Client::_appendToBuffer(const char *data, int len)

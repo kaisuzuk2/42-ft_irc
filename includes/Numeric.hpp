@@ -16,9 +16,9 @@
 enum Numeric 
 {
     RPL_WELCOME             = 1, 
-    RPL_YOURHOST            = 2,
-    RPL_CREATED             = 3,
-    RPL_MYINFO              = 4,
+    // RPL_YOURHOST            = 2,
+    // RPL_CREATED             = 3,
+    // RPL_MYINFO              = 4,
 
     ERR_UNKNOWNCOMMAND      = 421,
     ERR_NONICKNAMEGIVEN     = 431,
@@ -28,6 +28,6 @@ enum Numeric
     ERR_NEEDMOREPARAMS      = 461,
     ERR_ALREADYREGISTERED   = 462,
     ERR_PASSWDMISMATCH      = 464,
-}
+};
 
 #endif
