@@ -25,6 +25,7 @@ class Client
         int                 _fd;
         std::string         _nick;
         std::string         _username;
+        std::string         _realname;
         std::string         _hostname;
         std::string         _password;
         bool                _isregistered;
@@ -53,6 +54,9 @@ class Client
         bool                _isRegistered() const;
         const std::string   &_getUsername() const;
         void                _setUsername(const std::string &username);
+        const std::string   &_getRealname() const;
+        void                _setRealname(const std::string &realname);
+
         const std::string   _getPrefix() const;
 
 };

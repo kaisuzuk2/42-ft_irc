@@ -28,6 +28,7 @@ Client::Client(int fd, const struct sockaddr_in &addr)
     : _fd(fd)
     , _nick("*")
     , _username("")
+    , _realname("")
     , _isregistered(false)
 {
     char ip[INET_ADDRSTRLEN];
@@ -109,6 +110,16 @@ const std::string &Client::_getUsername() const
 void Client::_setUsername(const std::string &username)
 {
     this->_username = username;
+}
+
+const std::string &Client::_getRealname() const
+{
+    return (this->_realname);
+}
+
+void Client::_setRealname(const std::string &realname)
+{
+    this->_realname = realname;
 }
 
 const std::string Client::_getPrefix() const
