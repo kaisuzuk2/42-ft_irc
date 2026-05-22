@@ -61,7 +61,7 @@ class FtIRCd
         const ClientManager &_getClients() const;
 
         static const size_t kMaxNickLen = 9;
-        static const size_t kMaxUserLen = 9
+        static const size_t kMaxUserLen = 9;
 };
 
 #endif

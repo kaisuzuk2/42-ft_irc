@@ -13,6 +13,7 @@
 #include "CommandParser.hpp"
 #include "commands/CmdPass.hpp"
 #include "commands/CmdNick.hpp"
+#include "commands/CmdUser.hpp"
 
 #include "ft_ircd.hpp"
 #include "Client.hpp"
@@ -24,6 +25,7 @@ CommandParser::CommandParser()
 {
     this->_commands["PASS"] = new CmdPass();
     this->_commands["NICK"] = new CmdNick();
+    this->_commands["USER"] = new CmdUser();
 }
 
 CommandParser::~CommandParser() 

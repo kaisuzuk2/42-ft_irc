@@ -10,7 +10,8 @@ SRCS		=	src/ft_ircd.cpp \
 				src/CommandParser.cpp \
 				src/commands/ACommand.cpp \
 				src/commands/CmdPass.cpp \
-				src/commands/CmdNick.cpp
+				src/commands/CmdNick.cpp \
+				src/commands/CmdUser.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
 

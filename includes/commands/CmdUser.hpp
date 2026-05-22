@@ -13,6 +13,8 @@
 #ifndef CMDUSER_HPP
 # define CMDUSER_HPP
 
+#include "commands/ACommand.hpp"
+
 class CmdUser: public ACommand
 {
     public:

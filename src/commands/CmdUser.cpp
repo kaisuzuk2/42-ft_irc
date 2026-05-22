@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "CmdUser.hpp"
+#include "commands/CmdUser.hpp"
+#include "Client.hpp"
+#include "ft_ircd.hpp"
 
 /*
 RFC 1459
@@ -23,8 +25,10 @@ RFC 2812
 */
 
 CmdUser::CmdUser()
-    : ACommand("USER", 4, 4, true);
+    : ACommand("USER", 4, 4, true)
 {}
+
+CmdUser::~CmdUser() {}
 
 /*
 FRC2812
@@ -46,6 +50,7 @@ bool CmdUser::_isValidUser(const std::string &user) const
         if (c >= 0x0E && c <= 0x1F) continue ;
         if (c >= 0x21 && c <= 0x3F) continue ;
         if (c >= 0x41 && c <= 0xFF) continue ;
+        return (false);
     }
     return (true);
 }
@@ -75,7 +80,7 @@ void CmdUser::_execute(FtIRCd &serverInstance, Client &client, const std::vector
        return ; 
     }
     
-    if (!client._isregistered())
+    if (!client._isRegistered())
         serverInstance._checkRegister(client);
 }
 
