@@ -68,7 +68,7 @@ void CmdUser::_execute(FtIRCd &serverInstance, Client &client, const std::vector
 
         if (!this->_isValidUser(newuser))
         {
-            client._writeNumeric(ERR_INVALIDUSERNAME, serverInstance._getServername(), "Your username is not valid");
+            client._writeNumeric(ERR_INVALIDUSERNAME, serverInstance._getServername(), newuser + " :Your username is not valid");
             return ;
         }
         client._setUsername(newuser);
