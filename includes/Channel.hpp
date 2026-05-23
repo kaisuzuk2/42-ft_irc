@@ -13,6 +13,10 @@
 #ifndef CHANNEL_HPP
 # define CHANNEL_HPP
 
+#include <string>
+#include <map>
+#include <ctime>
+
 class Client;
 
 class Channel
@@ -28,10 +32,10 @@ class Channel
         unsigned int                _limit;
 
     public:
-        Channel();
+        Channel(const std::strin &name);
         ~Channel();
 
-        const std::string           &_geName() const;
+        const std::string           &_getName() const;
         const std::string           &_getTopic() const;
 
         void                        addMember(Client *client, bool isOper = false);
