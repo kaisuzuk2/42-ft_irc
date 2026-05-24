@@ -36,20 +36,25 @@ void Channel::_addMember(Client *client, bool isOper)
     this->_members[client] = isOper;
 }
 
-void Channel::removeMember(Client *client)
+void Channel::_removeMember(Client *client)
 {
     this->_members.erase(client);
 }
 
-bool Channel::hasMember(Client *client) const
+bool Channel::_hasMember(Client *client) const
 {
     return (this->_members.find(client) != this->_members.end());
 }
 
-bool Channel::isOper(Client *client) const
+bool Channel::_isOper(Client *client) const
 {
-    std::map<Client *, bool>::const_iterator it = this->_member.find(client);
-    if (it == this->_member.end())
-        return (false)
+    std::map<Client *, bool>::const_iterator it = this->_members.find(client);
+    if (it == this->_members.end())
+        return (false);
     return (it->second);
+}
+
+bool Channel::_isEmpt() const
+{
+    return (this->_members.empty());
 }
