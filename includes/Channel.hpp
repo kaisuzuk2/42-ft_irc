@@ -35,14 +35,13 @@ class Channel
         Channel(const std::strin &name);
         ~Channel();
 
-        const std::string           &_getName() const;
-        const std::string           &_getTopic() const;
-
         void                        addMember(Client *client, bool isOper = false);
         void                        removeMember(Client *client);
         bool                        hasMember(Client *client) const;
         bool                        isOper(Client *client) const;
         
+        const std::string           &_getName() const;
+        const std::string           &_getTopic() const;
 };
 
 #endif

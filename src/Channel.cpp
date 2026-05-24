@@ -1,0 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Channel.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kaisuzuk <kaisuzuk@student.42.fr>          #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026-05-23 23:38:54 by kaisuzuk          #+#    #+#             */
+/*   Updated: 2026-05-23 23:38:54 by kaisuzuk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "Channel.hpp"
+
+Channel::Channel(const std::string &name)
+    : _name(name)
+    , _topicSetAt(0)
+    , _modes(0) // ### TODO: デフォルトのモード追加しよう
+    , _limit(0)
+{}
+
+Channel::~Channel() {}
+
+const std::string &Channel::_getName() const 
+{
+    return (this->_name);
+}
+
+const std::string &Channel::_getTopic() const
+{
+    return (this->_topic);
+}
+
+void Channel::_addMember(Client *client, bool isOper)
+{
+    this->_members[client] = isOper;
+}
+
+void Channel::removeMember(Client *client)
+{
+    this->_members.erase(client);
+}
+
+bool Channel::hasMember(Client *client) const
+{
+    return (this->_members.find(client) != this->_members.end());
+}
+
+bool Channel::isOper(Client *client) const
+{
+    std::map<Client *, bool>::const_iterator it = this->_member.find(client);
+    if (it == this->_member.end())
+        return (false)
+    return (it->second);
+}
