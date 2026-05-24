@@ -32,7 +32,7 @@ class Channel
         unsigned int                _limit;
 
     public:
-        Channel(const std::strin &name);
+        Channel(const std::string &name);
         ~Channel();
 
         void                        _addMember(Client *client, bool isOper = false);
