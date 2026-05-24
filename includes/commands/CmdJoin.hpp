@@ -22,6 +22,10 @@ class CmdJoin: public ACommand
         ~CmdJoin();
 
         void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
+    
+    private:
+        bool    _isValidChannelName(const std::string &name) const;
+        bool    _isPrefix(unsigned char prefix) const;
 };
 
 #endif
