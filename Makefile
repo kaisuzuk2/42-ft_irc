@@ -9,6 +9,7 @@ SRCS		=	src/ft_ircd.cpp \
 				src/ClientManager.cpp \
 				src/CommandParser.cpp \
 				src/Channel.cpp \
+				src/ChannelManager.cpp \
 				src/commands/ACommand.cpp \
 				src/commands/CmdPass.cpp \
 				src/commands/CmdNick.cpp \

@@ -18,6 +18,7 @@
 #include "SocketEngine.hpp"
 #include "ClientManager.hpp"
 #include "CommandParser.hpp"
+#include "ChannelManager.hpp"
 #include "Numeric.hpp"
 
 class FtIRCd 
@@ -30,38 +31,41 @@ class FtIRCd
         
         SocketEngine        _socketEngine;
         ClientManager       _clients;
+        ChannelManager      _channels;
         CommandParser       _parser;
 
     public:
         FtIRCd(int argc, char **argv);
         ~FtIRCd();
 
-        void                _run();
-        void                _checkRegister(Client &client) const;
+        void                    _run();
+        void                    _checkRegister(Client &client) const;
 
     private:
-        void                _parseConfig(int argc, char **argv);
-        int                 _parsePort(const char *str) const;
-        std::string         _parsePassword(const std::string &str) const;
+        void                    _parseConfig(int argc, char **argv);
+        int                     _parsePort(const char *str) const;
+        std::string             _parsePassword(const std::string &str) const;
 
-        void                _acceptClient();
-        void                _handleClient(int fd);
-        void                _disconnectClient(int fd);
+        void                    _acceptClient();
+        void                    _handleClient(int fd);
+        void                    _disconnectClient(int fd);
 
-        static const int    kPortMin = 1024;
-        static const int    kPortMax = 65535; // ### TODO: これ正しいかチェックする
-        static const int    kArgNum = 3;
-        static const int    kArgIdxPort = 1;
-        static const int    kArgIdxPassword = 2;
+        static const int        kPortMin = 1024;
+        static const int        kPortMax = 65535; // ### TODO: これ正しいかチェックする
+        static const int        kArgNum = 3;
+        static const int        kArgIdxPort = 1;
+        static const int        kArgIdxPassword = 2;
 
 
     public:
-        const std::string   &_getServername() const;
-        ClientManager       &_getClients();
-        const ClientManager &_getClients() const;
+        const std::string       &_getServername() const;
+        ClientManager           &_getClients();
+        const ClientManager     &_getClients() const;
+        ChannelManager          &_getChannels();
+        const ChannelManager    &_getCannels() const;
 
-        static const size_t kMaxNickLen = 9;
-        static const size_t kMaxUserLen = 9;
+        static const size_t     kMaxNickLen = 9;
+        static const size_t     kMaxUserLen = 9;
 };
 
 #endif

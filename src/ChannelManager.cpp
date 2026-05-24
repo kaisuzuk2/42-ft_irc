@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ChannelManager.hpp"
+#include "Channel.hpp"
 
 ChannelManager::ChannelManager() {}
 
