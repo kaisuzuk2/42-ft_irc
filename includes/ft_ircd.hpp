@@ -57,7 +57,7 @@ class FtIRCd
         static const int        kArgIdxPassword = 2;
 
 
-    public:
+    public: // ### TODO: const版いるかどうか考えよう
         const std::string       &_getServername() const;
         ClientManager           &_getClients();
         const ClientManager     &_getClients() const;
