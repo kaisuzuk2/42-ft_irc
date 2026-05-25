@@ -19,6 +19,7 @@
 #include <set>
 
 class ClientManager;
+class Channel;
 
 class Client
 {

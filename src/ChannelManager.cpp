@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <algorithm>
+
 #include "ChannelManager.hpp"
 #include "Channel.hpp"
 
