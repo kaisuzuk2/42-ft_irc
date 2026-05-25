@@ -16,6 +16,7 @@
 #include <string>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <set>
 
 class ClientManager;
 
@@ -32,6 +33,8 @@ class Client
 
         std::string         _recvBuf;
         std::string         _sendBuf;
+
+        std::set<Channel *> _channels;
     public:
         Client(int fd, const struct sockaddr_in &addr);
         ~Client();
@@ -44,6 +47,10 @@ class Client
 
         bool                _changeNick(const std::string &newnick, const ClientManager &clients, const std::string &servername);
         void                _setFullyRegistered();
+
+        void                _joinChannel(Channel *ch);
+        void                _leaveChannel(Channel *ch);
+        size_t              _getChannelCount() const;
 
         int                 _getFd() const;
         const std::string   &_getHostname() const;    

@@ -127,6 +127,21 @@ const std::string Client::_getPrefix() const
     return (this->_nick + "!" + this->_username + "@" + this->_hostname);
 }
 
+void Client::_joinChannel(Channel *ch)
+{
+    this->_channels.insert(ch);
+}
+
+void Client::_leaveChannel(Channel *ch)
+{
+    this->_channels.erase(ch);
+}
+
+size_t Client::_getChannelCount() const
+{
+    return (this->_channels.size());
+}
+
 void Client::_writeNumeric(const int num, const std::string &servername, const std::string &msg)
 {
     std::ostringstream oss;
