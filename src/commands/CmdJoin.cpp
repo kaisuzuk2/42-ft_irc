@@ -70,9 +70,20 @@ bool CmdJoin::_isPrefix(unsigned char prefix) const
     return prefix == '#';
 }
 
-bool CmdJoin::_isJoinCheck(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &key)
+bool CmdJoin::_preJoinCheck(FtIRCd &serverInstance, Client &client, Channel *ch, const std::string &cname, const std::string &key)
 {
-    
+    // 上限数チェック
+    if (client._getChannelSize() >= FtIRCd::kMaxChannels)
+    {
+        client._writeNumeric(ERR_TOOMANYCHANNELS, serverInstance._getServername(), cname + " :You have joined too many channels");
+        return (false);
+    }
+
+    // 新規チャンネル
+    if (!ch)
+        return (true);
+
+
 }
 
 // ### TODO: これらはchannelクラスにあるべきかな

@@ -43,6 +43,7 @@ class Channel
         
         const std::string           &_getName() const;
         const std::string           &_getTopic() const;
+        const std::string           &_getKey() const;
 };
 
 #endif

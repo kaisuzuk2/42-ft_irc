@@ -31,6 +31,11 @@ const std::string &Channel::_getTopic() const
     return (this->_topic);
 }
 
+const std::string &Channel::_getKey() const
+{
+    return (this->_key);
+}
+
 void Channel::_addMember(Client *client, bool isOper)
 {
     this->_members[client] = isOper;
