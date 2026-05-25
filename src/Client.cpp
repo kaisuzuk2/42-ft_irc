@@ -137,7 +137,7 @@ void Client::_leaveChannel(Channel *ch)
     this->_channels.erase(ch);
 }
 
-size_t Client::_getChannelCount() const
+size_t Client::_getChannelSize() const
 {
     return (this->_channels.size());
 }

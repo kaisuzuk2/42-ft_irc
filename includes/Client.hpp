@@ -51,7 +51,7 @@ class Client
 
         void                _joinChannel(Channel *ch);
         void                _leaveChannel(Channel *ch);
-        size_t              _getChannelCount() const;
+        size_t              _getChannelSize() const;
 
         int                 _getFd() const;
         const std::string   &_getHostname() const;    
