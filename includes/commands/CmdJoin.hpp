@@ -25,7 +25,8 @@ class CmdJoin: public ACommand
     
     private:
         void    _joinChannel(FtIRCd &serverInstance, Client &client, const std::string &chanName, const std::string &key);
-        
+        bool    _preJoinCheck(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &key);
+
         bool    _isValidChannelName(const std::string &name) const;
         bool    _isPrefix(unsigned char prefix) const;
 };

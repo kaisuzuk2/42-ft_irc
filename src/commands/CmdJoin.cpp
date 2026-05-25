@@ -70,10 +70,22 @@ bool CmdJoin::_isPrefix(unsigned char prefix) const
     return prefix == '#';
 }
 
+bool CmdJoin::_isJoinCheck(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &key)
+{
+    
+}
+
 // ### TODO: これらはchannelクラスにあるべきかな
 void CmdJoin::_joinChannel(FtIRCd &severInstance, Client &client, const std::string &chanName, const std::string &key)
 {
-    Channel *ch = serverInstance._getChannels()._find(chanName);
+    Channel *ch;
+    bool isNew;
+
+    ch = serverInstance._getChannels()._find(chanName);
+    isNew = (ch == NULL);
+    if (!ch)
+
+
 }
 
 void CmdJoin::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
