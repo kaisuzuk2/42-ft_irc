@@ -30,6 +30,7 @@ class Channel
         unsigned int                _modes;
         std::string                 _key;
         unsigned int                _limit;
+        std::set<Client *>          _inviteList;
 
     public:
         Channel(const std::string &name);
@@ -40,6 +41,11 @@ class Channel
         bool                        _hasMember(Client *client) const;
         bool                        _isOper(Client *client) const;
         bool                        _isEmpty() const;
+    
+        bool                        _isModeSet(unsigned int mode) const;
+        bool                        _isInvited(Client *client) const;
+        void                        _addInvite(Client *client);
+        void                        _removeInvite(Client *client);
         
         const std::string           &_getName() const;
         const std::string           &_getTopic() const;

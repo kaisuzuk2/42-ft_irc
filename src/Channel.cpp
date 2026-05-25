@@ -63,3 +63,27 @@ bool Channel::_isEmpty() const
 {
     return (this->_members.empty());
 }
+
+
+
+bool Channel::_isModeSet(unsigned int mode) const
+{
+    return ((this->_modes & mode) != 0);
+}
+
+bool Channel::_isInvited(Client *client) const
+{
+    return (this->_inviteList.find(client) != this->_inviteList.end());
+}
+
+void Channel::_addInvite(Client *client)
+{
+    this->_inviteList.insert(client);
+}
+
+void Channel::_removeInvite(Client *client)
+{
+    this->_inviteList.erase(client);
+}
+
+
