@@ -21,7 +21,7 @@ class Channel;
 class ChannelManager 
 {
     private:
-        std::map<std::string, Channel *>    _channels;
+        std::map<std::string, Channel *>    _channels; // キーは小文字
 
     public:
         ChannelManager();

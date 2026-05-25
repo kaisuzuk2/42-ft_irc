@@ -26,18 +26,26 @@ ChannelManager::~ChannelManager()
 
 Channel *ChannelManager::_find(const std::string &name) const
 {
-    std::map<std::string, Channel *>::const_iterator it = this->_channels.find(name);
+    std::string lowerCh;
+
+    lowerCh = name;
+    std::transform(lowerCh.begin(), lowerCh.end(), lowerCh.begin(), (int(*)(int))std::tolower);
+    std::map<std::string, Channel *>::const_iterator it = this->_channels.find(lowerCh);
     if (it == this->_channels.end())
         return (NULL);
     return (it->second);
 }
 
+// チャンネル名は大文字小文字を区別しないので、キーはすべて小文字で統一する
 Channel *ChannelManager::_create(const std::string &name)
 {  
     Channel *ch;
+    std::string lowerCh;
 
-    ch = new Channel(name); 
-    this->_channels[name] = ch;
+    ch = new Channel(name);
+    lowerCh = name;
+    std::transform(lowerCh.begin(), lowerCh.end(), lowerCh.begin(), (int(*)(int))std::tolower);  // オーバーロードされているのでキャストが必要
+    this->_channels[lowerCh] = ch;
     return (ch);
 }
 

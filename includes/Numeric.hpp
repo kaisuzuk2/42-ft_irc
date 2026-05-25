@@ -28,6 +28,7 @@ enum Numeric
     ERR_NEEDMOREPARAMS      = 461,
     ERR_ALREADYREGISTERED   = 462,
     ERR_PASSWDMISMATCH      = 464,
+    ERR_BADCHANMASK         = 476
 
     // from ircu (inspircd)
     ERR_INVALIDUSERNAME     = 468

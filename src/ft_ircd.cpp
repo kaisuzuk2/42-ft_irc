@@ -42,6 +42,17 @@ const ClientManager &FtIRCd::_getClients() const
     return (this->_clients);
 }
 
+ChannelManager &FtIRCd::_getChannels()
+{
+    return (this->_channels);
+}
+
+const ChannelManager &FtIRCd::_getChannels() const
+{
+    return (this->_channels);
+}
+
+
 void FtIRCd::_checkRegister(Client &client) const
 {
     if (client._getNick() == "*" || client._getUsername().empty())

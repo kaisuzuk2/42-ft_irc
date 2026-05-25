@@ -17,6 +17,8 @@
 RFC1459
 パラメータ:  <channel>{,<channel>} [<key>{,<key>}]
 チャンネル文字数: 200文字
+チャンネルの同時参加数: 10(推奨)
+
 
 RFC2812
 パラメーター: ( <channel> *( "," <channel> ) [ <key> *( "," <key> ) ] )
@@ -28,6 +30,8 @@ RFC2812
 RFC2811
 チャンネル文字数: 50文字
 チャンネル名は大文字・小文字を区別しない。
+
+
 */
 
 CmdJoin::CmdJoin()
@@ -37,7 +41,7 @@ CmdJoin::CmdJoin()
 /*
 RFC2811 2.1
 スペース（' '）、コントロールG（^G またはASCII 7）、カンマ（','、プロトコルにおいてリスト項目の区切り文字として使用される）
-を含んではならない（SHALL NOT）
+を含んではならない
 */
 bool CmdJoin::_isValidChannelName(const std::string &name)
 {
@@ -47,8 +51,7 @@ bool CmdJoin::_isValidChannelName(const std::string &name)
     if (!this->_isPrefix(name[0]))
         return (false);
 
-    std::string::const_iterator it = name.begin();
-    ++it; // prefix
+    std::string::const_iterator it = name.begin() + 1; // prefix
     for (; it != name.end(); ++it)
     {
         switch(*it)
@@ -67,3 +70,49 @@ bool CmdJoin::_isPrefix(unsigned char prefix) const
     return prefix == '#';
 }
 
+// ### TODO: これらはchannelクラスにあるべきかな
+void CmdJoin::_joinChannel(FtIRCd &severInstance, Client &client, const std::string &chanName, const std::string &key)
+{
+    Channel *ch = serverInstance._getChannels()._find(chanName);
+}
+
+void CmdJoin::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
+{
+    std::string chanStr;
+    std::string keyStr;
+    std::vector<std::string> channels;
+    std::vector<std::string> keys;
+    std::string::size_type pos;
+
+    chanStr = params[0];
+    while ((pos = chanStr.find(',')) != std::string::npos)
+    {
+        channels.push_back(chanStr.substr(0, pos));
+        chanStr.erase(0, pos + 1);
+    }
+    channels.push_back(chanStr);
+
+    keyStr = params.size() > 1 ? params[1] : "";
+    while ((pos = keyStr.find(',')) != std::string::npos)
+    {
+        keys.push_back(keyStr.substr(0, pos));
+        keys.erase(0, pos + 1);
+    }
+    if (!keyStr.empty())
+        keys.push_back(keyStr);
+
+    for (size_t i = 0; i < channels.size(); ++i)
+    {
+        const std::string channel = channels[i];
+        const std::string key = i < keys.size() ? keys[i] : "";
+
+        if (!this->_isValidChannelName(channel))
+        {
+            client.writeNumeric(ERR_BADCHANMASK, serverInstance._getServername(), channel + " :Invalid channel name"); // message from inspircd
+            continue ;
+        }
+        this->_joinChannel(serverInstance, client, channels[0], key);
+
+    }
+
+}
