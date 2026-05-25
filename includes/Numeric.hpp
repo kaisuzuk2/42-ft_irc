@@ -20,6 +20,7 @@ enum Numeric
     // RPL_CREATED             = 3,
     // RPL_MYINFO              = 4,
 
+    ERR_TOOMANYCHANNELS     = 405,
     ERR_UNKNOWNCOMMAND      = 421,
     ERR_NONICKNAMEGIVEN     = 431,
     ERR_ERRONEUSNICKNAME    = 432,
