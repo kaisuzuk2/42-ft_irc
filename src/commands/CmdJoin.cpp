@@ -101,8 +101,6 @@ bool CmdJoin::_preJoinCheck(FtIRCd &serverInstance, Client &client, Channel *ch,
 }
 
 // ### TODO: これらはchannelクラスにあるべきかな
-
-#include <iostream>
 void CmdJoin::_joinChannel(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &key)
 {
     Channel *ch;
@@ -122,7 +120,7 @@ void CmdJoin::_joinChannel(FtIRCd &serverInstance, Client &client, const std::st
             return ;
     }
 
-    // セットでやるようにした方がいいかね
+    // TODO: セットでやるようにした方がいいかね
     ch->_addMember(&client, isNew);
     client._joinChannel(ch);
 
