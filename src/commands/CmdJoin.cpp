@@ -38,12 +38,14 @@ CmdJoin::CmdJoin()
     : ACommand("JOIN", 1, 2, false)
 {}
 
+CmdJoin::~CmdJoin() {}
+
 /*
 RFC2811 2.1
 スペース（' '）、コントロールG（^G またはASCII 7）、カンマ（','、プロトコルにおいてリスト項目の区切り文字として使用される）
 を含んではならない
 */
-bool CmdJoin::_isValidChannelName(const std::string &name)
+bool CmdJoin::_isValidChannelName(const std::string &name) const
 {
     if (name.empty() || name.length() > FtIRCd::kMaxChanLen)
         return (false);
@@ -99,7 +101,9 @@ bool CmdJoin::_preJoinCheck(FtIRCd &serverInstance, Client &client, Channel *ch,
 }
 
 // ### TODO: これらはchannelクラスにあるべきかな
-void CmdJoin::_joinChannel(FtIRCd &severInstance, Client &client, const std::string &cname, const std::string &key)
+
+#include <iostream>
+void CmdJoin::_joinChannel(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &key)
 {
     Channel *ch;
     bool isNew;
@@ -110,15 +114,19 @@ void CmdJoin::_joinChannel(FtIRCd &severInstance, Client &client, const std::str
     if (!this->_preJoinCheck(serverInstance, client, ch, cname, key))
         return ;
     if (isNew)
-        ch = serverInstance._getChannels._create(cname); 
+        ch = serverInstance._getChannels()._create(cname); 
     else
     {
         /* Already on the channel */
-        if (ch->hasMember(client))
+        if (ch->_hasMember(&client))
             return ;
     }
-    ch->_addMember(client, isNew);
-    ch->_broadcast(":" + client._getPrefix() + " JOIN :" + cname);
+
+    // セットでやるよおうにした方がいいかね
+    ch->_addMember(&client, isNew);
+    client._joinChannel(ch);
+
+    ch->_broadcast(":" + client._getPrefix() + " JOIN :" + cname, NULL);
 }
 
 void CmdJoin::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
@@ -141,7 +149,7 @@ void CmdJoin::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     while ((pos = keyStr.find(',')) != std::string::npos)
     {
         keys.push_back(keyStr.substr(0, pos));
-        keys.erase(0, pos + 1);
+        keyStr.erase(0, pos + 1);
     }
     if (!keyStr.empty())
         keys.push_back(keyStr);
@@ -153,11 +161,9 @@ void CmdJoin::_execute(FtIRCd &serverInstance, Client &client, const std::vector
 
         if (!this->_isValidChannelName(channel))
         {
-            client.writeNumeric(ERR_BADCHANMASK, serverInstance._getServername(), channel + " :Invalid channel name"); // message from inspircd
+            client._writeNumeric(ERR_BADCHANMASK, serverInstance._getServername(), channel + " :Invalid channel name"); // message from inspircd
             continue ;
         }
         this->_joinChannel(serverInstance, client, channel, key);
-
     }
-
 }

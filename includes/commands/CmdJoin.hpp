@@ -13,7 +13,9 @@
 #ifndef CMDJOIN_HPP
 # define CMDJOIN_HPP
 
+#include "ft_ircd.hpp"
 #include "ACommand.hpp"
+#include "Channel.hpp"
 
 class CmdJoin: public ACommand
 {
