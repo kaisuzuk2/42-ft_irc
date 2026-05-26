@@ -64,6 +64,21 @@ bool Channel::_isEmpty() const
     return (this->_members.empty());
 }
 
+/*
+    ### TODO:
+    @#channelで管理者だけに送信できる
+*/
+void Channel::_broadcast(const std::string &msg, Client *except)
+{
+    std::map<Client *, bool>::const_iterator it;
+    
+    it = this->_members.begin();
+    for (; it != this->_members.end(); ++it)
+    {
+        if (it->first != except)
+            it->first->_send(msg);
+    }
+}
 
 
 bool Channel::_isModeSet(unsigned int mode) const

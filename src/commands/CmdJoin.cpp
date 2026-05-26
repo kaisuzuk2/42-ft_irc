@@ -89,6 +89,13 @@ bool CmdJoin::_preJoinCheck(FtIRCd &serverInstance, Client &client, Channel *ch,
         client._writeNumeric(ERR_BADCHANNELKEY, serverInstance._getServername(), cname + " :Cannot join channel (+k)");
         return (false);
     }
+
+    // ###  TODO
+    // 招待チェック
+
+    // 人数制限値チェック
+
+    return (true);
 }
 
 // ### TODO: これらはchannelクラスにあるべきかな

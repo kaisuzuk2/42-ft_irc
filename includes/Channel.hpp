@@ -19,6 +19,14 @@
 
 class Client;
 
+enum ChannelMode
+{
+    MODE_INVITE_ONLY    = 0x01,
+    MODE_TOPIC_OP       = 0x02,
+    MODE_KEY            = 0x04, 
+    MODE_LIMIT          = 0x08,
+};
+
 class Channel
 {
     private:
@@ -46,6 +54,8 @@ class Channel
         bool                        _isInvited(Client *client) const;
         void                        _addInvite(Client *client);
         void                        _removeInvite(Client *client);
+
+        void                        _broadcast(const std::string &msg, Client *except);
         
         const std::string           &_getName() const;
         const std::string           &_getTopic() const;
