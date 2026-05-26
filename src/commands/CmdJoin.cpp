@@ -122,7 +122,7 @@ void CmdJoin::_joinChannel(FtIRCd &serverInstance, Client &client, const std::st
             return ;
     }
 
-    // セットでやるよおうにした方がいいかね
+    // セットでやるようにした方がいいかね
     ch->_addMember(&client, isNew);
     client._joinChannel(ch);
 

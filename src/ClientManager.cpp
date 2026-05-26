@@ -62,3 +62,8 @@ Client *ClientManager::_findByNick(const std::string &nick) const
     return (NULL);
 }
 
+std::map<int, Client *> &ClientManager::_getClients() const
+{
+    return (this->_clients);   
+}
+

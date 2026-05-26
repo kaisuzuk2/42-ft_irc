@@ -31,6 +31,8 @@ class ClientManager
 
         Client                  *_findByFd(int fd) const;
         Client                  *_findByNick(const std::string &nick) const;
+
+        std::map<int, Client *> &_getClients() const;
 };  
 
 #endif
