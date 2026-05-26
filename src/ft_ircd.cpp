@@ -160,7 +160,9 @@ void FtIRCd::_acceptClient()
 void FtIRCd::_run() 
 {
     int fd;
+    std::map<int, Client *> clients;
 
+    clients = this->_clients._getClients();
     while (1)
     {
         // ### TODO: -1でいいか再考すること
@@ -173,6 +175,9 @@ void FtIRCd::_run()
             else
                 this->_handleClient(fd);        
         }
+        std::map<int, Client *>::const_iterator it = clients.begin();
+        for (; it != clients.end(); ++it)
+            it->second->_flushSendBuf();
     }
 }
 
