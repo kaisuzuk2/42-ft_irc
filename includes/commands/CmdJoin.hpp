@@ -24,7 +24,7 @@ class CmdJoin: public ACommand
         void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
     
     private:
-        void    _joinChannel(FtIRCd &serverInstance, Client &client, const std::string &chanName, const std::string &key);
+        void    _joinChannel(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &key);
         bool    _preJoinCheck(FtIRCd &serverInstance, Client &client, Channel *ch, const std::string &cname, const std::string &key);
 
         bool    _isValidChannelName(const std::string &name) const;
