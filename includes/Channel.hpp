@@ -58,6 +58,8 @@ class Channel
 
         void                        _broadcast(const std::string &msg, Client *except);
         
+        void                        _sendNames(Client &client, const std::string &servername) const;
+
         const std::string           &_getName() const;
         const std::string           &_getTopic() const;
         const std::string           &_getKey() const;

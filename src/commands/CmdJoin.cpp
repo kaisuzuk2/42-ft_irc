@@ -121,12 +121,19 @@ void CmdJoin::_joinChannel(FtIRCd &serverInstance, Client &client, const std::st
     }
 
     // TODO: セットでやるようにした方がいいかね
+    // TODO: whois <nick> 最新のチャンネルから表示される　順番があるね
     ch->_addMember(&client, isNew);
     client._joinChannel(ch);
 
     ch->_broadcast(":" + client._getPrefix() + " JOIN :" + cname, NULL);
 }
 
+/*
+join_command 
+-> JoinUser: チャンネルの作成 preuserjoin実行
+
+->　ForceJoin: ユーザをチャンネルに追加 数値リプライ
+*/
 void CmdJoin::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
     std::string chanStr;
