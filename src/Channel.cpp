@@ -92,6 +92,10 @@ void Channel::_sendNames(Client &client, const std::string servername) const
             nameList += "@";
         nameList += it->first->_getNick() + " ";
     }
+    
+    // ### TODO:  = はチャンネルの種類によるもの
+    client._writeNumeric(RPL_NAMREPLY, + servername, " = " + this->_name + " :" + nameList);
+    client._writeNumeric(RPL_ENDOFNAMES, + servername, this->_name + " :End of NAMES list" );
 }
 
 
