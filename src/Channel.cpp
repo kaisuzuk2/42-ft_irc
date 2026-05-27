@@ -81,6 +81,19 @@ void Channel::_broadcast(const std::string &msg, Client *except)
     }
 }
 
+void Channel::_sendNames(Client &client, const std::string servername) const
+{
+    std::string nameList;
+
+    std::map<Client *, bool>::const_iterator it = this->_members.begin();
+    for (; it != this->_members.end(); ++it)
+    {
+        if (it->second)
+            nameList += "@";
+        nameList += it->first->_getNick() + " ";
+    }
+}
+
 
 bool Channel::_isModeSet(unsigned int mode) const
 {
