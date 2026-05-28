@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "comamnds/CmdPart.hpp"
+#include <sstream>
+
+#include "commands/CmdPart.hpp"
+#include "Channel.hpp"
+#include "ft_ircd.hpp"
 
 /*
 RFC 1459
@@ -26,11 +30,44 @@ CmdPart::CmdPart()
 
 CmdPart::~CmdPart() {}
 
-void CmdPart::_partChannel(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string reason)
+void CmdPart::_partChannel(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &reason)
 {
     Channel *ch;
 
-    ch = server._getChannels()._find(cname);
+    ch = serverInstance._getChannels()._find(cname);
+    if (!ch)
+    {
+        client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), cname + " :No such channel");
+        return ;
+    }
+    if (!ch->_hasMember(&client))
+    {
+        client._writeNumeric(ERR_NOTONCHANNEL, serverInstance._getServername(), cname + " :You're not on that channel");
+        return ;
+    }
+
+
+    std::ostringstream msg;
+    msg << ":"
+    << client._getPrefix()
+    << " "
+    << "PART"
+    << " "
+    << cname;   
+    if (!reason.empty())
+    {
+        msg << " "
+        << ":"
+        << reason;
+    }
+    ch->_broadcast(msg.str(), NULL);
+
+    /* ### TODO: ひとまとめにしたいね*/
+    ch->_removeMember(&client);
+    client._leaveChannel(ch);
+    // ここでやるのはどうなんだろう
+    if (ch->_isEmpty())
+        serverInstance._getChannels()._remove(cname);
 }
 
 void CmdPart::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
@@ -52,5 +89,5 @@ void CmdPart::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     channels.push_back(chanStr);
 
     for (size_t i = 0; i < channels.size(); ++i)
-        _partChannel(server, client, channels[i], reason);
+        _partChannel(serverInstance, client, channels[i], reason);
 }

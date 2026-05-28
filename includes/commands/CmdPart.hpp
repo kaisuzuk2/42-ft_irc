@@ -24,7 +24,7 @@ class CmdPart: public ACommand
         void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
     
     private:
-        void    _partChannel(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string reason);
+        void    _partChannel(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &reason);
 };
 
 #endif
