@@ -107,6 +107,7 @@ void FtIRCd::_parseConfig(int argc, char **argv)
     this->_password = this->_parsePassword(argv[kArgIdxPassword]);
 }
 
+// ### TODO: チャンネルの削除
 void FtIRCd::_disconnectClient(int fd) 
 {
     std::cout << "client disconnected: fd = " << fd << std::endl;

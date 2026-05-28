@@ -49,23 +49,23 @@ void CmdPart::_partChannel(FtIRCd &serverInstance, Client &client, const std::st
 
     std::ostringstream msg;
     msg << ":"
-    << client._getPrefix()
-    << " "
-    << "PART"
-    << " "
-    << cname;   
+        << client._getPrefix()
+        << " "
+        << "PART"
+        << " "
+        << cname;   
     if (!reason.empty())
     {
         msg << " "
-        << ":"
-        << reason;
+            << ":"
+            << reason;
     }
     ch->_broadcast(msg.str(), NULL);
 
     /* ### TODO: ひとまとめにしたいね*/
     ch->_removeMember(&client);
     client._leaveChannel(ch);
-    // ここでやるのはどうなんだろう
+    // TODO: ここでやるのはどうなんだろう
     if (ch->_isEmpty())
         serverInstance._getChannels()._remove(cname);
 }
