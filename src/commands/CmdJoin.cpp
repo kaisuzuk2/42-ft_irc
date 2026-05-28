@@ -126,12 +126,16 @@ void CmdJoin::_joinChannel(FtIRCd &serverInstance, Client &client, const std::st
     client._joinChannel(ch);
 
     ch->_broadcast(":" + client._getPrefix() + " JOIN :" + cname, NULL);
+
+    // TODO: onpostjoin
+    ch->_sendNames(client, serverInstance._getServername());
+    client._writeNumeric(RPL_ENDOFNAMES, + servername, this->_name + " :End of NAMES list" );
+
 }
 
 /*
 join_command 
 -> JoinUser: チャンネルの作成 preuserjoin実行
-
 ->　ForceJoin: ユーザをチャンネルに追加 数値リプライ
 */
 void CmdJoin::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
