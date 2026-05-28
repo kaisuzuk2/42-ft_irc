@@ -16,6 +16,7 @@
 #include "commands/CmdUser.hpp"
 #include "commands/CmdJoin.hpp"
 #include "commands/CmdPart.hpp"
+#include "commands/CmdQuit.hpp"
 
 #include "ft_ircd.hpp"
 #include "Client.hpp"
@@ -30,6 +31,7 @@ CommandParser::CommandParser()
     this->_commands["USER"] = new CmdUser();
     this->_commands["JOIN"] = new CmdJoin();
     this->_commands["PART"] = new CmdPart();
+    this->_commands["QUIT"] = new CmdQuit();
 }
 
 CommandParser::~CommandParser() 

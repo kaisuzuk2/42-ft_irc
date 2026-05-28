@@ -15,7 +15,8 @@ SRCS		=	src/ft_ircd.cpp \
 				src/commands/CmdNick.cpp \
 				src/commands/CmdUser.cpp \
 				src/commands/CmdJoin.cpp \
-				src/commands/CmdPart.cpp
+				src/commands/CmdPart.cpp \
+				src/commands/CmdQuit.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
 

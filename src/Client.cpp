@@ -142,7 +142,7 @@ size_t Client::_getChannelSize() const
     return (this->_channels.size());
 }
 
-const std::set<Channel *> Client::_getChannels() const
+const std::set<Channel *> &Client::_getChannels() const
 {
     return (this->_channels);
 }

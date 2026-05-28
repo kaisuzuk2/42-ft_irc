@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "commands/CmdQuit.hpp"
+#include "Client.hpp"
+#include "Channel.hpp"
+#include "ft_ircd.hpp"
 
 CmdQuit::CmdQuit()
     : ACommand("QUIT", 0, 1, true)

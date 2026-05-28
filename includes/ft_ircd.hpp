@@ -41,6 +41,9 @@ class FtIRCd
         void                    _run();
         void                    _checkRegister(Client &client) const;
 
+        void                    _disconnectClient(int fd);
+
+
     private:
         void                    _parseConfig(int argc, char **argv);
         int                     _parsePort(const char *str) const;
@@ -48,7 +51,6 @@ class FtIRCd
 
         void                    _acceptClient();
         void                    _handleClient(int fd);
-        void                    _disconnectClient(int fd);
 
         static const int        kPortMin = 1024;
         static const int        kPortMax = 65535; // ### TODO: これ正しいかチェックする
