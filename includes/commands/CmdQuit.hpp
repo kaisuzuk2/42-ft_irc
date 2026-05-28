@@ -21,7 +21,7 @@ class CmdQuit: public ACommand
         CmdQuit();
         ~CmdQuit();
 
-        void    _execute(FtIRCd &serverInstance, Client &client, std::vector<std::string> &params);
+        void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
 };
 
 #endif

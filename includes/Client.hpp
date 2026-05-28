@@ -24,49 +24,49 @@ class Channel;
 class Client
 {
     private:
-        int                 _fd;
-        std::string         _nick;
-        std::string         _username;
-        std::string         _realname;
-        std::string         _hostname;
-        std::string         _password;
-        bool                _isregistered;
+        int                         _fd;
+        std::string                 _nick;
+        std::string                 _username;
+        std::string                 _realname;
+        std::string                 _hostname;
+        std::string                 _password;
+        bool                        _isregistered;
 
-        std::string         _recvBuf;
-        std::string         _sendBuf;
+        std::string                 _recvBuf;
+        std::string                 _sendBuf;
 
-        std::set<Channel *> _channels;
+        std::set<Channel *>         _channels;
     public:
         Client(int fd, const struct sockaddr_in &addr);
         ~Client();
 
-        void                _appendToBuffer(const char *data, int len);
-        bool                _getNextLine(std::string &line);
-        void                _send(const std::string &msg);
-        void                _flushSendBuf();
-        void                _writeNumeric(const int num, const std::string &servername, const std::string &msg);
+        void                        _appendToBuffer(const char *data, int len);
+        bool                        _getNextLine(std::string &line);
+        void                        _send(const std::string &msg);
+        void                        _flushSendBuf();
+        void                        _writeNumeric(const int num, const std::string &servername, const std::string &msg);
 
-        bool                _changeNick(const std::string &newnick, const ClientManager &clients, const std::string &servername);
-        void                _setFullyRegistered();
+        bool                        _changeNick(const std::string &newnick, const ClientManager &clients, const std::string &servername);
+        void                        _setFullyRegistered();
 
-        void                _joinChannel(Channel *ch);
-        void                _leaveChannel(Channel *ch);
-        size_t              _getChannelSize() const;
+        void                        _joinChannel(Channel *ch);
+        void                        _leaveChannel(Channel *ch);
+        size_t                      _getChannelSize() const;
+        const std::set<Channel *>   &_getChannels() const;
 
-        int                 _getFd() const;
-        const std::string   &_getHostname() const;    
-        void                _setPassword(const std::string &pass);
-        const std::string   &_getPassword() const;
-        void                _setNick(const std::string &nick);
-        const std::string   &_getNick() const;
-        bool                _isRegistered() const;
-        const std::string   &_getUsername() const;
-        void                _setUsername(const std::string &username);
-        const std::string   &_getRealname() const;
-        void                _setRealname(const std::string &realname);
+        int                         _getFd() const;
+        const std::string           &_getHostname() const;    
+        void                        _setPassword(const std::string &pass);
+        const std::string           &_getPassword() const;
+        void                        _setNick(const std::string &nick);
+        const std::string           &_getNick() const;
+        bool                        _isRegistered() const;
+        const std::string           &_getUsername() const;
+        void                        _setUsername(const std::string &username);
+        const std::string           &_getRealname() const;
+        void                        _setRealname(const std::string &realname);
 
-        const std::string   _getPrefix() const;
-
+        const std::string           _getPrefix() const;
 };
 
 #endif

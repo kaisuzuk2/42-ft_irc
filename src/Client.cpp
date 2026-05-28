@@ -142,6 +142,11 @@ size_t Client::_getChannelSize() const
     return (this->_channels.size());
 }
 
+const std::set<Channel *> Client::_getChannels() const
+{
+    return (this->_channels);
+}
+
 void Client::_writeNumeric(const int num, const std::string &servername, const std::string &msg)
 {
     std::ostringstream oss;

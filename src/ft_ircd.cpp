@@ -108,6 +108,11 @@ void FtIRCd::_parseConfig(int argc, char **argv)
 }
 
 // ### TODO: チャンネルの削除
+/* ### TODO: RFC 1459
+    何らかの理由でクライアントがQUITコマンドを発行せずに接続が切断された場合
+    （例：クライアントがクラッシュしてソケット上でEOFが発生した場合）、
+    サーバはその原因となった事象の性質を反映した何らかのメッセージでQUITメッセージを補完することが求められる。
+*/
 void FtIRCd::_disconnectClient(int fd) 
 {
     std::cout << "client disconnected: fd = " << fd << std::endl;
