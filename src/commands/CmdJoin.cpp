@@ -129,7 +129,7 @@ void CmdJoin::_joinChannel(FtIRCd &serverInstance, Client &client, const std::st
 
     // TODO: onpostjoin
     ch->_sendNames(client, serverInstance._getServername());
-    client._writeNumeric(RPL_ENDOFNAMES, + servername, this->_name + " :End of NAMES list" );
+    client._writeNumeric(RPL_ENDOFNAMES, serverInstance._getServername(), ch->_getName() + " :End of NAMES list" );
 
 }
 

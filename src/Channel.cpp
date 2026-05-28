@@ -81,7 +81,9 @@ void Channel::_broadcast(const std::string &msg, Client *except)
     }
 }
 
-void Channel::_sendNames(Client &client, const std::string servername) const
+
+// ### TODO: nameListの順番
+void Channel::_sendNames(Client &client, const std::string &servername) const
 {
     std::string nameList;
 
@@ -94,7 +96,7 @@ void Channel::_sendNames(Client &client, const std::string servername) const
     }
     
     // ### TODO:  = はチャンネルの種類によるもの
-    client._writeNumeric(RPL_NAMREPLY, + servername, " = " + this->_name + " :" + nameList);
+    client._writeNumeric(RPL_NAMREPLY, servername, " = " + this->_name + " :" + nameList);
 }
 
 

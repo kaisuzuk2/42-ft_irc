@@ -18,6 +18,8 @@
 #include <set>
 #include <ctime>
 
+#include "Numeric.hpp"
+
 class Client;
 
 enum ChannelMode
