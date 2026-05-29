@@ -146,6 +146,7 @@ void CmdJoin::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     std::vector<std::string> keys;
     std::string::size_type pos;
 
+     // ### TODO: コンマ区切りの処理は複数で使っているから関数かしよう
     chanStr = params[0];
     while ((pos = chanStr.find(',')) != std::string::npos)
     {

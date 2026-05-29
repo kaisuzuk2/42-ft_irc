@@ -59,9 +59,9 @@ std::vector<std::string> CommandParser::_split(const std::string &line, size_t m
             ++i;
             continue ;
         }
-        if (line[i] == ':')
+        if (line[i] == ':') 
         {
-            params.push_back(line.substr(i + 1));
+            params.push_back(line.substr(i + 1)); // ### TODO: これどうなっているんだろう
             break;
         }
 
