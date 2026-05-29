@@ -137,7 +137,11 @@ void FtIRCd::_handleClient(int fd)
 
     client->_appendToBuffer(buf, n);
     while (client->_getNextLine(line))
+    {
         this->_parser._process(*this, *client, line);
+        if (this->_clients._findByFd(fd))
+            return ;
+    }
 }
 
 void FtIRCd::_acceptClient()

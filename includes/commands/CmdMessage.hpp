@@ -24,7 +24,7 @@ class CmdMessage: public ACommand
         void    _sendToUser(FtIRCd &serverInstance, Client &client, const std::string &targetNick, const std::string &msg);
 
     public:
-        CmdMessage();
+        CmdMessage(bool isNotice);
         ~CmdMessage();
 
         void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
