@@ -61,7 +61,7 @@ std::vector<std::string> CommandParser::_split(const std::string &line, size_t m
         }
         if (line[i] == ':') 
         {
-            params.push_back(line.substr(i + 1)); // ### TODO: これどうなっているんだろう
+            params.push_back(line.substr(i + 1));
             break;
         }
 
@@ -76,7 +76,7 @@ std::vector<std::string> CommandParser::_split(const std::string &line, size_t m
 
         if (max_params && params.size() == max_params)
         {
-            params.back() + " " + line.substr(i);
+            params.back() += " " + line.substr(i);
             break;
         }
     }

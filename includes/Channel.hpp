@@ -24,10 +24,11 @@ class Client;
 
 enum ChannelMode
 {
-    MODE_INVITE_ONLY    = 0x01,
-    MODE_TOPIC_OP       = 0x02,
-    MODE_KEY            = 0x04, 
-    MODE_LIMIT          = 0x08,
+    MODE_INVITE_ONLY    = 0x01, // +i
+    MODE_TOPIC_OP       = 0x02, // +t
+    MODE_KEY            = 0x04, // +k
+    MODE_LIMIT          = 0x08, // +l
+    MODE_NO_EXTERNAL    = 0x10, // +n
 };
 
 class Channel
