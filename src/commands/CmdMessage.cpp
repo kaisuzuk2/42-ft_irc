@@ -36,11 +36,27 @@ solanum(libera.chat)ではエラーを返さない
 */
 
 CmdMessage::CmdMessage(bool isNotice) 
-    : ACOmmand(isNotice ? "NOTICE" : "PRIVMSG", 2, 2, false)
+    : ACommand(isNotice ? "NOTICE" : "PRIVMSG", 2, 2, false)
     , _isNotice(isNotice)
 {}
 
 CmdMessage::~CmdMessage() {}
+
+void CmdMessage::_handleChannelTarget(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &msg)
+{
+    Channel *chan;
+
+    chan = serverInstance._getChannels()._find(cname);
+    if (!chan && !this->_isNotice)
+    {
+        client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), cname + " :No such channel");
+        return ;
+    }
+
+    // +nモード
+    // onuserpremessageを実装する
+
+}
 
 void CmdMessage::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
@@ -51,14 +67,14 @@ void CmdMessage::_execute(FtIRCd &serverInstance, Client &client, const std::vec
 
     // ### TODO: コンマ区切りの処理は複数で使っているから関数かしよう
     targetStr = params[0];
-    while ((pos = targetStr.find('')) != std::string::npos)
+    while ((pos = targetStr.find(',')) != std::string::npos)
     {
         targets.push_back(targetStr.substr(0, pos));
-        targetStr.substr(0, pos + 1);
+        targetStr.erase(0, pos + 1);
     }
     targets.push_back(targetStr);
 
-    if (!this->_isNotice && msg.empty())
+    if (msg.empty() && !this->_isNotice)
     {
         client._write(ERR_NOTEXTTOSEND, serverInstance._getServername(), ":No text to send");
         return ;
@@ -70,7 +86,15 @@ void CmdMessage::_execute(FtIRCd &serverInstance, Client &client, const std::vec
     {   
         // プレフィックスを処理したので、その後のテキストがあるか確認する
         const std::string &target = *it;
-        if (!target[0])
+        if (!target[0] && !this->_isNotice)
+        {
+            client._writeNumeric(ERR_NORECIPIENT, serverInstance._getServername(), "No recipient given (" + this->_getName() + ")");
+            return ;   
+        }
+        if (target[0] == '#') // ### TODO: cmdjoinに定義しているが、チャンネルマネージャークラスにあるべきかも
+            _handleChannelTarget();
+        else
+            _handleUserTarget();
 
     }
 

@@ -67,6 +67,8 @@ bool CmdJoin::_isValidChannelName(const std::string &name) const
     return (true);
 }
 
+// ### TODO: CmdMessageからも使う　チャンネルマネージャーにあるべきかも
+// inspircd: chanelmanager.cpp
 bool CmdJoin::_isPrefix(unsigned char prefix) const
 {
     return prefix == '#';
