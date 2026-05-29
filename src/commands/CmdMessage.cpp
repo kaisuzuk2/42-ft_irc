@@ -42,3 +42,7 @@ CmdMessage::CmdMessage(bool isNotice)
 
 CmdMessage::~CmdMessage() {}
 
+void CmdMessage::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
+{
+    
+}
