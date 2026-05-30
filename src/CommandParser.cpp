@@ -86,6 +86,10 @@ std::vector<std::string> CommandParser::_split(const std::string &line, size_t m
     return (params);
 }
 
+
+/*
+### TODO: noticeの場合引数が足りない場合もエラーを出さないようにする
+*/
 void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::string &line)
 {
     std::vector<std::string> tokens;
