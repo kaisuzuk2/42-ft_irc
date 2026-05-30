@@ -13,16 +13,18 @@
 #ifndef CMDKICK_HPP
 # define CMDKICK_HPP
 
+#include "commands/ACommand.hpp"
+
 class CmdKick: public ACommand
 {
     public:
         CmdKick();
         ~CmdKick();
 
-        void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::stirng> &params);
+        void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
     
     private:
-        void    _kickUser(FtIRCd &serverInstance, Client &client, const std::string cname, const std::string nick, const std::string &reason);
+        void    _kickUser(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &nick, const std::string &reason);
 };
 
 #endif

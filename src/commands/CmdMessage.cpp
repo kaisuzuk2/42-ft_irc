@@ -95,7 +95,7 @@ void CmdMessage::_handleChannelTarget(FtIRCd &serverInstance, Client &client, co
     
     // ### TODO: 関数にした方が良さそう
     cmdName = this->_isNotice ? "NOTICE" : "PRIVMSG";
-    chan->_broadcast(":" + client._getPrefix() + " " + cmdName + " " + chan._getName() + " :" + msg, &client);
+    chan->_broadcast(":" + client._getPrefix() + " " + cmdName + " " + chan->_getName() + " :" + msg, &client);
 
 }
 
