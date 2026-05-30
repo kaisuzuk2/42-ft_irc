@@ -62,17 +62,18 @@ void CmdKick::_kickUser(FtIRCd &serverInstance, Client &client, const std::strin
         return ;
     }
 
+    if (!ch->_hasMember(target))
+    {
+        client._writeNumeric(ERR_USERNOTINCHANNEL, serverInstance._getServername(), target->_getNick()  + " " + ch->_getName() + " :They aren't on that channel");
+        return ;
+    }
+
     if (!ch->_isOper(&client))
     {
         client._writeNumeric(ERR_CHANOPRIVSNEEDED, serverInstance._getServername(), ch->_getName() + " :You're not channel operator");
         return ;
     }
 
-    if (!ch->_hasMember(target))
-    {
-        client._writeNumeric(ERR_USERNOTINCHANNEL, serverInstance._getServername(), target->_getNick()  + " " + ch->_getName() + " :They aren't on that channel");
-        return ;
-    }
 
     ch->_broadcast(":" + client._getPrefix() + " KICK " + ch->_getName() + " " + target->_getNick() + " :" + reason, NULL);
     
