@@ -35,6 +35,25 @@ CmdKick::CmdKick()
 CmdKick::CmdKick() {}
 
 
+void CmdKick::_kickUser(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string nick, const std::string &reason)
+{
+    Channel *ch;
+
+    ch = server._getChannels._find(cname);
+    if (!ch)
+    {
+        client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), cname + " :No such channel");
+        return ;
+    }
+
+    if (!ch->_hasMember(&client))
+    {
+        client._writeNumeric(ERR_NOTONCHANNEL, serverInstance._getServername(), ch._getName() + " :You're not on that channel");
+        return ;
+    }
+    
+}
+
 // ### TODO: kick #a,,,#c 連続する,は空文字になる　それはスキップする
 void CmdKick::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
@@ -43,6 +62,8 @@ void CmdKick::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     std::string::size_type pos;
     std::string chanStr;
     std::string userStr;
+
+    const std::string reason = params.size() > 2 ? params[2] : client._getNick();
 
     // ### TOOD: コンマ区切りの分割は関数化すること
     chanStr = params[0];
@@ -61,5 +82,16 @@ void CmdKick::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     }
     users.push_back(userStr);
 
-    
+    if (channels.size() == 1)
+    {
+        for (size_t i = 0; i < users.size(); ++it)
+            _kickUser(server, client, channels[0], users[i], reason);
+    }
+    else if (channels.size() == users.size())
+    {
+        for (size_t i = 0; i < users.size(); ++it)
+            _kickUser(serer, client, channels[i], users[i], reason);
+    }
+    else
+        client._writeNumeric(ERR_NEEDMOREPARAMS, server._getServername(), "KICK :Not enough parameters");
 }

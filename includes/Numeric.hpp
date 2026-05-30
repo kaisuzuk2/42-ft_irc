@@ -40,6 +40,7 @@ enum Numeric
     ERR_PASSWDMISMATCH      = 464,
     ERR_BADCHANNELKEY       = 475,
     ERR_BADCHANMASK         = 476,
+    ERR_CHANOPRIVSNEEDED    = 482,
 
     // from ircu (inspircd)
     ERR_INVALIDUSERNAME     = 468,

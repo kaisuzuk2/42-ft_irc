@@ -40,6 +40,7 @@ solanum(libera.chat)ではエラーを返さない
 /*
 ### TODO: findByNick
 登録済みのもののみチェックする必要があるかも
+チャンネルの大文字小文字のエラーメッセージ
 */
 CmdMessage::CmdMessage(bool isNotice) 
     : ACommand(isNotice ? "NOTICE" : "PRIVMSG", 2, 2, false)
@@ -94,7 +95,7 @@ void CmdMessage::_handleChannelTarget(FtIRCd &serverInstance, Client &client, co
     
     // ### TODO: 関数にした方が良さそう
     cmdName = this->_isNotice ? "NOTICE" : "PRIVMSG";
-    chan->_broadcast(":" + client._getPrefix() + " " + cmdName + " " + cname + " :" + msg, &client);
+    chan->_broadcast(":" + client._getPrefix() + " " + cmdName + " " + chan._getName() + " :" + msg, &client);
 
 }
 

@@ -20,6 +20,9 @@ class CmdKick: public ACommand
         ~CmdKick();
 
         void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::stirng> &params);
+    
+    private:
+        void    _kickUser(FtIRCd &serverInstance, Client &client, const std::string cname, const std::string nick, const std::string &reason);
 };
 
 #endif
