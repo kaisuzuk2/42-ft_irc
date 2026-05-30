@@ -43,6 +43,10 @@ enum Numeric
     ERR_BADCHANMASK         = 476,
     ERR_CHANOPRIVSNEEDED    = 482,
 
+    // from irc-hybrid(insprcd)
+    RPL_INVITELIST          = 336,
+    RPL_ENDOFINVITELIST     = 337,
+
     // from ircu (inspircd)
     ERR_INVALIDUSERNAME     = 468,
 };

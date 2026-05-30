@@ -32,3 +32,14 @@ CmdInvite::CmdInvite()
 
 CmdInvite::~CmdInvite() {}
 
+void CmdInvite::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
+{
+    // invite
+    // invite nicksample
+    // パラメータが一つの場合無視する
+    if (params.size() < 2)
+    {
+        // ### TODO: 招待されているリスト一覧を表示する
+        client._writeNumeric()
+    }
+}
