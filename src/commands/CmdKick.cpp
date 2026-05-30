@@ -12,6 +12,22 @@
 
 #include "CmdKick.hpp"
 
+/*
+RFC 1459
+パラメータ:  <channel> <user> [<comment>]
+
+RFC 2812
+パラメーター: <channel> *( "," <channel> ) <user> *( "," <user> )
+             [<comment>]
+
+[Note]
+メッセージが構文的に正しいためには、
+チャンネルパラメーターが1つでユーザーパラメーターが複数、
+またはチャンネルパラメーター数とユーザーパラメーター数が同数でなければなりません（MUST）。
+「comment」が指定された場合、
+KICKを実行したユーザーのニックネームというデフォルトメッセージの代わりにそれが送信されます。
+*/
+
 CmdKick::CmdKick() 
     : ACommand("KICK", 2, 3, false)
 {}
