@@ -14,6 +14,7 @@
 # define CMDMESSAGE_HPP
 
 #include "ACommand.hpp"
+#include "Channel.hpp"
 
 class CmdMessage: public ACommand
 {

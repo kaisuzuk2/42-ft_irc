@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "commands/CmdMessage.hpp"
+#include "ft_ircd.hpp"
 
 /*
 RFC 1459
@@ -66,7 +67,7 @@ void CmdMessage::_handleUserTarget(FtIRCd &serverInstance, Client &client,const 
 
 bool CmdMessage::_preMessageCheck(FtIRCd &serverInstance, Client &client, Channel &chan)
 {
-    if (chan._isModeSet(MODE_NO_EXTERNAL) && !chan._hasMember(client))
+    if (chan._isModeSet(MODE_NO_EXTERNAL) && !chan._hasMember(&client))
     {
         if (!this->_isNotice)
             client._writeNumeric(ERR_CANNOTSENDTOCHAN, serverInstance._getServername(), chan._getName() + " :Cannot send to channel (+n)");
