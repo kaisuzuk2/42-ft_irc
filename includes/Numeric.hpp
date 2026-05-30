@@ -23,6 +23,7 @@ enum Numeric
     RPL_NAMREPLY            = 353,
     RPL_ENDOFNAMES          = 366,
 
+    ERR_NOSUCHNICK          = 401,
     ERR_NOSUCHCHANNEL       = 403, // ### TODO: 複数で使用　エラーメッセージ統一しないといけない
     ERR_CANNOTSENDTOCHAN    = 404,
     ERR_TOOMANYCHANNELS     = 405,

@@ -21,6 +21,9 @@ class CmdMessage: public ACommand
         bool    _isNotice; // 離席中のユーザーにAWAYをリプライする。今回は実装しないので使わない。
 
         void    _handleChannelTarget(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &msg);
+        void    _handleUserTarget(FtIRCd &serverInstance, Client &client, const std::string &nick, const std::string &msg);
+
+        bool    _preMessageCheck(FtIRCd &serverInstance,Client &client, Channel &ch);
     public:
         CmdMessage(bool isNotice);
         ~CmdMessage();

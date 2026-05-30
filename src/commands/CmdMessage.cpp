@@ -35,6 +35,11 @@ inspircdではエラーを返す
 solanum(libera.chat)ではエラーを返さない
 */
 
+
+/*
+### TODO: findByNick
+登録済みのもののみチェックする必要があるかも
+*/
 CmdMessage::CmdMessage(bool isNotice) 
     : ACommand(isNotice ? "NOTICE" : "PRIVMSG", 2, 2, false)
     , _isNotice(isNotice)
@@ -42,19 +47,44 @@ CmdMessage::CmdMessage(bool isNotice)
 
 CmdMessage::~CmdMessage() {}
 
+void CmdMessage::_handleUserTarget(FtIRCd &serverInstance, Client &client,const std::string &nick, const std::string &msg)
+{
+    Client *target;
+    
+    target = serverInstance._getClients()._findByNick(target); // ### TODO: 登録が完了しているかチェックしないと
+
+}
+
+bool CmdMessage::_preMessageCheck(FtIRCd &serverInstance, Client &client, Channel &chan)
+{
+    if (chan._isModeSet(MODE_NO_EXTERNAL) && !chan._hasMember(client))
+    {
+        if (!this->_isNotice)
+            client._writeNumeric(ERR_CANNOTSENDTOCHAN, serverInstance._getServername(), chan._getName() + " :Cannot send to channel (+n)");
+        return (false);
+    }
+    return (true);
+}
+
 void CmdMessage::_handleChannelTarget(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &msg)
 {
     Channel *chan;
+    std::string cmdName;
 
     chan = serverInstance._getChannels()._find(cname);
-    if (!chan && !this->_isNotice)
+    if (!chan)
     {
-        client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), cname + " :No such channel");
+        if (!this->_isNotice)
+            client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), cname + " :No such channel");
         return ;
     }
 
-    // +nモード
-    // onuserpremessageを実装する
+    if (!this->_preMessageCheck(serverInstance, client, *chan))
+        return ;
+    
+    // ### TODO: 関数にした方が良さそう
+    cmdName = this->_isNotice ? "NOTICE" : "PRIVMSG";
+    chan->_broadcast(":" + client._getPrefix() + " " + cmdName + " " + cname + " :" + msg, &client);
 
 }
 
@@ -74,9 +104,10 @@ void CmdMessage::_execute(FtIRCd &serverInstance, Client &client, const std::vec
     }
     targets.push_back(targetStr);
 
-    if (msg.empty() && !this->_isNotice)
-    {
-        client._write(ERR_NOTEXTTOSEND, serverInstance._getServername(), ":No text to send");
+    if (msg.empty())
+    {   
+        if (!this->_isNotice)
+            client._writeNumeric(ERR_NOTEXTTOSEND, serverInstance._getServername(), ":No text to send");
         return ;
     }
 
@@ -86,16 +117,16 @@ void CmdMessage::_execute(FtIRCd &serverInstance, Client &client, const std::vec
     {   
         // プレフィックスを処理したので、その後のテキストがあるか確認する
         const std::string &target = *it;
-        if (!target[0] && !this->_isNotice)
+        if (!target[0])
         {
-            client._writeNumeric(ERR_NORECIPIENT, serverInstance._getServername(), "No recipient given (" + this->_getName() + ")");
+            if (!this->_isNotice)
+                client._writeNumeric(ERR_NORECIPIENT, serverInstance._getServername(), "No recipient given (" + this->_getName() + ")");
             return ;   
         }
         if (target[0] == '#') // ### TODO: cmdjoinに定義しているが、チャンネルマネージャークラスにあるべきかも
-            _handleChannelTarget();
+            _handleChannelTarget(serverInstance, client, target, msg);
         else
-            _handleUserTarget();
-
+            _handleUserTarget(serverInstance, client, target, msg);
     }
 
 }
