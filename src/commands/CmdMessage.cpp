@@ -50,9 +50,18 @@ CmdMessage::~CmdMessage() {}
 void CmdMessage::_handleUserTarget(FtIRCd &serverInstance, Client &client,const std::string &nick, const std::string &msg)
 {
     Client *target;
-    
-    target = serverInstance._getClients()._findByNick(target); // ### TODO: 登録が完了しているかチェックしないと
+    std::string cmdName;
 
+    target = serverInstance._getClients()._findByNick(target); // ### TODO: 登録が完了しているかチェックしないと
+    if (!target)
+    {
+        if (!this->_isNotice)
+            client._writeNumeric(ERR_NOSUCHNICK, serverInstance._getServername(), nick + " :No such nick");
+        return ;
+    }
+    
+    cmdName = this->_isNotice ? "NOTICE" : "PRIVMSG"; // ### TODO: これ関数化しよう
+    target->_send(":" + client._getPrefix() + " " + cmdName + " " + target->_getNick() + " :" + msg);
 }
 
 bool CmdMessage::_preMessageCheck(FtIRCd &serverInstance, Client &client, Channel &chan)
