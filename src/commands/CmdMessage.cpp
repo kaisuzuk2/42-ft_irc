@@ -52,7 +52,7 @@ void CmdMessage::_handleUserTarget(FtIRCd &serverInstance, Client &client,const 
     Client *target;
     std::string cmdName;
 
-    target = serverInstance._getClients()._findByNick(target); // ### TODO: 登録が完了しているかチェックしないと
+    target = serverInstance._getClients()._findByNick(nick); // ### TODO: 登録が完了しているかチェックしないと
     if (!target)
     {
         if (!this->_isNotice)
