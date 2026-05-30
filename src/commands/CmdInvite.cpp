@@ -34,12 +34,42 @@ CmdInvite::~CmdInvite() {}
 
 void CmdInvite::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
+    Channel *ch;
+    Client *target;
     // invite
     // invite nicksample
     // パラメータが一つの場合無視する
+
     if (params.size() < 2)
     {
         // ### TODO: 招待されているリスト一覧を表示する
-        client._writeNumeric()
+        client._writeNumeric(RPL_ENDOFINVITELIST, serverInstance._getServername(), " :End of INVITE list");
+        return ;
     }
+
+    const std::string &nick = params[0];
+    const std::string &cname = params[1];
+
+    ch = serverInstance._getChannels()._find(cname);
+    if (!ch)
+    {
+        client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), cname + " :No such channel");
+        return ;
+    }
+
+    target = serverInstance._getClients()._findByNick(nick);
+    if (!target)
+    {
+        client._writeNumeric(ERR_NOSUCHNICK, serverInstance._getServername(), nick + " :No such nick");
+        return ;
+    }
+
+    if (!ch->_hasMember(&client))
+    {
+        client._writeNumeric(ERR_NOTONCHANNEL, serverInstance._getServername(), ch->_getName() + " :You're not on that channel");
+        return ;
+    }
+
+    
+
 }
