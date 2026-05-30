@@ -34,3 +34,32 @@ CmdKick::CmdKick()
 
 CmdKick::CmdKick() {}
 
+
+// ### TODO: kick #a,,,#c 連続する,は空文字になる　それはスキップする
+void CmdKick::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
+{
+    std::vector<std::string> channels;
+    std::vector<std::string> users;
+    std::string::size_type pos;
+    std::string chanStr;
+    std::string userStr;
+
+    // ### TOOD: コンマ区切りの分割は関数化すること
+    chanStr = params[0];
+    while ((pos = chanStr.find(',')) != std::string::npos)
+    {
+        channels.push_back(chanStr.substr(0, pos));
+        chanStr.erase(0, pos + 1);
+    }
+    channels.push_back(chanStr);
+
+    userStr = params[1];
+    while ((pos = userStr.find(',')) != std::string::npos)
+    {
+        users.push_back(userStr.substr(0, pos));
+        userStr.erase(0, pos + 1);
+    }
+    users.push_back(userStr);
+
+    
+}

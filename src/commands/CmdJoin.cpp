@@ -140,6 +140,8 @@ join_command
 -> JoinUser: チャンネルの作成 preuserjoin実行
 ->　ForceJoin: ユーザをチャンネルに追加 数値リプライ
 */
+
+// ### TODO: join #a,,,#c 空文字はスキップ
 void CmdJoin::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
     std::string chanStr;
