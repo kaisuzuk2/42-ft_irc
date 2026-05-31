@@ -46,9 +46,14 @@ void CmdTopic::_execute(FtIRCd &serverInstance, Client &client, const std::vecto
     }
 
     // topic表示
+    // ### TODO: トピックが設定されていないかどうかをここでやるかshowtopicでやるのがいいか
     if (params.size() == 1)
     {
-  
+        if (ch->_getTopic().empty())
+            client._writeNumeric(RPL_NOTOPIC, serverInstance._getServername(), ch->_getName() + " :No topic is set");
+        else
+            ch->_showTopic(client, serverInstance._getServername());
+        return ;
     }
 
 

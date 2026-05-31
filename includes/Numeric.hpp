@@ -20,7 +20,7 @@ enum Numeric
     // RPL_CREATED             = 3,
     // RPL_MYINFO              = 4,
 
-    RPL_NOTOPIC             = 332,
+    RPL_NOTOPIC             = 331,
     RPL_TOPIC               = 332,
     RPL_INVITING            = 341,
     RPL_NAMREPLY            = 353,

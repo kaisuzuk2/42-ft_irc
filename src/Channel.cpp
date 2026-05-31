@@ -34,6 +34,13 @@ const std::string &Channel::_getTopic() const
     return (this->_topic);
 }
 
+void Channel::_setTopic(const std::string &topic, const std::string &setBy, size_t setAt)
+{
+    this->_topic = topic;
+    this->_topicSetBy = setBy;
+    this->_topicSetAt = setAt;
+}
+
 const std::string &Channel::_getKey() const
 {
     return (this->_key);
