@@ -157,12 +157,12 @@ void Client::_removeInvitedChannel(Channel *ch)
     this->_invitedChannels.erase(ch);
 }
 
-bool Client::_isInvitedTo(Channel *ch)
+bool Client::_isInvitedTo(Channel *ch) const
 {
     return (this->_invitedChannels.find(ch) != this->_invitedChannels.end());
 }
 
-const std::set<Channel *> &Client::_getInvitedChannels
+const std::set<Channel *> &Client::_getInvitedChannels() const
 {
     return (this->_invitedChannels);
 }

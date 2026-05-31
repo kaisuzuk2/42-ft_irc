@@ -14,6 +14,7 @@
 # define CMDINVITE_HPP
 
 #include "ACommand.hpp"
+#include "Channel.hpp"
 
 class CmdInvite: public ACommand
 {

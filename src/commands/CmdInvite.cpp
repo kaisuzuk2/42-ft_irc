@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "commands/CmdInvite.hpp"
+#include "Client.hpp"
+#include "ft_ircd.hpp"
 
 /*
 RFC 1459
@@ -40,7 +42,7 @@ CmdInvite::CmdInvite()
 
 CmdInvite::~CmdInvite() {}
 
-bool CmdInvite::_preInviteCheck(FtIRCd &serverInstance, Client &client, Channel *ch)
+bool CmdInvite::_preInviteCheck(FtIRCd &serverInstance, Client &client, Channel *ch) const
 {
     if (ch->_isModeSet(MODE_INVITE_ONLY) && !ch->_isOper(&client))
     {
@@ -60,7 +62,9 @@ void CmdInvite::_execute(FtIRCd &serverInstance, Client &client, const std::vect
 
     if (params.size() < 2)
     {
-        // ### TODO: 招待されているリスト一覧を表示する
+        const std::set<Channel *> &invitedChannels = client._getInvitedChannels();
+        for (std::set<Channel *>::const_iterator it = invitedChannels.begin(); it != invitedChannels.end(); ++it)
+            client._writeNumeric(RPL_INVITELIST, serverInstance._getServername(), " :" + (*it)->_getName());
         client._writeNumeric(RPL_ENDOFINVITELIST, serverInstance._getServername(), " :End of INVITE list");
         return ;
     }
