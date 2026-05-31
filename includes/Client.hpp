@@ -36,6 +36,9 @@ class Client
         std::string                 _sendBuf;
 
         std::set<Channel *>         _channels;
+
+        std::set<Channel *>         _invitedChannels;
+
     public:
         Client(int fd, const struct sockaddr_in &addr);
         ~Client();
@@ -53,6 +56,11 @@ class Client
         void                        _leaveChannel(Channel *ch);
         size_t                      _getChannelSize() const;
         const std::set<Channel *>   &_getChannels() const;
+
+        void                        _addInvitedChannel(Channel *ch);
+        void                        _removeInvitedChannel(Channel *ch);
+        bool                        _isInvitedTo(Channel *ch) const;
+        const std::set<Channel *>   &_getInvitedChannels() const;
 
         int                         _getFd() const;
         const std::string           &_getHostname() const;    

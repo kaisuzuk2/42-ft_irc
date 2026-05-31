@@ -147,6 +147,27 @@ const std::set<Channel *> &Client::_getChannels() const
     return (this->_channels);
 }
 
+void Client::_addInvitedChannel(Channel *ch)
+{
+    this->_invitedChannels.insert(ch);
+}
+
+void Client::_removeInvitedChannel(Channel *ch)
+{
+    this->_invitedChannels.erase(ch);
+}
+
+bool Client::_isInvitedTo(Channel *ch)
+{
+    return (this->_invitedChannels.find(ch) != this->_invitedChannels.end());
+}
+
+const std::set<Channel *> &Client::_getInvitedChannels
+{
+    return (this->_invitedChannels);
+}
+
+
 void Client::_writeNumeric(const int num, const std::string &servername, const std::string &msg)
 {
     std::ostringstream oss;

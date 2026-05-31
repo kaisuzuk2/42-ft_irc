@@ -18,7 +18,8 @@ SRCS		=	src/ft_ircd.cpp \
 				src/commands/CmdPart.cpp \
 				src/commands/CmdQuit.cpp \
 				src/commands/CmdMessage.cpp \
-				src/commands/CmdKick.cpp
+				src/commands/CmdKick.cpp \
+				src/commands/CmdInvite.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
 
