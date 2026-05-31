@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sstream>
+
 #include "Channel.hpp"
 #include "Client.hpp"
 
@@ -98,6 +100,16 @@ void Channel::_sendNames(Client &client, const std::string &servername) const
     
     // ### TODO:  = はチャンネルの種類によるもの
     client._writeNumeric(RPL_NAMREPLY, servername, " = " + this->_name + " :" + nameList);
+}
+
+void Channel::_showTopic(Client &client, const std::string &servername) const
+{
+    std::ostringstream oss;
+
+    client._writeNumeric(RPL_TOPIC, servername, this->_name + " :" + this->_topic);
+    // ### TODO: もう少しいい感じにできないかな
+    oss << this->_topicSetAt;
+    client._writeNumeric(RPL_TOPICTIME, servername, this._name + " " + _topicSetBy + " :" + oss.str());
 }
 
 
