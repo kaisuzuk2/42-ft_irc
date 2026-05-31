@@ -20,6 +20,7 @@
 #include "commands/CmdMessage.hpp"
 #include "commands/CmdKick.hpp"
 #include "commands/CmdInvite.hpp"
+#include "commands/CmdTopic.hpp"
 
 #include "ft_ircd.hpp"
 #include "Client.hpp"
@@ -39,6 +40,7 @@ CommandParser::CommandParser()
     this->_commands["NOTICE"] = new CmdMessage(true);
     this->_commands["KICK"] = new CmdKick();
     this->_commands["INVITE"] = new CmdInvite();
+    this->_commands["TOPIC"] = new CmdTopic();
 }
 
 CommandParser::~CommandParser() 
