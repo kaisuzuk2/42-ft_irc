@@ -63,6 +63,8 @@ class Channel
         
         void                        _sendNames(Client &client, const std::string &servername) const;
 
+        void                        _showTopic(Client &client, const std::string &servername) const;
+
         const std::string           &_getName() const;
         const std::string           &_getTopic() const;
         const std::string           &_getKey() const;

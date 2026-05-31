@@ -142,6 +142,7 @@ join_command
 */
 
 // ### TODO: join #a,,,#c 空文字はスキップ
+// ### TODO: topicがあれば表示する？
 void CmdJoin::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
     std::string chanStr;
