@@ -56,6 +56,22 @@ void CmdTopic::_execute(FtIRCd &serverInstance, Client &client, const std::vecto
         return ;
     }
 
+    // topic設定
+    if (!ch->_hasMember(&client))
+    {
+        client._writeNumeric(ERR_NOTONCHANNEL, serverInstance._getServername(), ch->_getName() + " :You're not on that channel");
+        return ;
+    }
 
+    if (ch->_isModeSet(MODE_TOPIC_OP) && !ch->_isOper(&client))
+    {
+        client._writeNumeric(ERR_CHANOPRIVSNEEDED, serverInstance._getServername(), ch->_getName() + " :You're not channel operator");
+        return ;
+    }
+
+    const std::string &t = params[1];
+    // ### TODO: 長さチェックするか考える
+    if (ch->_topic != t)
+        ch->_setTopic(t, client._getPrefix(), std::time(NULL));
 }
 
