@@ -19,6 +19,7 @@
 #include "commands/CmdQuit.hpp"
 #include "commands/CmdMessage.hpp"
 #include "commands/CmdKick.hpp"
+#include "commands/CmdInvite.hpp"
 
 #include "ft_ircd.hpp"
 #include "Client.hpp"
@@ -37,6 +38,7 @@ CommandParser::CommandParser()
     this->_commands["PRIVMSG"] = new CmdMessage(false);
     this->_commands["NOTICE"] = new CmdMessage(true);
     this->_commands["KICK"] = new CmdKick();
+    this->_commands["INVITE"] = new CmdInvite();
 }
 
 CommandParser::~CommandParser() 
