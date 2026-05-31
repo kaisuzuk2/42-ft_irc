@@ -14,6 +14,8 @@
 # define CMDTOPIC_HPP
 
 #include "ACommand.hpp"
+#include "Channel.hpp"
+#include "ft_ircd.hpp"
 
 class CmdTopic: public ACommand
 {

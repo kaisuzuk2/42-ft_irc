@@ -34,11 +34,13 @@ const std::string &Channel::_getTopic() const
     return (this->_topic);
 }
 
-void Channel::_setTopic(const std::string &topic, const std::string &setBy, size_t setAt)
+void Channel::_setTopic(const std::string &topic, const std::string &setBy, time_t setAt)
 {
     this->_topic = topic;
     this->_topicSetBy = setBy;
     this->_topicSetAt = setAt;
+    
+    this->_broadcast(":" + setBy + " TOPIC " + this->_name + " :" + topic, NULL);
 }
 
 const std::string &Channel::_getKey() const
@@ -116,7 +118,7 @@ void Channel::_showTopic(Client &client, const std::string &servername) const
     client._writeNumeric(RPL_TOPIC, servername, this->_name + " :" + this->_topic);
     // ### TODO: もう少しいい感じにできないかな
     oss << this->_topicSetAt;
-    client._writeNumeric(RPL_TOPICTIME, servername, this._name + " " + _topicSetBy + " :" + oss.str());
+    client._writeNumeric(RPL_TOPICTIME, servername, this->_name + " " + _topicSetBy + " :" + oss.str());
 }
 
 

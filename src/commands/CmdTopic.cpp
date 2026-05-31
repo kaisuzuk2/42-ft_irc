@@ -71,7 +71,7 @@ void CmdTopic::_execute(FtIRCd &serverInstance, Client &client, const std::vecto
 
     const std::string &t = params[1];
     // ### TODO: 長さチェックするか考える
-    if (ch->_topic != t)
+    if (ch->_getTopic() != t)
         ch->_setTopic(t, client._getPrefix(), std::time(NULL));
 }
 
