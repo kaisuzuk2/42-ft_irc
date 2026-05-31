@@ -24,6 +24,14 @@ RFC 2182
 招待先のチャンネルが存在するか有効なチャンネルである必要はありません。
 ただし、チャンネルが存在する場合、そのチャンネルのメンバーのみが他のユーザーを招待できます。
 チャンネルに招待制フラグが設定されている場合、チャンネルオペレーターのみがINVITEコマンドを実行できます。
+
+
+[Note] RFC2188 4.2.2
+チャンネルフラグ 'i' が設定されている場合、
+新しいメンバーは、そのマスクが招待リスト（セクション4.3.2を参照）に一致するか、
+チャンネルオペレーターから招待された場合にのみ受け入れられる。
+このフラグはまた、INVITE コマンド（「IRC Client Protocol」[IRC-CLIENT]を参照）の使用を
+チャンネルオペレーターに限定する。
 */
 
 CmdInvite::CmdInvite() 
@@ -31,6 +39,16 @@ CmdInvite::CmdInvite()
 {}
 
 CmdInvite::~CmdInvite() {}
+
+bool CmdInvite::_preInviteCheck(FtIRCd &serverInstance, Client &client, Channel *ch)
+{
+    if (ch->_isModeSet(MODE_INVITE_ONLY) && !ch->_isOper(&client))
+    {
+        client._writeNumeric(ERR_CHANOPRIVSNEEDED, serverInstance._getServername(), ch->_getName() + " :You're not channel operator");
+        return (false);
+    }
+    return (true);
+}
 
 void CmdInvite::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
@@ -70,6 +88,20 @@ void CmdInvite::_execute(FtIRCd &serverInstance, Client &client, const std::vect
         return ;
     }
 
-    
+    if (ch->_hasMember(&target))
+    {
+        client._writeNumeric(ERR_USERONCHANNEL, serverInstance._getServername(), target._getNick() + " " + ch->_getName() + " :is already on channel");
+        return ;
+    }
+
+    if (!this->_preInviteCheck(serverInstance, client, ch))
+        return ;
+
+    ch->_addInvite(target);
+    target->_addInviteChannel(ch);
+
+    target->_send(":" + client._getPrefix() + " INVITE " + target._getNick() + " :" + ch->_getName());
+
+
 
 }

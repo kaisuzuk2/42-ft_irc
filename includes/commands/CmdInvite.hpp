@@ -17,10 +17,15 @@
 
 class CmdInvite: public ACommand
 {
-    CmdInvite();
-    ~CmdInvite();
+    public:
+        CmdInvite();
+        ~CmdInvite();
 
-    void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
+        void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
+    
+    private:
+        bool    _preInviteCheck(FtIRCd &serverInstance, Client &client, Channel *ch) const;
 };
+
 
 #endif
