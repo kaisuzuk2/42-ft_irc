@@ -22,6 +22,11 @@ class CmdMode: public ACommand
         ~CmdMode();
 
         void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
+
+    private:
+        bool    _applyMode(FtIRCd &serverInstance, Client &client, Channel *ch, char c, bool adding, size_t &paramIdx, const std::vector<std::string> &params, std::string &outParam);
+        bool    _applyFlagMode(Channel *ch, char c, bool adding);
+        bool    _applyKeyMode(Channel *ch, bool adding ,size_t &paramIdx, const std::vector<std::string> &params, std::string &outParam);
 };
 
 #endif

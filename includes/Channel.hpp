@@ -56,6 +56,9 @@ class Channel
         bool                        _isEmpty() const;
     
         bool                        _isModeSet(unsigned int mode) const;
+        void                        _setMode(unsigned int mode);
+        void                        _unsetMode(unsigned int mode);
+
         bool                        _isInvited(Client *client) const;
         void                        _addInvite(Client *client);
         void                        _removeInvite(Client *client);
