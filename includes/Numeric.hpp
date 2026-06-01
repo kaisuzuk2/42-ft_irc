@@ -20,6 +20,7 @@ enum Numeric
     // RPL_CREATED             = 3,
     // RPL_MYINFO              = 4,
 
+    RPL_CHANNELMODEIS       = 324,
     RPL_NOTOPIC             = 331,
     RPL_TOPIC               = 332,
     RPL_INVITING            = 341,
@@ -52,6 +53,7 @@ enum Numeric
     RPL_ENDOFINVITELIST     = 337,
 
     // from ircu (inspircd)
+    RPL_CHANNELCREATED      = 329,
     RPL_TOPICTIME           = 333,
     ERR_INVALIDUSERNAME     = 468,
 };

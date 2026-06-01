@@ -20,6 +20,7 @@ Channel::Channel(const std::string &name)
     , _topicSetAt(0)
     , _modes(0) // ### TODO: デフォルトのモード追加しよう
     , _limit(0)
+    , _createdAt(std::time(NULL))
 {}
 
 Channel::~Channel() {}
@@ -121,6 +122,34 @@ void Channel::_showTopic(Client &client, const std::string &servername) const
     client._writeNumeric(RPL_TOPICTIME, servername, this->_name + " " + _topicSetBy + " :" + oss.str());
 }
 
+// ### TODO: もう少しシンプルにしよう
+// ### core_mode.cpp
+void Channel::_displayModes(Client &client, const std::string &servername) const
+{
+    std::ostringstream modes;
+    std::ostringstream params;
+    std::ostringstream created;
+
+    modes << "+";
+
+    if (this->_isModeSet(MODE_INVITE_ONLY)) modes << "i";
+    if (this->_isModeSet(MODE_NO_EXTERNAL)) modes << "n";
+    if (this->_isModeSet(MODE_TOPIC_OP)) mode << "t";
+    if (this->_isModeSet(MODE_LIMIT))
+    {
+        modes << "l";
+        params << " " << this->_limit;
+    }
+    if (this->_isModeSet(MODE_KEY))
+    {
+        modes << "k";
+        params << " :" << this->_key;
+    }
+
+    client._writeNumeric(RPL_CHANNELMODEIS, servername, this->_name + " " modes.str()  + params.str());
+    created << this->_createdAt;
+    client._writeNumeric(RPL_CHANNELCREATED, servername, this->_name + " :" + created.str());
+}
 
 bool Channel::_isModeSet(unsigned int mode) const
 {

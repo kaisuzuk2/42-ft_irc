@@ -52,3 +52,22 @@ CmdMode::CmdMode()
 
 CmdMode::~CmdMode() {}
 
+// ### TODO: ユーザーのmodeに対応すべきか　特別なエラー処理すべきか　とりあえずチャンネル専用にする
+void CmdMode::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
+{
+    const std::string &cname = params[0];
+    Channel *ch;
+
+    ch = serverInstance._getChannels._find(cname);
+    if (!ch)
+    {
+        client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), target + " :No such channel");
+        return ;
+    }
+
+    if (params.size() == 1)
+    {
+        
+        return ;
+    }
+}

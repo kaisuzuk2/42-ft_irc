@@ -43,6 +43,7 @@ class Channel
         std::string                 _key;
         unsigned int                _limit;
         std::set<Client *>          _inviteList;
+        time_t                      _createdAt;
 
     public:
         Channel(const std::string &name);
@@ -64,6 +65,7 @@ class Channel
         void                        _sendNames(Client &client, const std::string &servername) const;
 
         void                        _showTopic(Client &client, const std::string &servername) const;
+        void                        _displayModes(Client &client, const std::string &servername) const;
 
         const std::string           &_getName() const;
         const std::string           &_getTopic() const;
