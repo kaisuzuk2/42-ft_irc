@@ -172,7 +172,7 @@ bool CmdMode::_applyMode(FtIRCd &serverInstance, Client &client, Channel *ch, ch
             return (this->_applyFlagMode(ch, c, adding));
         case 'k':
             return (this->_applyKeyMode(serverInstance._getServername(), client, ch, adding, paramIdx, params, outParam));
-        case 'i':
+        case 'l':
             return (this->_applyLimitMode());
     }
 }
