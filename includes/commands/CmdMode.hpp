@@ -30,6 +30,8 @@ class CmdMode: public ACommand
         bool    _applyLimitMode(const std::string &servername, Client &client, Channel *ch, bool adding, size_t &paramIdx, const std::vector<std::string> &params, std::string &outParam);
         bool    _applyOperMode(FtIRCd &serverInstance, Client &client, Channel *ch, bool adding, size_t &paramIdx, const std::vector<std::string> &params, std::string &outParam)
 
+        void    _appendMode(char c, bool adding, const std::string &outParam, std::string &appliedStr, std::string appliedParams, char &lastSign);
+
 };
 
 #endif

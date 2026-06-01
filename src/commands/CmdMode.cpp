@@ -211,11 +211,27 @@ bool CmdMode::_applyMode(FtIRCd &serverInstance, Client &client, Channel *ch, ch
             return (this->_applyKeyMode(serverInstance._getServername(), client, ch, adding, paramIdx, params, outParam));
         case 'l':
             return (this->_applyLimitMode(serverInstance._getServername(), client, ch, adding, paramIdx, params, outParam));
-        case 'o'
+        case 'o':
             return (this->_applyOperMode(serverInstance, client, ch, adding, paramIdx, params, outParam));
         default:
-
+            client._writeNumeric(ERR_UNKNOWNMODE, serverInstance._getServername(), std::string(1, c) + " :is unknown mode char to me for " + ch->_getName());
+            return (false);
     }
+}
+
+void CmdMode::_appendMode(char c, bool adding, const std::string &outParam, std::string &appliedStr, std::string &appliedParams, char &lastSign)
+{
+    char sign;
+
+    sign = adding ? '+' : '-';
+    if (sign != lastSign)
+    {
+        appliedStr += sign;
+        lastSign = sign;
+    }
+    appliedStr += c;
+    if (!outParam.empty())
+        appliedParams += " " + outParam;
 }
 
 // ### TODO: ユーザーのmodeに対応すべきか　特別なエラー処理すべきか　とりあえずチャンネル専用にする
@@ -237,8 +253,17 @@ void CmdMode::_execute(FtIRCd &serverInstance, Client &client, const std::vector
         return ;
     }
 
-    // ### TODO: メンバーじゃないか
-    // ### TODO: オペレータかどうか
+    if (!ch->_hasMember(&client))
+    {
+        client._writeNumeric(ERR_NOTONCHANNEL, serverInstance._getServername(), cname + " :You're not on that channel");
+        return;
+    }
+
+    if (!ch->_isOper(&client))
+    {
+        client._writeNumeric(ERR_CHANOPRIVSNEEDED, serverInstance._getServername(), cname + " :You're not channel operator");
+        return;
+    }
 
     const std::string &modeStr = params[1];
     bool adding;
@@ -269,7 +294,6 @@ void CmdMode::_execute(FtIRCd &serverInstance, Client &client, const std::vector
         if (_applyMode(serverInstance, client, ch, c, adding, paramIdx, params, outParam)) // ### TODO: 引数が多い　なんとかならないか
             _appendMode(c, adding, outParam, appliedStr, appliedParams, lastSign); // ### TODO: 引数が多い　なんとかならないか
     }
-
-
-
+    if (!appliedStr.empty())
+        ch->_broadcast(":" + client._getPrefix + " MODE " + ch->_getName() + " " + appliedStr + appliedParams, NULL);
 }
