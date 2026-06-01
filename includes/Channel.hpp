@@ -75,6 +75,9 @@ class Channel
         void                        _setTopic(const std::string &topic, const std::string &setBy, time_t setAt);
         const std::string           &_getKey() const;
         void                        _setKey(const std::string &key);
+
+        void                        _setLimit(unsigned int limit);
+        unsigned int                _getLimit() const;
 };
 
 #endif

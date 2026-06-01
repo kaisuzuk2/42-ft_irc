@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <climits>
+
 #include "commands/CmdMode.hpp"
 
 /*
@@ -112,6 +114,54 @@ bool CmdMode::_applyFlagMode(Channel *ch, char c, bool adding)
     return (true);
 }
 
+bool CmdMode::_applyLimitMode(const std::string &servername, Client &client, Channel *ch, bool adding, size_t &paramIdx, const std::vector<std::string> &params, std::string &outParam)
+{
+    char *endptr;
+    long limit;
+    std::string limitValStr;
+
+    if (adding)
+    {
+        if (paramIdx >= params.size())
+        {
+            client._writeNumeric(ERR_INVALIDMODEPARAM, servername, ch->_getName() + " l * :You must specify a parameter for the limit mode. Syntax: <limit>.");
+            return (false);
+        }
+
+        errno = 0;
+        endptr = NULL;
+        limitValStr = params[paramIdx];
+        limit = std::strtol(limitValStr.c_str(), &endptr, 10);
+        if (limitValStr.c_str() == endptr || limit <= 0 || errno == ERANGE || limit > UINT_MAX)
+        {
+            client._writeNumeric(ERR_INVALIDMODEPARAM, servername,  ch->_getName() + " l " + limitValStr + " :Invalid limit mode parameter. Syntax: <limit>.");
+            ++paramIdx;
+            return (false);
+        }
+        if (ch->_isModeSet(MODE_LIMIT) && ch->_getLimit() == static_cast<unsigned int>(limit))
+        {
+            ++paramIdx;
+            return (false);
+        }
+
+        std::ostringstream oss;
+        oss << limit;
+        outParam = oss.str();
+        ++paramIdx;
+        ch->_setLimit(static_cast<unsigned int>(limit));
+        ch->_setMode(MODE_LIMIT);
+        return (true);
+    }
+    else
+    {
+        if (!ch->_isModeSet(MODE_LIMIT))
+            return (false);
+        ch->_setLimit(0);
+        ch->_unsetMode(MODE_LIMIT);
+        return (true);
+    }
+}
+
 bool CmdMode::_applyMode(FtIRCd &serverInstance, Client &client, Channel *ch, char c, bool adding, size_t &paramIdx, const std::vector<std::string> &params, std::string &outParam)
 {
     switch(c)
@@ -119,9 +169,11 @@ bool CmdMode::_applyMode(FtIRCd &serverInstance, Client &client, Channel *ch, ch
         case 'i':
         case 'n':
         case 't':
-            return (_applyFlagMode(ch, c, adding));
+            return (this->_applyFlagMode(ch, c, adding));
         case 'k':
-            return (_applyKeyMode(serverInstance._getServername(), client, ch, adding, paramIdx, params, outParam));
+            return (this->_applyKeyMode(serverInstance._getServername(), client, ch, adding, paramIdx, params, outParam));
+        case 'i':
+            return (this->_applyLimitMode());
     }
 }
 

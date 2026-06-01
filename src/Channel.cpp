@@ -53,6 +53,16 @@ void Channel::_setKey(const std::string &key)
     this->_key = key;
 }
 
+void Channel::_setLimit(unsigned int limit)
+{
+    this->_limit = limit;
+}
+
+unsigned int Channel::_getLimit() const
+{
+    return (this->_limit);
+}
+
 void Channel::_addMember(Client *client, bool isOper)
 {
     this->_members[client] = isOper;
