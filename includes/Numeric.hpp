@@ -44,6 +44,7 @@ enum Numeric
     ERR_NEEDMOREPARAMS      = 461,
     ERR_ALREADYREGISTERED   = 462,
     ERR_PASSWDMISMATCH      = 464,
+    ERR_KEYSET              = 467,
     ERR_BADCHANNELKEY       = 475,
     ERR_BADCHANMASK         = 476,
     ERR_CHANOPRIVSNEEDED    = 482,
@@ -56,6 +57,9 @@ enum Numeric
     RPL_CHANNELCREATED      = 329,
     RPL_TOPICTIME           = 333,
     ERR_INVALIDUSERNAME     = 468,
+
+    // from inspircd 
+    ERR_INVALIDMODEPARAM    = 696
 };
 
 #endif

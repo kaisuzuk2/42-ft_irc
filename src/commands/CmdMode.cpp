@@ -52,9 +52,41 @@ CmdMode::CmdMode()
 
 CmdMode::~CmdMode() {}
 
-bool CmdMode::_applyKeyMode(Channel *ch, bool ading, size_t &paramIdx, const std::vector<std::string> &params, std::string &outParam)
+bool CmdMode::_applyKeyMode(const std::string &servername, Client &client, Channel *ch, bool adding, size_t &paramIdx, const std::vector<std::string> &params, std::string &outParam)
 {
-    
+    if (paramIdx >= params.size()) 
+    {
+        client._writeNumeric(ERR_INVALIDMODEPARAM, servername, ch->_getName() + " k * :You must specify a parameter for the key mode. Syntax: <key>.");
+        return (false);
+    }
+    if (adding)
+    {
+        if (!ch->_isModeSet(MODE_KEY))  
+        {
+            outParam = params[paramIdx];
+            ch->_setMode(MODE_KEY);
+            ch->_setKey(outParam);
+            ++paramIdx;
+            return (true);
+        }
+        paramIdx++;
+        return (false);
+    }
+    else
+    {
+        if (!ch->_isModeSet(MODE_KEY))
+            return (false);
+        if (params[paramIdx] != ch->_getKey())
+        {
+            client._writeNumeric(ERR_KEYSET, servername, ch->_getName() + " :Channel key already set");
+            ++paramIdx;
+            return (false);
+        }
+        ch->_setKey("");
+        ch->_unsetMode(MODE_KEY);
+        ++paramIdx;
+        return (true);
+    }
 }
 
 bool CmdMode::_applyFlagMode(Channel *ch, char c, bool adding)
@@ -89,7 +121,7 @@ bool CmdMode::_applyMode(FtIRCd &serverInstance, Client &client, Channel *ch, ch
         case 't':
             return (_applyFlagMode(ch, c, adding));
         case 'k':
-            return (_applyKeyMode(ch, adding, paramIdx, params, outParam));
+            return (_applyKeyMode(serverInstance._getServername(), client, ch, adding, paramIdx, params, outParam));
     }
 }
 
