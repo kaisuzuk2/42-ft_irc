@@ -162,6 +162,43 @@ bool CmdMode::_applyLimitMode(const std::string &servername, Client &client, Cha
     }
 }
 
+bool CmdMode::_applyOperMode(FtIRCd &serverInstance, Client &client, Channel *ch, bool adding, size_t &paramIdx, const std::vector<std::string> &params, std::string &outParam)
+{
+    Client *target;
+
+    if (paramIdx >= params.size())
+    {
+        client._writeNumeric(ERR_INVALIDMODEPARAM, serverInstance._getServername(), ch->_getName() + " o * :You must specify a parameter for the op mode. Syntax: <nick>.");
+        return (false);
+    }
+
+    const std::string &nick = params[paramIdx];
+    target = serverInstance._getClients()._findByNick(nick);
+    if (!target)
+    {
+        client._writeNumeric(ERR_NOSUCHNICK, serverInstance._getServername(), nick + " :No such nick");
+        ++paramIdx;
+        return (false);
+    }
+    if (!ch->_hasMember(target))
+    {
+        client._writeNumeric(ERR_USERNOTINCHANNEL, serverInstance._getServername(), nick + " " + ch->_getName() + " :They are not on that channel");
+        ++paramIdx;
+        return (false);
+    }
+
+    if (ch->_isOper(target) == adding)
+    {
+        ++paramIdx;
+        return (false);
+    }
+
+    outParam = nick;
+    ++paramIdx;
+    ch->_setOper(target, adding);
+    return (true);
+}
+
 bool CmdMode::_applyMode(FtIRCd &serverInstance, Client &client, Channel *ch, char c, bool adding, size_t &paramIdx, const std::vector<std::string> &params, std::string &outParam)
 {
     switch(c)
@@ -173,7 +210,11 @@ bool CmdMode::_applyMode(FtIRCd &serverInstance, Client &client, Channel *ch, ch
         case 'k':
             return (this->_applyKeyMode(serverInstance._getServername(), client, ch, adding, paramIdx, params, outParam));
         case 'l':
-            return (this->_applyLimitMode());
+            return (this->_applyLimitMode(serverInstance._getServername(), client, ch, adding, paramIdx, params, outParam));
+        case 'o'
+            return (this->_applyOperMode(serverInstance, client, ch, adding, paramIdx, params, outParam));
+        default:
+
     }
 }
 

@@ -87,6 +87,13 @@ bool Channel::_isOper(Client *client) const
     return (it->second);
 }
 
+void Channel::_setOper(Client *client, bool isOper)
+{
+    this->_members[client] = isOper;
+}
+
+
+
 bool Channel::_isEmpty() const
 {
     return (this->_members.empty());

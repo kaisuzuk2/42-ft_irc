@@ -52,7 +52,10 @@ class Channel
         void                        _addMember(Client *client, bool isOper = false);
         void                        _removeMember(Client *client);
         bool                        _hasMember(Client *client) const;
+
         bool                        _isOper(Client *client) const;
+        void                        _setOper(Client *client, bool isOper);
+
         bool                        _isEmpty() const;
     
         bool                        _isModeSet(unsigned int mode) const;
