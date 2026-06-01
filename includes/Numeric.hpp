@@ -45,6 +45,7 @@ enum Numeric
     ERR_ALREADYREGISTERED   = 462,
     ERR_PASSWDMISMATCH      = 464,
     ERR_KEYSET              = 467,
+    ERR_UNKNOWNMODE         = 472,
     ERR_BADCHANNELKEY       = 475,
     ERR_BADCHANMASK         = 476,
     ERR_CHANOPRIVSNEEDED    = 482,
