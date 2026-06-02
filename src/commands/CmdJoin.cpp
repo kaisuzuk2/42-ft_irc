@@ -31,7 +31,8 @@ RFC2811
 チャンネル文字数: 50文字
 チャンネル名は大文字・小文字を区別しない。
 
-
+channels.cpp
+https://github.com/inspircd/inspircd/blob/5b5be2721fe408ffc13c0558b93037e6994461ff/src/channels.cpp#L166
 */
 
 CmdJoin::CmdJoin()
@@ -96,6 +97,10 @@ bool CmdJoin::_preJoinCheck(FtIRCd &serverInstance, Client &client, Channel *ch,
 
     // ###  TODO
     // 招待チェック
+    if (ch->_isModeSet(MODE_INVITE_ONLY) && !ch->_isInvited(&client))
+    {
+        return (false);
+    }
 
     // 人数制限値チェック
 
