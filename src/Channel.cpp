@@ -18,7 +18,7 @@
 Channel::Channel(const std::string &name)
     : _name(name)
     , _topicSetAt(0)
-    , _modes(0) // ### TODO: デフォルトのモード追加しよう
+    , _modes(MODE_NO_EXTERNAL | MODE_TOPIC_OP) // [Note] inspircdよりデフォルトのチャンネルモード設定
     , _limit(0)
     , _createdAt(std::time(NULL)) // ### TODO 0になるね
 {}
@@ -92,8 +92,6 @@ void Channel::_setOper(Client *client, bool isOper)
 {
     this->_members[client] = isOper;
 }
-
-
 
 bool Channel::_isEmpty() const
 {
