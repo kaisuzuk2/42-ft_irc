@@ -148,9 +148,9 @@ void CmdJoin::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     std::vector<std::string> channels;
     std::vector<std::string> keys;
 
-    channels = this->_splitByComma(params[0]);
+    channels = this->_splitByComma(params[0], true);
     if (params.size() > 1)
-        keys = this->_splitByComma(params[1]);
+        keys = this->_splitByComma(params[1], false);
 
     for (size_t i = 0; i < channels.size(); ++i)
     {

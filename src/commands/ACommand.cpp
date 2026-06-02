@@ -41,14 +41,16 @@ bool ACommand::_getWorksBeforeReg() const
     return (this->_works_before_reg);
 }
 
-std::vector<std::string> ACommand::_splitByComma(std::string str)
+std::vector<std::string> ACommand::_splitByComma(std::string str, bool skipEmpty)
 {
     std::vector<std::string> res;
     std::string::size_type pos;
 
     while ((pos = str.find(',')) != std::string::npos)
     {
-        res.push_back(str.substr(0, pos));
+        std::string token = str.substr(0, pos);
+        if (!token.empty() || !skipEmpty)
+            res.push_back(str.substr(0, pos));
         str.erase(0, pos + 1);
     }
     res.push_back(str);

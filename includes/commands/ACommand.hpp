@@ -39,7 +39,7 @@ class ACommand
         bool                        _getWorksBeforeReg() const;
 
     protected:
-        std::vector<std::string>    _splitByComma(const std::string str);
+        std::vector<std::string>    _splitByComma(const std::string str bool skipEmpty);
 };
 
 #endif
