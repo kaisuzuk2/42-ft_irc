@@ -205,4 +205,12 @@ void Channel::_removeInvite(Client *client)
     this->_inviteList.erase(client);
 }
 
+size_t Channel::_getMemberSize() const
+{
+    return (this->_members.size());
+}
 
+unsigned int Channel::_getLimit() const
+{
+    return (this->_limit);
+}

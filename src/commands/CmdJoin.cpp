@@ -80,7 +80,7 @@ bool CmdJoin::_preJoinCheck(FtIRCd &serverInstance, Client &client, Channel *ch,
     // 上限数チェック
     if (client._getChannelSize() >= FtIRCd::kMaxChannels)
     {
-        client._writeNumeric(ERR_TOOMANYCHANNELS, serverInstance._getServername(), cname + " :You have joined too many channels");
+        client._writeNumeric(ERR_TOOMANYCHANNELS, serverInstance._getServername(), ch_>_getName() + " :You have joined too many channels");
         return (false);
     }
 
@@ -91,18 +91,19 @@ bool CmdJoin::_preJoinCheck(FtIRCd &serverInstance, Client &client, Channel *ch,
     // キーチェック
     if (!ch->_getKey().empty() && ch->_getKey() != key)
     {
-        client._writeNumeric(ERR_BADCHANNELKEY, serverInstance._getServername(), cname + " :Cannot join channel (+k)");
+        client._writeNumeric(ERR_BADCHANNELKEY, serverInstance._getServername(), ch->_getName() + " :Cannot join channel (+k)");
         return (false);
     }
 
-    // ###  TODO
     // 招待チェック
     if (ch->_isModeSet(MODE_INVITE_ONLY) && !ch->_isInvited(&client))
     {
+        client._writeNumeric(ERR_INVITEONLYCHAN, serverInstance._getServername(), ch->_getName() + " :Cannot join channel (+i)");
         return (false);
     }
 
     // 人数制限値チェック
+
 
     return (true);
 }

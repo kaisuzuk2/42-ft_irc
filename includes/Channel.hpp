@@ -81,6 +81,9 @@ class Channel
 
         void                        _setLimit(unsigned int limit);
         unsigned int                _getLimit() const;
+
+        size_t                      _getMemberSize() const;
+        unsigned int                _getLimit() const;
 };
 
 #endif
