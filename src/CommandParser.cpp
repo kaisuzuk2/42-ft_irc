@@ -116,7 +116,7 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     cmd = tokens[0];
     std::transform(cmd.begin(), cmd.end(), cmd.begin(), ::toupper);
 
-    std::map<std::string, ACommand *>::iterator it = this->_commands.find(cmd);
+    std::map<std::string, ACommand *>::const_iterator it = this->_commands.find(cmd);
     if (it == this->_commands.end())
     {
         // [Note] 登録が済んでいたらエラーにする
