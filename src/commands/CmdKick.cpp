@@ -15,7 +15,7 @@
 #include "ft_ircd.hpp"
 
 /*
-RFC 1459
+RFC 1459 (inspircd)
 パラメータ:  <channel> <user> [<comment>]
 
 RFC 2812
@@ -89,28 +89,11 @@ void CmdKick::_execute(FtIRCd &serverInstance, Client &client, const std::vector
 {
     std::vector<std::string> channels;
     std::vector<std::string> users;
-    std::string::size_type pos;
-    std::string chanStr;
-    std::string userStr;
 
     const std::string reason = params.size() > 2 ? params[2] : client._getNick();
 
-    // ### TOOD: コンマ区切りの分割は関数化すること
-    chanStr = params[0];
-    while ((pos = chanStr.find(',')) != std::string::npos)
-    {
-        channels.push_back(chanStr.substr(0, pos));
-        chanStr.erase(0, pos + 1);
-    }
-    channels.push_back(chanStr);
-
-    userStr = params[1];
-    while ((pos = userStr.find(',')) != std::string::npos)
-    {
-        users.push_back(userStr.substr(0, pos));
-        userStr.erase(0, pos + 1);
-    }
-    users.push_back(userStr);
+    channels = this->_splitByComma(params[0]);
+    users = this->_splitByComma(params[1]);
 
     if (channels.size() == 1)
     {
