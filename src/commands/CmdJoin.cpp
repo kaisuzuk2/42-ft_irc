@@ -75,12 +75,12 @@ bool CmdJoin::_isPrefix(unsigned char prefix) const
     return prefix == '#';
 }
 
-bool CmdJoin::_preJoinCheck(FtIRCd &serverInstance, Client &client, Channel *ch, const std::string &cname, const std::string &key)
+bool CmdJoin::_preJoinCheck(FtIRCd &serverInstance, Client &client, Channel *ch, const std::string &key)
 {
     // 上限数チェック
     if (client._getChannelSize() >= FtIRCd::kMaxChannels)
     {
-        client._writeNumeric(ERR_TOOMANYCHANNELS, serverInstance._getServername(), ch_>_getName() + " :You have joined too many channels");
+        client._writeNumeric(ERR_TOOMANYCHANNELS, serverInstance._getServername(), ch->_getName() + " :You have joined too many channels");
         return (false);
     }
 
@@ -106,7 +106,7 @@ bool CmdJoin::_preJoinCheck(FtIRCd &serverInstance, Client &client, Channel *ch,
     if (ch->_isModeSet(MODE_LIMIT) && ch->_getMemberSize() >= ch->_getLimit())
     {
         client._writeNumeric(ERR_CHANNELISFULL, serverInstance._getServername(), ch->_getName() + " :Cannot join channel (+l)");
-        returN (false);
+        return (false);
     }
 
     return (true);
@@ -121,7 +121,7 @@ void CmdJoin::_joinChannel(FtIRCd &serverInstance, Client &client, const std::st
     ch = serverInstance._getChannels()._find(cname);
     isNew = (ch == NULL);
 
-    if (!this->_preJoinCheck(serverInstance, client, ch, cname, key))
+    if (!this->_preJoinCheck(serverInstance, client, ch, key))
         return ;
     if (isNew)
         ch = serverInstance._getChannels()._create(cname); 
