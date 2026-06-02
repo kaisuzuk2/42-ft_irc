@@ -38,9 +38,7 @@ solanum(libera.chat)ではエラーを返さない
 
 
 /*
-### TODO: findByNick
-登録済みのもののみチェックする必要があるかも
-チャンネルの大文字小文字のエラーメッセージ
+### TODO: チャンネルの大文字小文字のエラーメッセージ
 */
 CmdMessage::CmdMessage(bool isNotice) 
     : ACommand(isNotice ? "NOTICE" : "PRIVMSG", 2, 2, false)
@@ -54,7 +52,7 @@ void CmdMessage::_handleUserTarget(FtIRCd &serverInstance, Client &client,const 
     Client *target;
     std::string cmdName;
 
-    target = serverInstance._getClients()._findByNick(nick); // ### TODO: 登録が完了しているかチェックしないと
+    target = serverInstance._getClients()._findByNick(nick, true);
     if (!target)
     {
         if (!this->_isNotice)
