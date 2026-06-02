@@ -43,7 +43,8 @@ CmdJoin::~CmdJoin() {}
 
 /*
 RFC2811 2.1
-スペース（' '）、コントロールG（^G またはASCII 7）、カンマ（','、プロトコルにおいてリスト項目の区切り文字として使用される）
+スペース（' '）、コントロールG（^G またはASCII 7）、
+カンマ（','、プロトコルにおいてリスト項目の区切り文字として使用される）
 を含んではならない
 */
 bool CmdJoin::_isValidChannelName(const std::string &name) const
@@ -139,19 +140,15 @@ void CmdJoin::_joinChannel(FtIRCd &serverInstance, Client &client, const std::st
 
     ch->_broadcast(":" + client._getPrefix() + " JOIN :" + cname, NULL);
 
+    if (!ch->_getTopic().empty())
+        ch->_showTopic(client, serverInstance._getServername());
+
     // TODO: onpostjoin
     ch->_sendNames(client, serverInstance._getServername());
     client._writeNumeric(RPL_ENDOFNAMES, serverInstance._getServername(), ch->_getName() + " :End of NAMES list" );
 
 }
 
-/*
-join_command 
--> JoinUser: チャンネルの作成 preuserjoin実行
-->　ForceJoin: ユーザをチャンネルに追加 数値リプライ
-*/
-
-// ### TODO: topicがあれば表示する？
 void CmdJoin::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
     std::vector<std::string> channels;
