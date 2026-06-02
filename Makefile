@@ -20,7 +20,8 @@ SRCS		=	src/ft_ircd.cpp \
 				src/commands/CmdMessage.cpp \
 				src/commands/CmdKick.cpp \
 				src/commands/CmdInvite.cpp \
-				src/commands/CmdTopic.cpp
+				src/commands/CmdTopic.cpp \
+				src/commands/CmdMode.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
 

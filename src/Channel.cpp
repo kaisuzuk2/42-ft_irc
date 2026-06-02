@@ -20,6 +20,7 @@ Channel::Channel(const std::string &name)
     , _topicSetAt(0)
     , _modes(0) // ### TODO: デフォルトのモード追加しよう
     , _limit(0)
+    , _createdAt(std::time(NULL))
 {}
 
 Channel::~Channel() {}
@@ -154,7 +155,7 @@ void Channel::_displayModes(Client &client, const std::string &servername) const
 
     if (this->_isModeSet(MODE_INVITE_ONLY)) modes << "i";
     if (this->_isModeSet(MODE_NO_EXTERNAL)) modes << "n";
-    if (this->_isModeSet(MODE_TOPIC_OP)) mode << "t";
+    if (this->_isModeSet(MODE_TOPIC_OP)) modes << "t";
     if (this->_isModeSet(MODE_LIMIT))
     {
         modes << "l";
@@ -166,8 +167,10 @@ void Channel::_displayModes(Client &client, const std::string &servername) const
         params << " :" << this->_key;
     }
 
-    client._writeNumeric(RPL_CHANNELMODEIS, servername, this->_name + " " modes.str()  + params.str());
-    client._writeNumeric(RPL_CHANNELCREATED, servername, )
+    client._writeNumeric(RPL_CHANNELMODEIS, servername, this->_name + " " + modes.str()  + params.str());
+    std::ostringstream oss;
+    oss << this->_createdAt;
+    client._writeNumeric(RPL_CHANNELCREATED, servername, this->_name + " :" + oss.str());
     
 }
 
