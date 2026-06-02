@@ -20,7 +20,7 @@ Channel::Channel(const std::string &name)
     , _topicSetAt(0)
     , _modes(0) // ### TODO: デフォルトのモード追加しよう
     , _limit(0)
-    , _createdAt(std::time(NULL))
+    , _createdAt(std::time(NULL)) // ### TODO 0になるね
 {}
 
 Channel::~Channel() {}
