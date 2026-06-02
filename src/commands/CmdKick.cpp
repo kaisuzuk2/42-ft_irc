@@ -49,7 +49,7 @@ void CmdKick::_kickUser(FtIRCd &serverInstance, Client &client, const std::strin
         return ;
     }
 
-    target = serverInstance._getClients()._findByNick(nick);
+    target = serverInstance._getClients()._findByNick(nick, true);
     if (!target)
     {
         client._writeNumeric(ERR_NOSUCHNICK, serverInstance._getServername(), nick + " :No such nick");
