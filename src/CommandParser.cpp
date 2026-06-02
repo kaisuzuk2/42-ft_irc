@@ -94,10 +94,6 @@ std::vector<std::string> CommandParser::_split(const std::string &line, size_t m
     return (params);
 }
 
-
-/*
-### TODO: noticeの場合引数が足りない場合もエラーを出さないようにする
-*/
 void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::string &line)
 {
     std::vector<std::string> tokens;
@@ -119,7 +115,7 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     std::map<std::string, ACommand *>::const_iterator it = this->_commands.find(cmd);
     if (it == this->_commands.end())
     {
-        // [Note] 登録が済んでいたらエラーにする
+        // 登録が済んでいたらエラーにする
         if (client._isRegistered())
             client._writeNumeric(ERR_UNKNOWNCOMMAND, serverInstance._getServername(), ":Unknown commmand");
         return ;
@@ -127,7 +123,7 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
 
     ACommand *command = it->second;
 
-    // [Note] command後にパラメータがあるかチェック
+    // command後にパラメータがあるかチェック
     sp = line.find(' '); 
     if (sp != std::string::npos)
     {
