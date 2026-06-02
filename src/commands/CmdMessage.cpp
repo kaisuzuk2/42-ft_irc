@@ -105,7 +105,7 @@ void CmdMessage::_execute(FtIRCd &serverInstance, Client &client, const std::vec
     const std::string &msg = params[1];
     std::vector<std::string> targets;
 
-    targets = this->_splitByComma(params[0]);
+    targets = this->_splitByComma(params[0], true);
 
     if (msg.empty())
     {   

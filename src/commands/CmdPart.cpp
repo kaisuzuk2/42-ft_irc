@@ -77,7 +77,7 @@ void CmdPart::_execute(FtIRCd &serverInstance, Client &client, const std::vector
 
     reason = params.size() > 1 ? params[1] : "";
 
-    channels = this->_splitByComma(params[0]);
+    channels = this->_splitByComma(params[0], true);
 
     for (size_t i = 0; i < channels.size(); ++i)
         _partChannel(serverInstance, client, channels[i], reason);

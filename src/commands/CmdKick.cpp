@@ -92,8 +92,8 @@ void CmdKick::_execute(FtIRCd &serverInstance, Client &client, const std::vector
 
     const std::string reason = params.size() > 2 ? params[2] : client._getNick();
 
-    channels = this->_splitByComma(params[0]);
-    users = this->_splitByComma(params[1]);
+    channels = this->_splitByComma(params[0], true);
+    users = this->_splitByComma(params[1], true);
 
     if (channels.size() == 1)
     {
