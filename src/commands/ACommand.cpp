@@ -41,7 +41,7 @@ bool ACommand::_getWorksBeforeReg() const
     return (this->_works_before_reg);
 }
 
-std::vector<std::string> ACommand::_splitByComma(const std::string str)
+std::vector<std::string> ACommand::_splitByComma(std::string str)
 {
     std::vector<std::string> res;
     std::string::size_type pos;

@@ -145,29 +145,12 @@ join_command
 // ### TODO: topicがあれば表示する？
 void CmdJoin::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
-    std::string chanStr;
-    std::string keyStr;
     std::vector<std::string> channels;
     std::vector<std::string> keys;
-    std::string::size_type pos;
 
-     // ### TODO: コンマ区切りの処理は複数で使っているから関数かしよう
-    chanStr = params[0];
-    while ((pos = chanStr.find(',')) != std::string::npos)
-    {
-        channels.push_back(chanStr.substr(0, pos));
-        chanStr.erase(0, pos + 1);
-    }
-    channels.push_back(chanStr);
-
-    keyStr = params.size() > 1 ? params[1] : "";
-    while ((pos = keyStr.find(',')) != std::string::npos)
-    {
-        keys.push_back(keyStr.substr(0, pos));
-        keyStr.erase(0, pos + 1);
-    }
-    if (!keyStr.empty())
-        keys.push_back(keyStr);
+    channels = this->_splitByComma(params[0]);
+    if (params.size() > 1)
+        keys = this->_splitByComma(params[1]);
 
     for (size_t i = 0; i < channels.size(); ++i)
     {
