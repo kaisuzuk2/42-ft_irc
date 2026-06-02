@@ -57,12 +57,12 @@ bool CmdUser::_isValidUser(const std::string &user) const
 
 void CmdUser::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
-    const std::string &newreal = params[3]; // ### TODO: 定数化した方がいいかな
+    const std::string &newreal = params[3]; 
     std::string newuser;
 
     if (client._getUsername().empty())
     {
-        newuser = params[0]; // ### TODO: 定数化した方がいいかな
+        newuser = params[0]; 
         if (newuser.length() > FtIRCd::kMaxUserLen)
             newuser.erase(FtIRCd::kMaxUserLen);
 
