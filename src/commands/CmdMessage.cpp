@@ -99,21 +99,13 @@ void CmdMessage::_handleChannelTarget(FtIRCd &serverInstance, Client &client, co
 
 }
 
+// ### TODO: #a,,#bとかのケース
 void CmdMessage::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
     const std::string &msg = params[1];
-    std::string targetStr;
     std::vector<std::string> targets;
-    std::string::size_type pos;
 
-    // ### TODO: コンマ区切りの処理は複数で使っているから関数かしよう
-    targetStr = params[0];
-    while ((pos = targetStr.find(',')) != std::string::npos)
-    {
-        targets.push_back(targetStr.substr(0, pos));
-        targetStr.erase(0, pos + 1);
-    }
-    targets.push_back(targetStr);
+    targets = this->_splitByComma(params[0]);
 
     if (msg.empty())
     {   
