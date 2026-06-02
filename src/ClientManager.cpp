@@ -45,7 +45,7 @@ Client *ClientManager::_findByFd(int fd) const
 }
 
 // ### TODO: {と}[] rfc1459
-Client *ClientManager::_findByNick(const std::string &nick) const
+Client *ClientManager::_findByNick(const std::string &nick, bool fullyConnected) const
 {
     std::string lowerNick;
     std::string clientNick;
@@ -57,7 +57,11 @@ Client *ClientManager::_findByNick(const std::string &nick) const
         clientNick = it->second->_getNick();
         std::transform(clientNick.begin(), clientNick.end(), clientNick.begin(), (int(*)(int))std::tolower);
         if (clientNick == lowerNick)
+        {
+            if (fullyConnected && !it->second->_isRegistered())
+                return (NULL);
             return (it->second);
+        }
     }
     return (NULL);
 }

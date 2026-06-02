@@ -30,7 +30,7 @@ class ClientManager
         void                    _removeClient(int fd);
 
         Client                  *_findByFd(int fd) const;
-        Client                  *_findByNick(const std::string &nick) const;
+        Client                  *_findByNick(const std::string &nick, bool fullyConnected) const;
         
         // typedefすべきかな
         const std::map<int, Client *> &_getClients() const;
