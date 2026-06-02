@@ -45,7 +45,7 @@ Client::~Client()
 
 bool Client::_changeNick(const std::string &newnick, const ClientManager &clients, const std::string &servername)
 {
-    Client *const InUse = clients._findByNick(newnick);
+    Client *const InUse = clients._findByNick(newnick, false);
 
     if (InUse == this)
     {
@@ -59,7 +59,6 @@ bool Client::_changeNick(const std::string &newnick, const ClientManager &client
     }
     this->_nick = newnick;
     return (true);
-    
 }
 
 int Client::_getFd() const 
