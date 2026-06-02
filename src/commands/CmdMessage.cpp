@@ -99,7 +99,6 @@ void CmdMessage::_handleChannelTarget(FtIRCd &serverInstance, Client &client, co
 
 }
 
-// ### TODO: #a,,#bとかのケース
 void CmdMessage::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
     const std::string &msg = params[1];

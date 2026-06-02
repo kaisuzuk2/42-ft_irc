@@ -84,7 +84,6 @@ void CmdKick::_kickUser(FtIRCd &serverInstance, Client &client, const std::strin
         serverInstance._getChannels()._remove(cname);    
 }
 
-// ### TODO: kick #a,,,#c 連続する,は空文字になる　それはスキップする
 void CmdKick::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
     std::vector<std::string> channels;

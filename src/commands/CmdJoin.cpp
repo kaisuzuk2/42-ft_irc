@@ -141,7 +141,6 @@ join_command
 ->　ForceJoin: ユーザをチャンネルに追加 数値リプライ
 */
 
-// ### TODO: join #a,,,#c 空文字はスキップ
 // ### TODO: topicがあれば表示する？
 void CmdJoin::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
