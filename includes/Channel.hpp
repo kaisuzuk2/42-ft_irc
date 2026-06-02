@@ -83,7 +83,6 @@ class Channel
         unsigned int                _getLimit() const;
 
         size_t                      _getMemberSize() const;
-        unsigned int                _getLimit() const;
 };
 
 #endif
