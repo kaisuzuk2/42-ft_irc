@@ -103,7 +103,11 @@ bool CmdJoin::_preJoinCheck(FtIRCd &serverInstance, Client &client, Channel *ch,
     }
 
     // 人数制限値チェック
-
+    if (ch->_isModeSet(MODE_LIMIT) && ch->_getMemberSize() >= ch->_getLimit())
+    {
+        client._writeNumeric(ERR_CHANNELISFULL, serverInstance._getServername(), ch->_getName() + " :Cannot join channel (+l)");
+        returN (false);
+    }
 
     return (true);
 }
