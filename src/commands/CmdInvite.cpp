@@ -34,6 +34,9 @@ RFC 2182
 チャンネルオペレーターから招待された場合にのみ受け入れられる。
 このフラグはまた、INVITE コマンド（「IRC Client Protocol」[IRC-CLIENT]を参照）の使用を
 チャンネルオペレーターに限定する。
+
+[Note]
+inspircdでは三つ目のパラメータは招待の有効期限を指定する。
 */
 
 CmdInvite::CmdInvite() 
@@ -52,13 +55,11 @@ bool CmdInvite::_preInviteCheck(FtIRCd &serverInstance, Client &client, Channel 
     return (true);
 }
 
+// [Note] parameterが一つの場合はそれを無視する
 void CmdInvite::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
     Channel *ch;
     Client *target;
-    // invite
-    // invite nicksample
-    // パラメータが一つの場合無視する
 
     if (params.size() < 2)
     {
