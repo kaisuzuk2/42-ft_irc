@@ -174,7 +174,7 @@ bool CmdMode::_applyOperMode(FtIRCd &serverInstance, Client &client, Channel *ch
     }
 
     const std::string &nick = params[paramIdx];
-    target = serverInstance._getClients()._findByNick(nick);
+    target = serverInstance._getClients()._findByNick(nick, false);
     if (!target)
     {
         client._writeNumeric(ERR_NOSUCHNICK, serverInstance._getServername(), nick + " :No such nick");
