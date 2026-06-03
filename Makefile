@@ -3,25 +3,28 @@ CXX			=	c++
 CXXFLAGS	=	-Wall -Werror -Wextra -std=c++98
 INC			=	-Iincludes
 
-SRCS		=	src/ft_ircd.cpp \
-				src/SocketEngine.cpp \
-				src/Client.cpp \
-				src/ClientManager.cpp \
-				src/CommandParser.cpp \
-				src/Channel.cpp \
-				src/ChannelManager.cpp \
-				src/commands/ACommand.cpp \
-				src/commands/CmdPass.cpp \
-				src/commands/CmdNick.cpp \
-				src/commands/CmdUser.cpp \
-				src/commands/CmdJoin.cpp \
-				src/commands/CmdPart.cpp \
-				src/commands/CmdQuit.cpp \
-				src/commands/CmdMessage.cpp \
-				src/commands/CmdKick.cpp \
-				src/commands/CmdInvite.cpp \
-				src/commands/CmdTopic.cpp \
-				src/commands/CmdMode.cpp
+SRCS 		=	$(addprefix src/,\
+					ft_ircd.cpp \
+					SocketEngine.cpp \
+					Client.cpp \
+					ClientManager.cpp \
+					CommandParser.cpp \
+					Channel.cpp \
+					ChannelManager.cpp \
+					$(addprefix commands/,\
+						ACommand.cpp \
+						CmdPass.cpp \
+						CmdNick.cpp \
+						CmdUser.cpp \
+						CmdJoin.cpp \
+						CmdPart.cpp \
+						CmdQuit.cpp \
+						CmdMessage.cpp \
+						CmdKick.cpp \
+						CmdInvite.cpp \
+						CmdTopic.cpp \
+						CmdMode.cpp \
+				))
 
 OBJS		=	$(SRCS:.cpp=.o)
 
