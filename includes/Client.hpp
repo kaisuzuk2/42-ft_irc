@@ -49,6 +49,8 @@ class Client
         void                        _flushSendBuf();
         void                        _writeNumeric(const int num, const std::string &servername, const std::string &msg);
 
+        void                        _broadcastToNeighbors(const std::string &msg);
+
         bool                        _changeNick(const std::string &newnick, const ClientManager &clients, const std::string &servername);
         void                        _setFullyRegistered();
 

@@ -61,6 +61,24 @@ bool Client::_changeNick(const std::string &newnick, const ClientManager &client
     return (true);
 }
 
+void Client::_broadcastToNeighbors(const std::string &msg)
+{
+    std::set<Client *> notified;
+    
+    notified.insert(this);
+    this->_send(msg);
+    
+    for (std::set<Channel *>::const_iterator it = this->_channels.begin(); it != this->_channels.end(); ++it)
+    {
+        const std::map<Client *, bool> &members = (*it)->_getMembers();
+        for (std::map<Client *, bool>::const_iterator mit = members.begin(); mit != members.end(); ++mit)
+        {
+            if (notified.insert(mit->first).second)
+                mit->first->_send(msg);
+        }
+    }
+}
+
 int Client::_getFd() const 
 {
     return (this->_fd);

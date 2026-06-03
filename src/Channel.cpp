@@ -207,3 +207,8 @@ size_t Channel::_getMemberSize() const
 {
     return (this->_members.size());
 }
+
+const &std::map<Client *, bool> Channel::_getMembers() const
+{
+    return (this->_members);
+}
