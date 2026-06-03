@@ -57,6 +57,7 @@ const ChannelManager &FtIRCd::_getChannels() const
 
 // ### TODO: 起動時のメッセージ
 // ### TODO: バージョン定数化した方がいいね
+// ### TODO: MOTD出力する　MOTDコマンドを実装しようかな
 void FtIRCd::_onUserConnect(Client &client)
 {
     client._writeNumeric(RPL_WELCOME, this->_servername, ":Welcome to the Internet Relay Network " + client._getPrefix());
@@ -68,7 +69,7 @@ void FtIRCd::_onUserConnect(Client &client)
     std::strftime(buf, sizeof(buf), ":This server was created on %d %b %Y at %H:%M:%S UTC", tm_info);
     client._writeNumeric(RPL_CREATED, this->_servername, buf);
 
-    client._writeNumeric(RPL_MYINFO, this->_servername, this->_servername + " ft-ircd-1.0 . iklnot");
+    client._writeNumeric(RPL_MYINFO, this->_servername, this->_servername + " ft-irc-1.0 . iklnot");
 
 }
 
