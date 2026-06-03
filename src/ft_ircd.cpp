@@ -63,10 +63,11 @@ void FtIRCd::_onUserConnect(Client &client)
     client._writeNumeric(RPL_YOURHOST, this->_servername, ":Your host is " + this->_servername + ", running version ft-irc-1.0");
     
     struct tm *tm_info = std::gmtime(&this->_startupTime);
-    char buf[64];
+    char buf[128];
     std::strftime(buf, sizeof(buf), ":This server was created on %d %b %Y at %H:%M:%S UTC", tm_info);
     client._writeNumeric(RPL_CREATED, this->_servername, buf);
 
+    client._writeNumeric(RPL_MYINFO, this->_servername, this->_servername + " ft-ircd-1.0 . iklnot");
 
 }
 
