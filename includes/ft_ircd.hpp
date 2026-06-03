@@ -28,11 +28,13 @@ class FtIRCd
         std::string         _password;
         int                 _serverFd;
         std::string         _servername;
-        
+        time_t              _startupTime;
+
         SocketEngine        _socketEngine;
         ClientManager       _clients;
         ChannelManager      _channels;
         CommandParser       _parser;
+
 
     public:
         FtIRCd(int argc, char **argv);
