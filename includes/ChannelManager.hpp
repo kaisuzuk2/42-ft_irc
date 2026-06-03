@@ -29,7 +29,9 @@ class ChannelManager
 
         Channel                             *_find(const std::string &name) const;
         Channel                             *_create(const std::string &name);
-        void                                _remove(const std::string &name);
+        void                                _remove(const std::string &name); // ### TODO: channel受け取ってもいいかもね
+       
+        static bool                         _isPrefix(unsigned char prefix);
 };
 
 #endif
