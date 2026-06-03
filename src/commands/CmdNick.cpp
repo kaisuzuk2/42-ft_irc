@@ -77,7 +77,4 @@ void CmdNick::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     
     if (!client._isRegistered())
         serverInstance._checkRegister(client);
-    
-
-    // ### TODO: 登録済みならチャンネル全員に通知する
 }

@@ -83,7 +83,7 @@ class Channel
         unsigned int                        _getLimit() const;
 
         size_t                              _getMemberSize() const;
-        const &std::map<Client *, bool>     _getMembers() const;
+        const std::map<Client *, bool>      &_getMembers() const;
 };
 
 #endif

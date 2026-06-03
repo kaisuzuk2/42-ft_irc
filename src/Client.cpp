@@ -23,6 +23,7 @@
 
 #include "ft_ircd.hpp"
 #include "ClientManager.hpp"
+#include "Channel.hpp"
 
 Client::Client(int fd, const struct sockaddr_in &addr)
     : _fd(fd)
@@ -57,7 +58,11 @@ bool Client::_changeNick(const std::string &newnick, const ClientManager &client
         this->_send(":" + servername + " 433 " + this->_getNick() + " " + newnick + " :Nickname is already in use");
         return (false);
     }
+    
+    const std::string oldPrefix = this->_getPrefix();
     this->_nick = newnick;
+    if (this->_isRegistered())
+        this->_broadcastToNeighbors(":" + oldPrefix + " NICK :" + newnick);
     return (true);
 }
 
