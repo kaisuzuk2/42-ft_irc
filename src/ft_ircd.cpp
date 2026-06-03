@@ -54,15 +54,20 @@ const ChannelManager &FtIRCd::_getChannels() const
     return (this->_channels);
 }
 
+
+// ### TODO: 起動時のメッセージ
 void FtIRCd::_onUserConnect(Client &client)
 {
     client._writeNumeric(RPL_WELCOME, this->_servername, ":Welcome to the Internet Relay Network " + client._getPrefix());
+    
     client._writeNumeric(RPL_YOURHOST, this->_servername, ":Your host is " + this->_servername + ", running version ft-irc-1.0");
     
     struct tm *tm_info = std::gmtime(&this->_startupTime);
     char buf[64];
-    std::strftime(buf, sizeof(buf), ":This server was created on %d %b  %Y at %H:%M:%S UTC", tm_info);
+    std::strftime(buf, sizeof(buf), ":This server was created on %d %b %Y at %H:%M:%S UTC", tm_info);
     client._writeNumeric(RPL_CREATED, this->_servername, buf);
+
+
 }
 
 
