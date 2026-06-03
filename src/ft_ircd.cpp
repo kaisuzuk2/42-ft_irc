@@ -100,7 +100,6 @@ int FtIRCd::_parsePort(const char *str) const
 
 void FtIRCd::_parseConfig(int argc, char **argv)
 {
-    // ### TODO: 定数マクロ化する
     if (argc < kArgNum)
         throw std::invalid_argument("Usage: ./ircserv <port> <password>");
     this->_port = this->_parsePort(argv[kArgIdxPort]);
