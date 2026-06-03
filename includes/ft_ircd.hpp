@@ -39,7 +39,7 @@ class FtIRCd
         ~FtIRCd();
 
         void                    _run();
-        void                    _checkRegister(Client &client) const;
+        void                    _checkRegister(Client &client);
 
         void                    _disconnectClient(int fd);
 
@@ -51,6 +51,8 @@ class FtIRCd
 
         void                    _acceptClient();
         void                    _handleClient(int fd);
+
+        void                    _onUserConnect(Client &client);
 
         static const int        kPortMin = 1024;
         static const int        kPortMax = 65535; // ### TODO: これ正しいかチェックする

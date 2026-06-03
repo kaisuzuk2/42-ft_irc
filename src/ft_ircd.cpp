@@ -16,6 +16,8 @@
 #include <unistd.h>
 #include <map>
 
+#include <ctime>
+
 #include <cerrno>
 
 #include <sys/epoll.h>
@@ -52,8 +54,21 @@ const ChannelManager &FtIRCd::_getChannels() const
     return (this->_channels);
 }
 
+void FtIRCd::_onUserConnect(Client &client)
+{
+    client._writeNumeric(RPL_WELCOME, this->_servername, ":Welcome to the Internet Relay Network " + client._getPrefix());
+    client._writeNumeric(RPL_YOURHOST, this->_servername, ":Your host is " + this->_servername + ", running version ft-irc-1.0");
+    
+    time_t now = std::time(NULL);
+    struct tm *tm_info = std::gmtime(&now);
+    char buf[64];
+    std::strftime(buf, sizeof(buf), ":This server was created on %d %b  %Y at %H:%M:%S UTC", tm_info);
+    client._writeNumeric(RPL_CREATED, this->_servername, buf);
 
-void FtIRCd::_checkRegister(Client &client) const
+}
+
+
+void FtIRCd::_checkRegister(Client &client)
 {
     if (client._getNick() == "*" || client._getUsername().empty())
         return ;
@@ -66,10 +81,8 @@ void FtIRCd::_checkRegister(Client &client) const
         return ;
     }
 
+    this->_onUserConnect(client);
     client._setFullyRegistered();
-    // client._send(":" + this->_servername +  " 001 " + client._getNick() + ":Welcome to the Internet Relay Network " + client._getPrefix());
-    client._writeNumeric(RPL_WELCOME, this->_servername, ":Welcome to the Internet Relay Network " + client._getPrefix());
-
 }
 
 std::string FtIRCd::_parsePassword(const std::string &str) const 
