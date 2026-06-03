@@ -56,6 +56,7 @@ const ChannelManager &FtIRCd::_getChannels() const
 
 
 // ### TODO: 起動時のメッセージ
+// ### TODO: バージョン定数化した方がいいね
 void FtIRCd::_onUserConnect(Client &client)
 {
     client._writeNumeric(RPL_WELCOME, this->_servername, ":Welcome to the Internet Relay Network " + client._getPrefix());

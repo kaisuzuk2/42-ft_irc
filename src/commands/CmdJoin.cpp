@@ -52,7 +52,7 @@ bool CmdJoin::_isValidChannelName(const std::string &name) const
     if (name.empty() || name.length() > FtIRCd::kMaxChanLen)
         return (false);
 
-    if (ChannelManager::_isPrefix(name[0]))
+    if (!ChannelManager::_isPrefix(name[0]))
         return (false);
 
     std::string::const_iterator it = name.begin() + 1; // prefix
