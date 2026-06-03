@@ -114,7 +114,7 @@ int FtIRCd::_parsePort(const char *str) const
         throw std::overflow_error("Error: Port number overflow: " + std::string(str));
     if (*endptr != '\0')
         throw std::invalid_argument("Error: Port contains invalid characters: " + std::string(str));
-    if (res < kPortMin || res > kPortMax) // ### TODO: kPortMaxとkPortMinを使うべき
+    if (res < kPortMin || res > kPortMax) 
         throw std::out_of_range("Error: Port out of range (1024 - 65535): " + std::string(str));
     return (static_cast<int>(res));
 }
