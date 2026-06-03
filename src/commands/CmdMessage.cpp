@@ -123,7 +123,7 @@ void CmdMessage::_execute(FtIRCd &serverInstance, Client &client, const std::vec
                 client._writeNumeric(ERR_NORECIPIENT, serverInstance._getServername(), "No recipient given (" + this->_getName() + ")");
             return ;   
         }
-        if (target[0] == '#') // ### TODO: cmdjoinに定義しているが、チャンネルマネージャークラスにあるべきかも
+        if (ChannelManager::_isPrefix(target[0])) 
             _handleChannelTarget(serverInstance, client, target, msg);
         else
             _handleUserTarget(serverInstance, client, target, msg);

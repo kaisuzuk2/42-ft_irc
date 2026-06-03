@@ -59,3 +59,8 @@ void ChannelManager::_remove(const std::string &name)
     delete it->second;
     this->_channels.erase(it);
 }
+
+bool ChannelManager::_isPrefix(unsigned char prefix)
+{
+    return (prefix == '#');
+}

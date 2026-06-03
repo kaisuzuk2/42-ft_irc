@@ -52,7 +52,7 @@ bool CmdJoin::_isValidChannelName(const std::string &name) const
     if (name.empty() || name.length() > FtIRCd::kMaxChanLen)
         return (false);
 
-    if (!this->_isPrefix(name[0]))
+    if (ChannelManager::_isPrefix(name[0]))
         return (false);
 
     std::string::const_iterator it = name.begin() + 1; // prefix
@@ -67,13 +67,6 @@ bool CmdJoin::_isValidChannelName(const std::string &name) const
         }
     }
     return (true);
-}
-
-// ### TODO: CmdMessageからも使う　チャンネルマネージャーにあるべきかも
-// inspircd: chanelmanager.cpp
-bool CmdJoin::_isPrefix(unsigned char prefix) const
-{
-    return prefix == '#';
 }
 
 bool CmdJoin::_preJoinCheck(FtIRCd &serverInstance, Client &client, Channel *ch, const std::string &key)
