@@ -26,6 +26,9 @@ enum Numeric
     RPL_INVITING            = 341,
     RPL_NAMREPLY            = 353,
     RPL_ENDOFNAMES          = 366,
+    RPL_MOTD                = 372,
+    RPL_MOTDSTART           = 375,
+    RPL_ENDOFMOTD           = 376,
 
     ERR_NOSUCHNICK          = 401,
     ERR_NOSUCHCHANNEL       = 403, // ### TODO: 複数で使用　エラーメッセージ統一しないといけない
