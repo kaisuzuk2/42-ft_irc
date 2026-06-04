@@ -41,6 +41,17 @@ CmdJoin::CmdJoin()
 
 CmdJoin::~CmdJoin() {}
 
+void CmdJoin::_partAllChannels(FtIRCd &serverInstance, Client &client)
+{
+    const std::set<Channel *> channels = client._getChannels();
+    for (std::set<Channel *>::const_iterator it = channels.begin(); it != channels.end(); ++it)
+    {
+        std::vector<std::string> params;
+        params.push_back((*it)->_getName());
+        serverInstance._getParser()._callExecute(serverInstance, client, "PART", params);
+    } 
+}
+
 /*
 RFC2811 2.1
 スペース（' '）、コントロールG（^G またはASCII 7）、
@@ -146,6 +157,12 @@ void CmdJoin::_execute(FtIRCd &serverInstance, Client &client, const std::vector
 {
     std::vector<std::string> channels;
     std::vector<std::string> keys;
+
+    if (params[0] == "0")
+    {
+        this->_partAllChannels(serverInstance, client);
+        return ;
+    }
 
     channels = this->_splitByComma(params[0], true);
     if (params.size() > 1)

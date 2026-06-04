@@ -30,6 +30,8 @@ class CmdJoin: public ACommand
         bool    _preJoinCheck(FtIRCd &serverInstance, Client &client, Channel *ch, const std::string &key);
 
         bool    _isValidChannelName(const std::string &name) const;
+
+        void    _partAllChannels(FtIRCd &serverInstance, Client &client);
 };
 
 #endif

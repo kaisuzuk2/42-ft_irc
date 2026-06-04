@@ -56,6 +56,16 @@ const ChannelManager &FtIRCd::_getChannels() const
     return (this->_channels);
 }
 
+CommandParser &FtIRCd::_getParser()
+{
+    return (this->_parser);
+}
+
+const CommandParser &FtIRCd::_getParser() const
+{
+    return (this->_parser);
+}
+
 
 // ### TODO: 起動時のメッセージ
 // ### TODO: バージョン定数化した方がいいね

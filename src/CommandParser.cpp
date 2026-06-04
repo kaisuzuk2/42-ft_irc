@@ -149,3 +149,10 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     
     command->_execute(serverInstance, client, params);
 }
+
+void CommandParser::_callExecute(FtIRCd &serverInstance, Client &client, const std::string &cmd, const std::vector<std::string> &params)
+{
+    std::map<std::string, ACommand *>::const_iterator it = this->_commands.find(cmd);
+    if (it != this->_commands.end())
+        it->second->_execute(serverInstance, client, params);
+}

@@ -31,7 +31,8 @@ class CommandParser
         CommandParser();
         ~CommandParser();
         void                        _process(FtIRCd &serverInstance, Client &client, const std::string &line);
-    
+
+        void                        _callExecute(FtIRCd &serverInstance, Client &client, const std::string &cmd, const std::vector<std::string> &params);
     private:
         std::vector<std::string>    _split(const std::string &line, size_t max_params = 0);
 };

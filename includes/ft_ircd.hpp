@@ -69,6 +69,8 @@ class FtIRCd
         const ClientManager     &_getClients() const;
         ChannelManager          &_getChannels();
         const ChannelManager    &_getChannels() const;
+        CommandParser            &_getParser();
+        const CommandParser     &_getParser() const;
 
         static const size_t     kMaxNickLen = 9;
         static const size_t     kMaxUserLen = 9;
