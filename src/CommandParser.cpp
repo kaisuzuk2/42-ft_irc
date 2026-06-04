@@ -22,6 +22,7 @@
 #include "commands/CmdInvite.hpp"
 #include "commands/CmdTopic.hpp"
 #include "commands/CmdMode.hpp"
+#include "commands/CmdMotd.hpp"
 
 #include "ft_ircd.hpp"
 #include "Client.hpp"
@@ -43,6 +44,7 @@ CommandParser::CommandParser()
     this->_commands["INVITE"] = new CmdInvite();
     this->_commands["TOPIC"] = new CmdTopic();
     this->_commands["MODE"] = new CmdMode();
+    this->_commands["MOTD"] = new CmdMotd();
 }
 
 CommandParser::~CommandParser() 

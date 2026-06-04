@@ -24,6 +24,7 @@ SRCS 		=	$(addprefix src/,\
 						CmdInvite.cpp \
 						CmdTopic.cpp \
 						CmdMode.cpp \
+						CmdMotd.cpp \
 				))
 
 OBJS		=	$(SRCS:.cpp=.o)

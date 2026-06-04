@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "CmdMotd.hpp"
+#include <fstream>
+
+#include "commands/CmdMotd.hpp"
+
+#include "ft_ircd.hpp"
 
 /*
 RFC 2812
@@ -22,7 +26,7 @@ RFC 2812
 */
 
 CmdMotd::CmdMotd() 
-    : Acommand("MOTD", 0, 0, false)
+    : ACommand("MOTD", 0, 0, false)
 {}
 
 CmdMotd::~CmdMotd() {}

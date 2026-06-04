@@ -13,12 +13,15 @@
 #ifndef CMDMOTD_HPP
 # define CMDMOTD_HPP
 
+#include "ACommand.hpp"
+
 class CmdMotd: public ACommand
 {
-    CmdMotd();
-    ~CmdMotd();
+    public :
+        CmdMotd();
+        ~CmdMotd();
 
-    void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
+        void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
 };
 
 #endif

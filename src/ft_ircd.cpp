@@ -76,6 +76,8 @@ void FtIRCd::_onUserConnect(Client &client)
 
 
     // ### TODO: MOTD
+    this->_parser._process(*this, client, "MOTD");
+
 }
 
 // ### TODO: 接続時にmodeコマンド実行している？ 501リプライが返ってきているね
@@ -92,8 +94,8 @@ void FtIRCd::_checkRegister(Client &client)
         return ;
     }
 
-    this->_onUserConnect(client);
     client._setFullyRegistered();
+    this->_onUserConnect(client);
 }
 
 std::string FtIRCd::_parsePassword(const std::string &str) const 
