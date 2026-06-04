@@ -29,6 +29,8 @@
 #include "Client.hpp"
 #include "CommandParser.hpp"
 
+const char *FtIRCd::kMotdPath = "conf/motd.example.txt";
+
 const std::string &FtIRCd::_getServername() const 
 {
     return (this->_servername);

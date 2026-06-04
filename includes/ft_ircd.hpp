@@ -74,7 +74,7 @@ class FtIRCd
         static const size_t     kMaxUserLen = 9;
         static const size_t     kMaxChanLen = 50; // RFC2811 2.1
         static const size_t     kMaxChannels = 10; // RFC1459 1.3
-        static const char       *kMotdPath = "conf/motd.example.txt";
+        static const char       *kMotdPath;
 };
 
 #endif
