@@ -43,7 +43,7 @@ void CmdMotd::_execute(FtIRCd &serverInstance, Client &client, const std::vector
         return ;
     }
 
-    client._writeNumeric(RPL_MOTDSTART, serverInstance._getServername(), serverInstance._getServername() + " message of the day:");
+    client._writeNumeric(RPL_MOTDSTART, serverInstance._getServername(), ":" + serverInstance._getServername() + " message of the day:");
     
     std::string line;
     while (std::getline(ifs, line))
