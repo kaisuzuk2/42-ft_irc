@@ -37,6 +37,7 @@ enum Numeric
     ERR_NORECIPIENT         = 411,
     ERR_NOTEXTTOSEND        = 412,
     ERR_UNKNOWNCOMMAND      = 421,
+    ERR_NOMOTD              = 422,
     ERR_NONICKNAMEGIVEN     = 431,
     ERR_ERRONEUSNICKNAME    = 432,
     ERR_NICKNAMEINUSE       = 433,

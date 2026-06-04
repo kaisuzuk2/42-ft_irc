@@ -32,4 +32,18 @@ void CmdMotd::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     if (!params.empty() && (serverInstance._getServername() != params[0]))
         return ;
     
+    std::ifstream ifs(FtIRCd::kMotdPath);
+    if (!ifs.is_open())
+    {
+        client._writeNumeric(ERR_NOMOTD, serverInstance._getServername(), ":MOTD File is missing");
+        return ;
+    }
+
+    client._writeNumeric(RPL_MOTDSTART, serverInstance._getServername(), serverInstance._getServername() + " message of the day:");
+    
+    std::string line;
+    while (std::getline(ifs, line))
+        client._writeNumeric(RPL_MOTD, serverInstance._getServername(), ":" + line);
+    
+    client._writeNumeric(RPL_ENDOFMOTD, serverInstance._getServername(), "End of MOTD command");
 }
