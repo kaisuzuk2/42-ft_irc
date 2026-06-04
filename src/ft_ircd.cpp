@@ -84,9 +84,7 @@ void FtIRCd::_onUserConnect(Client &client)
 
     client._writeNumeric(RPL_MYINFO, this->_servername, this->_servername + " ft-irc-1.0 . iklnot");
 
-
-    // ### TODO: MOTD
-    this->_parser._process(*this, client, "MOTD");
+    this->_parser._callExecute(*this, client, "MOTD", std::vector<std::string>());
 
 }
 
