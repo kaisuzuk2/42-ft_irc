@@ -50,7 +50,6 @@ CmdMessage::~CmdMessage() {}
 void CmdMessage::_handleUserTarget(FtIRCd &serverInstance, Client &client,const std::string &nick, const std::string &msg)
 {
     Client *target;
-    std::string cmdName;
 
     target = serverInstance._getClients()._findByNick(nick, true);
     if (!target)
@@ -60,8 +59,7 @@ void CmdMessage::_handleUserTarget(FtIRCd &serverInstance, Client &client,const 
         return ;
     }
     
-    cmdName = this->_isNotice ? "NOTICE" : "PRIVMSG"; // ### TODO: これ関数化しよう
-    target->_send(":" + client._getPrefix() + " " + cmdName + " " + target->_getNick() + " :" + msg);
+    target->_send(":" + client._getPrefix() + " " + this->_getName() + " " + target->_getNick() + " :" + msg);
 }
 
 bool CmdMessage::_preMessageCheck(FtIRCd &serverInstance, Client &client, Channel &chan)
@@ -78,7 +76,6 @@ bool CmdMessage::_preMessageCheck(FtIRCd &serverInstance, Client &client, Channe
 void CmdMessage::_handleChannelTarget(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &msg)
 {
     Channel *chan;
-    std::string cmdName;
 
     chan = serverInstance._getChannels()._find(cname);
     if (!chan)
@@ -91,9 +88,7 @@ void CmdMessage::_handleChannelTarget(FtIRCd &serverInstance, Client &client, co
     if (!this->_preMessageCheck(serverInstance, client, *chan))
         return ;
     
-    // ### TODO: 関数にした方が良さそう
-    cmdName = this->_isNotice ? "NOTICE" : "PRIVMSG";
-    chan->_broadcast(":" + client._getPrefix() + " " + cmdName + " " + chan->_getName() + " :" + msg, &client);
+    chan->_broadcast(":" + client._getPrefix() + " " + this->_getName() + " " + chan->_getName() + " :" + msg, &client);
 
 }
 
