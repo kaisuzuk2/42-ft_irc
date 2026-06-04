@@ -58,6 +58,7 @@ const ChannelManager &FtIRCd::_getChannels() const
 // ### TODO: 起動時のメッセージ
 // ### TODO: バージョン定数化した方がいいね
 // ### TODO: MOTD出力する　MOTDコマンドを実装しようかな
+
 void FtIRCd::_onUserConnect(Client &client)
 {
     client._writeNumeric(RPL_WELCOME, this->_servername, ":Welcome to the Internet Relay Network " + client._getPrefix());
@@ -75,7 +76,7 @@ void FtIRCd::_onUserConnect(Client &client)
     // ### TODO: MOTD
 }
 
-
+// ### TODO: 接続時にmodeコマンド実行している？ 501リプライが返ってきているね
 void FtIRCd::_checkRegister(Client &client)
 {
     if (client._getNick() == "*" || client._getUsername().empty())
