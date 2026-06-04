@@ -30,6 +30,7 @@
 #include "CommandParser.hpp"
 
 const char *FtIRCd::kMotdPath = "conf/motd.example.txt";
+const std::string FtIRCd::kVersion = "ft-irc-1.0";
 
 const std::string &FtIRCd::_getServername() const 
 {
@@ -75,17 +76,16 @@ void FtIRCd::_onUserConnect(Client &client)
 {
     client._writeNumeric(RPL_WELCOME, this->_servername, ":Welcome to the Internet Relay Network " + client._getPrefix());
     
-    client._writeNumeric(RPL_YOURHOST, this->_servername, ":Your host is " + this->_servername + ", running version ft-irc-1.0");
+    client._writeNumeric(RPL_YOURHOST, this->_servername, ":Your host is " + this->_servername + ", running version " + kVersion);
     
     struct tm *tm_info = std::gmtime(&this->_startupTime);
     char buf[128];
     std::strftime(buf, sizeof(buf), ":This server was created on %d %b %Y at %H:%M:%S UTC", tm_info);
     client._writeNumeric(RPL_CREATED, this->_servername, buf);
 
-    client._writeNumeric(RPL_MYINFO, this->_servername, this->_servername + " ft-irc-1.0 . iklnot");
+    client._writeNumeric(RPL_MYINFO, this->_servername, this->_servername + " " + kVersion + " . iklnot");
 
     this->_parser._callExecute(*this, client, "MOTD", std::vector<std::string>());
-
 }
 
 // ### TODO: 接続時にmodeコマンド実行している？ 501リプライが返ってきているね
