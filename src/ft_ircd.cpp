@@ -92,8 +92,6 @@ const CommandParser &FtIRCd::_getParser() const
 
 
 // ### TODO: 起動時のメッセージ
-// ### TODO: バージョン定数化した方がいいね
-// ### TODO: MOTD出力する　MOTDコマンドを実装しようかな
 
 void FtIRCd::_onUserConnect(Client &client)
 {
