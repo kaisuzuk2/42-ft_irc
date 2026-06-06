@@ -44,7 +44,6 @@ Client *ClientManager::_findByFd(int fd) const
     return (it->second);
 }
 
-// ### TODO: {と}[] rfc1459
 Client *ClientManager::_findByNick(const std::string &nick, bool fullyConnected) const
 {
     std::string lowerNick;
