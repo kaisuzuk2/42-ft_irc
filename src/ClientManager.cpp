@@ -51,11 +51,11 @@ Client *ClientManager::_findByNick(const std::string &nick, bool fullyConnected)
     std::string clientNick;
 
     lowerNick = nick;
-    std::transform(lowerNick.begin(), lowerNick.end(), lowerNick.begin(), (int(*)(int))std::tolower);
+    std::transform(lowerNick.begin(), lowerNick.end(), lowerNick.begin(), FtIRCd::_rfcTolower);
     for (std::map<int, Client *>::const_iterator it = this->_clients.begin(); it != this->_clients.end(); ++it)
     {
         clientNick = it->second->_getNick();
-        std::transform(clientNick.begin(), clientNick.end(), clientNick.begin(), (int(*)(int))std::tolower);
+        std::transform(clientNick.begin(), clientNick.end(), clientNick.begin(), FtIRCd::_rfcTolower);
         if (clientNick == lowerNick)
         {
             if (fullyConnected && !it->second->_isRegistered())

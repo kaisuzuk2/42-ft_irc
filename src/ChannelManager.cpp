@@ -14,6 +14,7 @@
 
 #include "ChannelManager.hpp"
 #include "Channel.hpp"
+#include "ft_ircd.hpp"
 
 ChannelManager::ChannelManager() {}
 
@@ -31,7 +32,7 @@ Channel *ChannelManager::_find(const std::string &name) const
     std::string lowerCh;
 
     lowerCh = name;
-    std::transform(lowerCh.begin(), lowerCh.end(), lowerCh.begin(), (int(*)(int))std::tolower);
+    std::transform(lowerCh.begin(), lowerCh.end(), lowerCh.begin(), FtIRCd::_rfcTolower);
     std::map<std::string, Channel *>::const_iterator it = this->_channels.find(lowerCh);
     if (it == this->_channels.end())
         return (NULL);
@@ -46,7 +47,7 @@ Channel *ChannelManager::_create(const std::string &name)
 
     ch = new Channel(name);
     lowerCh = name;
-    std::transform(lowerCh.begin(), lowerCh.end(), lowerCh.begin(), (int(*)(int))std::tolower);  // オーバーロードされているのでキャストが必要
+    std::transform(lowerCh.begin(), lowerCh.end(), lowerCh.begin(), FtIRCd::_rfcTolower);
     this->_channels[lowerCh] = ch;
     return (ch);
 }
