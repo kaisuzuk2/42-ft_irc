@@ -33,6 +33,28 @@
 const char *FtIRCd::kMotdPath = "conf/motd.example.txt";
 const std::string FtIRCd::kVersion = "ft-irc-1.0";
 
+
+/*
+RFC 2812 2.2
+IRCのスカンジナビア起源により、
+文字 {}|^ はそれぞれ []\~ の小文字に相当するものとみなされます。
+これは、二つのニックネームやチャンネル名の同一性を判定する際に重要な問題となります。
+*/
+char FtIRCd::_rfcTolower(char c)
+{
+    if (c >= 'A' && c <= 'Z')
+        return (c + ('a' - 'A'));
+    if (c == '[')   
+        return ('{');
+    if (c == ']')
+        return ('}');
+    if (c == '\\')
+        return ('|');
+    if (c == '~')
+        return ('^');
+    return (c);
+}
+
 const std::string &FtIRCd::_getServername() const 
 {
     return (this->_servername);

@@ -79,6 +79,8 @@ class FtIRCd
         static const size_t         kMaxChannels = 10; // RFC1459 1.3
         static const char           *kMotdPath;
         static const std::string    kVersion;
+
+        static char                 _rfcTolower(char c);
 };
 
 #endif
