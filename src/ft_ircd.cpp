@@ -144,9 +144,8 @@ void FtIRCd::_parseConfig(int argc, char **argv)
 void FtIRCd::_quitUser(Client &client, const std::string &reason)
 {
     const std::set<Channel *> channels = client._getChannels();
-    std::set<Channel *>::const_iterator it = channels.begin();
 
-    for (; it != channels.end(); ++it)
+    for (std::set<Channel *>::const_iterator it = channels.begin(); it != channels.end(); ++it)
     {
         Channel *ch = *it;
         // クライアントが参加しているすべてのチャンネルにブロードキャスト
@@ -156,6 +155,10 @@ void FtIRCd::_quitUser(Client &client, const std::string &reason)
         if (ch->_isEmpty())
             this->_channels._remove(ch->_getName()); // ### TODO: チャンネルオブジェクト渡そうかな
     }
+
+    const std::set<Channel *> invitedChannels = client._getInvitedChannels();
+    for (std::set<Channel *>::const_iterator it = invitedChannels.begin(); it != invitedChannels.end(); ++it)
+        (*it)->_removeInvite(&client);
 }
 
 // ### TODO: チャンネルの削除
