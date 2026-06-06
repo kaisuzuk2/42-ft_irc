@@ -34,16 +34,7 @@ void CmdQuit::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     client._send("ERROR :Closing link: (" + client._getPrefix() + ") [" +errmsg + "]");
     client._flushSendBuf();
 
-    // クライアントが参加しているすべてのチャンネルにブロードキャスト
-    const std::set<Channel *> channels = client._getChannels();
-    std::set<Channel *>::const_iterator it = channels.begin();
-    for (; it != channels.end(); ++it)
-    {
-        Channel *ch = *it;
-        ch->_broadcast(":" + client._getPrefix() + " QUIT :" + quitmsg, &client);
-        ch->_removeMember(&client);
-        if (ch->_isEmpty())
-            serverInstance._getChannels()._remove(ch->_getName()); // ### TODO: チャンネルオブジェクト渡そうかな
-    }
+    client._setQuitting();
+    serverInstance._quitUser(client, quitmsg);
     serverInstance._disconnectClient(client._getFd());
 }

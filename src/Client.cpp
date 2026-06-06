@@ -31,6 +31,7 @@ Client::Client(int fd, const struct sockaddr_in &addr)
     , _username("")
     , _realname("")
     , _isregistered(false)
+    , _quitting(false)
 {
     char ip[INET_ADDRSTRLEN];
     if ( inet_ntop(AF_INET, &addr.sin_addr, ip, sizeof(ip)) == NULL)
@@ -242,4 +243,14 @@ void Client::_flushSendBuf()
     if (sent <= 0) // ### TODO: エラー処理
         return ;
     this->_sendBuf.erase(0, sent);
+}
+
+bool Client::_isQuitting() const
+{
+    return (this->_quitting);
+}
+
+void Client::_setQuitting()
+{
+    this->_quitting = true;
 }

@@ -28,6 +28,7 @@
 #include "SocketEngine.hpp"
 #include "Client.hpp"
 #include "CommandParser.hpp"
+#include "Channel.hpp"
 
 const char *FtIRCd::kMotdPath = "conf/motd.example.txt";
 const std::string FtIRCd::kVersion = "ft-irc-1.0";
@@ -140,6 +141,22 @@ void FtIRCd::_parseConfig(int argc, char **argv)
     this->_password = this->_parsePassword(argv[kArgIdxPassword]);
 }
 
+void FtIRCd::_quitUser(Client &client, const std::string &reason)
+{
+    const std::set<Channel *> channels = client._getChannels();
+    std::set<Channel *>::const_iterator it = channels.begin();
+
+    for (; it != channels.end(); ++it)
+    {
+        Channel *ch = *it;
+        // クライアントが参加しているすべてのチャンネルにブロードキャスト
+        ch->_broadcast(":" + client._getPrefix() + " QUIT :" + reason, &client);
+        ch->_removeMember(&client);
+        if (ch->_isEmpty())
+            this->_channels._remove(ch->_getName()); // ### TODO: チャンネルオブジェクト渡そうかな
+    }
+}
+
 // ### TODO: チャンネルの削除
 /* ### TODO: RFC 1459
     何らかの理由でクライアントがQUITコマンドを発行せずに接続が切断された場合
@@ -149,6 +166,12 @@ void FtIRCd::_parseConfig(int argc, char **argv)
 void FtIRCd::_disconnectClient(int fd) 
 {
     std::cout << "client disconnected: fd = " << fd << std::endl;
+
+    Client *client = this->_clients._findByFd(fd);
+    if (client && !client->_isQuitting())
+    {
+        this->_quitUser(*client, "Connection closed"); // ### TODO: エラーメッセージ適切かな
+    }
     this->_socketEngine._delFd(fd);
     this->_clients._removeClient(fd);
 }
@@ -162,7 +185,7 @@ void FtIRCd::_handleClient(int fd)
 
     client = this->_clients._findByFd(fd);
     n = recv(fd, buf, sizeof(buf) - 1, 0);
-    if (n <= 0)
+    if (n <= 0) // ### TODO: シグナル 
     {
         this->_disconnectClient(fd);
         return ;

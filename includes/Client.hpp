@@ -39,6 +39,8 @@ class Client
 
         std::set<Channel *>         _invitedChannels;
 
+        bool                        _quitting;
+
     public:
         Client(int fd, const struct sockaddr_in &addr);
         ~Client();
@@ -77,6 +79,9 @@ class Client
         void                        _setRealname(const std::string &realname);
 
         const std::string           _getPrefix() const;
+
+        bool                        _isQuitting() const;
+        void                        _setQuitting();
 };
 
 #endif

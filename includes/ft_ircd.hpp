@@ -43,6 +43,7 @@ class FtIRCd
         void                        _run();
         void                        _checkRegister(Client &client);
 
+        void                        _quitUser(Client &client, const std::string &reason);
         void                        _disconnectClient(int fd);
 
 
