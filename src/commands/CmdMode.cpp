@@ -235,7 +235,6 @@ void CmdMode::_appendMode(char c, bool adding, const std::string &outParam, std:
         appliedParams += " " + outParam;
 }
 
-// ### TODO: ユーザーのmodeに対応すべきか　特別なエラー処理すべきか　とりあえずチャンネル専用にする
 void CmdMode::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
     const std::string &cname = params[0];
