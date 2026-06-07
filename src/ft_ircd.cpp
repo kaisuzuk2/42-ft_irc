@@ -125,6 +125,9 @@ void FtIRCd::_checkRegister(Client &client)
         // client._send(":" + this->_servername + " 464 " + client._getNick() + " :Password incorrect");
         client._writeNumeric(ERR_PASSWDMISMATCH, this->_servername, ":Password incorrect");
         // ### TODO: 切断処理
+        std::vector<std::string> params;
+        params.push_back("You are not allowed to connect to this server");
+        this->_parser._callExecute(*this, client, "QUIT", params);
         return ;
     }
 
