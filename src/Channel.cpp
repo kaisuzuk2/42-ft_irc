@@ -41,7 +41,7 @@ void Channel::_setTopic(const std::string &topic, const std::string &setBy, time
     this->_topicSetBy = setBy;
     this->_topicSetAt = setAt;
     
-    this->_broadcast(":" + setBy + " TOPIC " + this->_name + " :" + topic, NULL);
+    this->_broadcast(":" + setBy + " TOPIC " + this->_name + " :" + topic, NULL, false);
 }
 
 const std::string &Channel::_getKey() const
@@ -102,15 +102,18 @@ bool Channel::_isEmpty() const
     ### TODO:
     @#channelで管理者だけに送信できる
 */
-void Channel::_broadcast(const std::string &msg, Client *except)
+void Channel::_broadcast(const std::string &msg, Client *except, bool operOnly)
 {
     std::map<Client *, bool>::const_iterator it;
     
     it = this->_members.begin();
     for (; it != this->_members.end(); ++it)
     {
-        if (it->first != except)
-            it->first->_send(msg);
+        if (it->first == except)
+            continue ;
+        if (operOnly && !it->second)
+            continue ;
+        it->first->_send(msg);
     }
 }
 

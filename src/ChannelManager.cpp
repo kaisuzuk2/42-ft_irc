@@ -65,3 +65,8 @@ bool ChannelManager::_isPrefix(unsigned char prefix)
 {
     return (prefix == '#');
 }
+
+bool ChannelManager::_isStatusPrefix(unsigned char prefix)
+{
+    return (prefix == '@');
+}

@@ -32,6 +32,7 @@ class ChannelManager
         void                                _remove(const std::string &name); // ### TODO: channel受け取ってもいいかもね
        
         static bool                         _isPrefix(unsigned char prefix);
+        static bool                         _isStatusPrefix(unsigned char prefix);
 };
 
 #endif

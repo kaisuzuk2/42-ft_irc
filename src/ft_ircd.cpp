@@ -169,7 +169,7 @@ void FtIRCd::_quitUser(Client &client, const std::string &reason)
     {
         Channel *ch = *it;
         // クライアントが参加しているすべてのチャンネルにブロードキャスト
-        ch->_broadcast(":" + client._getPrefix() + " QUIT :" + reason, &client);
+        ch->_broadcast(":" + client._getPrefix() + " QUIT :" + reason, &client, false);
         ch->_removeMember(&client);
         ch->_removeInvite(&client);
         if (ch->_isEmpty())

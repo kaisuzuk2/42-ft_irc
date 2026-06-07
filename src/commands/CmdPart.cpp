@@ -60,7 +60,7 @@ void CmdPart::_partChannel(FtIRCd &serverInstance, Client &client, const std::st
             << ":"
             << reason;
     }
-    ch->_broadcast(msg.str(), NULL);
+    ch->_broadcast(msg.str(), NULL, false);
 
     /* ### TODO: ひとまとめにしたいね*/
     ch->_removeMember(&client);

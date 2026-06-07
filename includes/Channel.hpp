@@ -66,7 +66,7 @@ class Channel
         void                                _addInvite(Client *client);
         void                                _removeInvite(Client *client);
 
-        void                                _broadcast(const std::string &msg, Client *except);
+        void                                _broadcast(const std::string &msg, Client *except, bool operOnly);
         
         void                                _sendNames(Client &client, const std::string &servername) const;
 

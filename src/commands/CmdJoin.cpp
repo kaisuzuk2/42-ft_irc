@@ -145,7 +145,7 @@ void CmdJoin::_joinChannel(FtIRCd &serverInstance, Client &client, const std::st
     client._removeInvitedChannel(ch);
 
 
-    ch->_broadcast(":" + client._getPrefix() + " JOIN :" + cname, NULL);
+    ch->_broadcast(":" + client._getPrefix() + " JOIN :" + cname, NULL, false);
 
     if (!ch->_getTopic().empty())
         ch->_showTopic(client, serverInstance._getServername());
