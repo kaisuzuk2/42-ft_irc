@@ -22,6 +22,7 @@ class ClientManager
 {
     private:
         std::map<int, Client*>  _clients;
+        
     public:
         ClientManager();
         ~ClientManager();
