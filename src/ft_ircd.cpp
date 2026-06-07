@@ -219,7 +219,7 @@ void FtIRCd::_handleClient(int fd)
     while (client->_getNextLine(line))
     {
         this->_parser._process(*this, *client, line);
-        if (this->_clients._findByFd(fd))
+        if (!this->_clients._findByFd(fd))
             return ;
     }
 }
