@@ -28,8 +28,6 @@
 Client::Client(int fd, const struct sockaddr_in &addr)
     : _fd(fd)
     , _nick("*")
-    , _username("")
-    , _realname("")
     , _isregistered(false)
     , _quitting(false)
 {
