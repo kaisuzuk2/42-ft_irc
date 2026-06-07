@@ -105,7 +105,6 @@ void CmdInvite::_execute(FtIRCd &serverInstance, Client &client, const std::vect
     ch->_addInvite(target);
     target->_addInvitedChannel(ch);
 
-    // ### TODO: オペレータにのみ送信するよう切り替えること
     // ### TOOO: noticeコマンド使おうか
     ch->_broadcast(":" + serverInstance._getServername() + " " + "NOTICE " + ch->_getName() + ":*** " + client._getNick() + " invited " + target->_getNick() + " into the channel", NULL, true);
     
