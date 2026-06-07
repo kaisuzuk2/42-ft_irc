@@ -73,7 +73,7 @@ bool CmdMessage::_preMessageCheck(FtIRCd &serverInstance, Client &client, Channe
     return (true);
 }
 
-void CmdMessage::_handleChannelTarget(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &msg)
+void CmdMessage::_handleChannelTarget(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &msg, bool operOnly)
 {
     Channel *chan;
 
@@ -88,7 +88,7 @@ void CmdMessage::_handleChannelTarget(FtIRCd &serverInstance, Client &client, co
     if (!this->_preMessageCheck(serverInstance, client, *chan))
         return ;
     
-    chan->_broadcast(":" + client._getPrefix() + " " + this->_getName() + " " + chan->_getName() + " :" + msg, &client);
+    chan->_broadcast(":" + client._getPrefix() + " " + this->_getName() + " " + chan->_getName() + " :" + msg, &client, operOnly);
 
 }
 
@@ -110,16 +110,24 @@ void CmdMessage::_execute(FtIRCd &serverInstance, Client &client, const std::vec
 
     for (std::vector<std::string>::const_iterator it = targets.begin(); it != targets.end(); ++it)
     {   
-        // プレフィックスを処理したので、その後のテキストがあるか確認する
         const std::string &target = *it;
-        if (!target[0])
+        size_t pos = 0;
+        bool operOnly = false;
+
+        while (pos < target.size() && ChannelManager::_isStatusPrefix(target[pos]))
+        {
+            operOnly = true;
+            ++pos;
+        }
+        // プレフィックスを処理したので、その後のテキストがあるか確認する
+        if (!target[pos])
         {
             if (!this->_isNotice)
                 client._writeNumeric(ERR_NORECIPIENT, serverInstance._getServername(), "No recipient given (" + this->_getName() + ")");
             return ;   
         }
-        if (ChannelManager::_isPrefix(target[0])) 
-            _handleChannelTarget(serverInstance, client, target, msg);
+        if (ChannelManager::_isPrefix(target[pos])) 
+            _handleChannelTarget(serverInstance, client, target.substr(pos), msg, operOnly);
         else
             _handleUserTarget(serverInstance, client, target, msg);
     }

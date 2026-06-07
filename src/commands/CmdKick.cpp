@@ -75,7 +75,7 @@ void CmdKick::_kickUser(FtIRCd &serverInstance, Client &client, const std::strin
     }
 
 
-    ch->_broadcast(":" + client._getPrefix() + " KICK " + ch->_getName() + " " + target->_getNick() + " :" + reason, NULL);
+    ch->_broadcast(":" + client._getPrefix() + " KICK " + ch->_getName() + " " + target->_getNick() + " :" + reason, NULL, false);
     
     // ### TODO: 一括でやりたいね
     ch->_removeMember(target);
