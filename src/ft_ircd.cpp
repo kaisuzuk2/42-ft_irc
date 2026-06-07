@@ -35,6 +35,11 @@ const std::string FtIRCd::kVersion = "ft-irc-1.0";
 
 
 /*
+### TODO: ctrl + D
+### TODO: 各シグナルの処理 
+*/
+
+/*
 RFC 2812 2.2
 IRCのスカンジナビア起源により、
 文字 {}|^ はそれぞれ []\~ の小文字に相当するものとみなされます。
