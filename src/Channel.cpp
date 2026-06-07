@@ -20,7 +20,7 @@ Channel::Channel(const std::string &name)
     , _topicSetAt(0)
     , _modes(MODE_NO_EXTERNAL | MODE_TOPIC_OP) // [Note] inspircdよりデフォルトのチャンネルモード設定
     , _limit(0)
-    , _createdAt(std::time(NULL)) // ### TODO 0になるね
+    , _createdAt(std::time(NULL)) 
 {}
 
 Channel::~Channel() {}
