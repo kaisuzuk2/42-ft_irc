@@ -105,9 +105,12 @@ void CmdInvite::_execute(FtIRCd &serverInstance, Client &client, const std::vect
     ch->_addInvite(target);
     target->_addInvitedChannel(ch);
 
-    // ### TOOO: noticeコマンド使おうか
-    ch->_broadcast(":" + serverInstance._getServername() + " " + "NOTICE " + ch->_getName() + ":*** " + client._getNick() + " invited " + target->_getNick() + " into the channel", NULL, true);
-    
+    std::vector<std::string> cmdparams;
+    cmdparams.push_back("@" + ch->_getName());
+    cmdparams.push_back("*** " + client._getNick() + " invited " + target->_getNick() + " into the channel");
+    serverInstance._getParser()._callExecute(serverInstance, client, "NOTICE", cmdparams);
+
+
     target->_send(":" + client._getPrefix() + " INVITE " + target->_getNick() + " :" + ch->_getName());
     client._writeNumeric(RPL_INVITING, serverInstance._getServername(), target->_getNick() + " " + ch->_getName());        
 }
