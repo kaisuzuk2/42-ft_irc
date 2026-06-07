@@ -27,7 +27,6 @@ void CmdQuit::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     std::string quitmsg;
     std::string errmsg;
 
-    // ### TODO: いい感じにできないかな
     quitmsg = params.empty() ? "Client exited" : params[0];
     errmsg = params.empty() ? "Client exited" : "Quit :" + params[0];
 
