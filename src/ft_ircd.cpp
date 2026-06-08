@@ -37,6 +37,7 @@ const std::string FtIRCd::kVersion = "ft-irc-1.0";
 /*
 ### TODO: ctrl + D
 ### TODO: 各シグナルの処理 
+### TODO: 文字列512文字制限
 */
 
 /*
