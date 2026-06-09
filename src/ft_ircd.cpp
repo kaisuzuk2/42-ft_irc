@@ -263,6 +263,7 @@ void FtIRCd::_run()
     {
         // ### TODO: -1でいいか再考すること
         std::vector<int> readyFds = this->_socketEngine._dispatch(-1);
+
         for (size_t i = 0; i < readyFds.size(); ++i)
         {
             fd = readyFds[i];
