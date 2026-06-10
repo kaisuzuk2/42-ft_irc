@@ -229,7 +229,7 @@ bool Client::_getNextLine(std::string &line)
         line.erase(line.size() -1);
 
     if (line.size() > FtIRCd::kMaxMsgLen)
-        line.substr(0, FtIRCd::kMaxMsgLen);
+        line = line.substr(0, FtIRCd::kMaxMsgLen);
 
     return (true);
 }
