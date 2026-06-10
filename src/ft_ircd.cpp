@@ -336,7 +336,7 @@ int main(int argc, char *argv[])
         std::cerr << e.what() << std::endl;
         return (EXIT_FAILURE);
     }
-    std::cout << "Server shutdown." << std::endl;
 
+    std::cout << "Server shutdown." << std::endl;
     return (EXIT_SUCCESS);
 }
