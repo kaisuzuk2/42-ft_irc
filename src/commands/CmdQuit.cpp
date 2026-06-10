@@ -21,7 +21,6 @@ CmdQuit::CmdQuit()
 
 CmdQuit::~CmdQuit() {}
 
-// ### TODO: quitmsgの長さ制限
 void CmdQuit::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
     std::string quitmsg;
