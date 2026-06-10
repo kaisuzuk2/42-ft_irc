@@ -245,7 +245,7 @@ void Client::_flushSendBuf()
 
     if (this->_sendBuf.empty())
         return ;
-    // sigpipeを無視する　signal(SIGPIPE, SIG_IGN)するなら不要
+    // ### TODO: sigpipeを無視する　signal(SIGPIPE, SIG_IGN)するなら不要
     sent = ::send(this->_fd, this->_sendBuf.c_str(), this->_sendBuf.size(), MSG_NOSIGNAL);
     if (sent <= 0) // ### TODO: エラー処理
         return ;

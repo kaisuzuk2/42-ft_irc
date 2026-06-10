@@ -17,6 +17,7 @@
 #include <map>
 
 #include <ctime>
+#include <signal.h>
 
 #include <cerrno>
 
@@ -46,6 +47,13 @@ IRCのスカンジナビア起源により、
 文字 {}|^ はそれぞれ []\~ の小文字に相当するものとみなされます。
 これは、二つのニックネームやチャンネル名の同一性を判定する際に重要な問題となります。
 */
+static bool g_running = true;
+
+static void onSignal(int)
+{
+    g_running = false;
+}
+
 char FtIRCd::_rfcTolower(char c)
 {
     if (c >= 'A' && c <= 'Z')
@@ -259,7 +267,7 @@ void FtIRCd::_run()
 {
     int fd;
 
-    while (1)
+    while (g_running)
     {
         // ### TODO: -1でいいか再考すること
         std::vector<int> readyFds = this->_socketEngine._dispatch(-1);
@@ -289,6 +297,13 @@ FtIRCd::FtIRCd(int argc, char **argv)
     : _servername("ft_irc.local")
     , _startupTime(std::time(NULL))
 {
+    struct sigaction sa;
+    sa.sa_handler = onSignal;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGTERM, &sa, NULL);
+
     this->_parseConfig(argc, argv);
 
     this->_serverFd = socket(AF_INET, SOCK_STREAM, 0);
@@ -321,6 +336,7 @@ int main(int argc, char *argv[])
         std::cerr << e.what() << std::endl;
         return (EXIT_FAILURE);
     }
+    std::cout << "Server shutdown." << std::endl;
 
     return (EXIT_SUCCESS);
 }

@@ -56,9 +56,8 @@ std::vector<int> SocketEngine::_dispatch(int timeout_ms)
     nfds = epoll_wait(this->_epfd, this->_events, 64, timeout_ms); // ### TODO: 64が適切か考える
     if (nfds < 0)
     {
-        // シグナル割り込みのケース
-        // if (errno == EINTR)
-        //     return (ready);
+        if (errno == EINTR)
+            return (ready);
         throw std::runtime_error("epoll_wait() failed: " + std::string(std::strerror(errno)));
     }
 
