@@ -98,10 +98,6 @@ bool Channel::_isEmpty() const
     return (this->_members.empty());
 }
 
-/*
-    ### TODO:
-    @#channelで管理者だけに送信できる
-*/
 void Channel::_broadcast(const std::string &msg, Client *except, bool operOnly)
 {
     std::map<Client *, bool>::const_iterator it;
