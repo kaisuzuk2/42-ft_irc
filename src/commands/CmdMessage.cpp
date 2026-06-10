@@ -105,7 +105,7 @@ void CmdMessage::_execute(FtIRCd &serverInstance, Client &client, const std::vec
             client._writeNumeric(ERR_NOTEXTTOSEND, serverInstance._getServername(), ":No text to send");
         return ;
     }
-    
+
     for (std::vector<std::string>::const_iterator it = targets.begin(); it != targets.end(); ++it)
     {   
         const std::string &target = *it;
@@ -117,7 +117,6 @@ void CmdMessage::_execute(FtIRCd &serverInstance, Client &client, const std::vec
             operOnly = true;
             ++pos;
         }
-        // プレフィックスを処理したので、その後のテキストがあるか確認する
         if (!target[pos])
         {
             if (!this->_isNotice)
