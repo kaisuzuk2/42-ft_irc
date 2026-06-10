@@ -208,6 +208,12 @@ void Client::_appendToBuffer(const char *data, int len)
     this->_recvBuf.append(data, len);
 }
 
+/*
+[Note]
+IRCメッセージは常にCR-LF（キャリッジリターン - ラインフィード）ペアで終端される文字列であり、
+末尾のCR-LFを含むすべての文字を数えて512文字を超えてはなりません（SHALL NOT）。
+したがって、コマンドとそのパラメーターに許可される最大文字数は510文字です。
+*/
 bool Client::_getNextLine(std::string &line)
 {
     size_t pos;
@@ -221,6 +227,9 @@ bool Client::_getNextLine(std::string &line)
 
     if (!line.empty() && line[line.size() -1] == '\r')
         line.erase(line.size() -1);
+
+    if (line.size() > FtIRCd::kMaxMsgLen)
+        line.substr(0, FtIRCd::kMaxMsgLen);
 
     return (true);
 }
