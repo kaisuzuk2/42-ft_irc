@@ -105,9 +105,7 @@ void CmdMessage::_execute(FtIRCd &serverInstance, Client &client, const std::vec
             client._writeNumeric(ERR_NOTEXTTOSEND, serverInstance._getServername(), ":No text to send");
         return ;
     }
-
-    // ### TODO: @#channelなどのケース　プレフィックスを処理する
-
+    
     for (std::vector<std::string>::const_iterator it = targets.begin(); it != targets.end(); ++it)
     {   
         const std::string &target = *it;
