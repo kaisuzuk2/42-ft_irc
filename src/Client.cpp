@@ -236,7 +236,7 @@ bool Client::_getNextLine(std::string &line)
 
 void Client::_send(const std::string &msg)
 {
-    this->_sendBuf += msg + "\r\n";
+    this->_sendBuf += msg.substr(0, FtIRCd::kMaxMsgLen) + "\r\n";
 }
 
 void Client::_flushSendBuf()
