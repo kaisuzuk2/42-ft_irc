@@ -245,7 +245,8 @@ void FtIRCd::_acceptClient()
 
     client_len = sizeof(client_addr);
     // ### TODO: accept4使っていいかな
-    client_fd = accept4(this->_serverFd, (struct sockaddr *)&client_addr, &client_len, SOCK_NONBLOCK);
+    // client_fd = accept4(this->_serverFd, (struct sockaddr *)&client_addr, &client_len, SOCK_NONBLOCK);
+    client_fd = accept(this->_serverFd, (struct sockaddr *)&client_addr, &client_len);
     if (client_fd < 0)
     {
         std::cerr << "accept4() failed: " << std::strerror(errno) << std::endl;
