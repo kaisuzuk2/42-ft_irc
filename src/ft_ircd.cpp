@@ -225,7 +225,7 @@ void FtIRCd::_handleClient(int fd)
 
     client = this->_clients._findByFd(fd);
     n = recv(fd, buf, sizeof(buf) - 1, 0);
-    if (n <= 0) // ### TODO: シグナル 
+    if (n <= 0)
     {
         this->_disconnectClient(fd);
         return ;
