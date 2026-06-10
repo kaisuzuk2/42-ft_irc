@@ -37,8 +37,6 @@ const std::string FtIRCd::kVersion = "ft-irc-1.0";
 
 /*
 ### TODO: ctrl + D -> nc -Nオプションで治った　なぜか考えよう
-### TODO: 各シグナルの処理 
-### TODO: 文字列512文字制限
 */
 
 /*
