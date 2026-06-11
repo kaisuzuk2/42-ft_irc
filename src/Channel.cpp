@@ -69,7 +69,6 @@ void Channel::_addMember(Client *client, bool isOper)
     this->_members[client] = isOper;
 }
 
-// ### TODO bool返して呼び出し元でからになったら削除する
 void Channel::_removeMember(Client *client)
 {
     this->_members.erase(client);

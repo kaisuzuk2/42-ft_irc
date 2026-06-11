@@ -31,7 +31,7 @@ enum Numeric
     RPL_ENDOFMOTD           = 376,
 
     ERR_NOSUCHNICK          = 401,
-    ERR_NOSUCHCHANNEL       = 403, // : 複数で使用　エラーメッセージ統一しないといけない
+    ERR_NOSUCHCHANNEL       = 403, 
     ERR_CANNOTSENDTOCHAN    = 404,
     ERR_TOOMANYCHANNELS     = 405,
     ERR_NORECIPIENT         = 411,
