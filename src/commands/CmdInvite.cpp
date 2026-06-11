@@ -84,7 +84,8 @@ void CmdInvite::_execute(FtIRCd &serverInstance, Client &client, const std::vect
     target = serverInstance._getClients()._findByNick(nick, true);
     if (!target)
     {
-        client._writeNumeric(ERR_NOSUCHNICK, serverInstance._getServername(), nick + " :No such nick");
+        // client._writeNumeric(ERR_NOSUCHNICK, serverInstance._getServername(), nick + " :No such nick");
+        client._writeNumeric(Numerics::NoSuchNick(nick), serverInstance._getServername());
         return ;
     }
 
