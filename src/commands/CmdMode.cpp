@@ -184,7 +184,8 @@ bool CmdMode::_applyOperMode(FtIRCd &serverInstance, Client &client, Channel *ch
     }
     if (!ch->_hasMember(target))
     {
-        client._writeNumeric(ERR_USERNOTINCHANNEL, serverInstance._getServername(), nick + " " + ch->_getName() + " :They are not on that channel");
+        // client._writeNumeric(ERR_USERNOTINCHANNEL, serverInstance._getServername(), nick + " " + ch->_getName() + " :They are not on that channel");
+        client._writeNumeric(Numerics::UserNotInChannel(target->_getNick(), ch->_getName()), serverInstance._getServername());
         ++paramIdx;
         return (false);
     }

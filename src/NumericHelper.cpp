@@ -28,6 +28,6 @@ Numerics::ChanOpPrivsNeeded::ChanOpPrivsNeeded(const std::string &cname)
     : NumericReply(ERR_CHANOPRIVSNEEDED, cname + " ::You're not channel operator")
 {}
 
-Numeric::UserNotInChannel::UserNotInChannel(const std::string &nick, const std::string &cname)
-    : NumericReply(ERR_USERNOTINCHANNEL, nick + " " + canme + " :They aren't on that channel");
+Numerics::UserNotInChannel::UserNotInChannel(const std::string &nick, const std::string &cname)
+    : NumericReply(ERR_USERNOTINCHANNEL, nick + " " + cname + " :They aren't on that channel")
 {}

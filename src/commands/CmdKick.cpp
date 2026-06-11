@@ -67,7 +67,8 @@ void CmdKick::_kickUser(FtIRCd &serverInstance, Client &client, const std::strin
 
     if (!ch->_hasMember(target))
     {
-        client._writeNumeric(ERR_USERNOTINCHANNEL, serverInstance._getServername(), target->_getNick()  + " " + ch->_getName() + " :They aren't on that channel");
+        // client._writeNumeric(ERR_USERNOTINCHANNEL, serverInstance._getServername(), target->_getNick()  + " " + ch->_getName() + " :They aren't on that channel");
+        client._writeNumeric(Numerics::UserNotInChannel(target->_getNick(), ch->_getName()), serverInstance._getServername());
         return ;
     }
 
