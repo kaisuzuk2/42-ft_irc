@@ -62,10 +62,8 @@ void CmdPart::_partChannel(FtIRCd &serverInstance, Client &client, const std::st
     }
     ch->_broadcast(msg.str(), NULL, false);
 
-    /* ### TODO: ひとまとめにしたいね*/
     ch->_removeMember(&client);
     client._leaveChannel(ch);
-    // TODO: ここでやるのはどうなんだろう
     if (ch->_isEmpty())
         serverInstance._getChannels()._remove(cname);
 }
