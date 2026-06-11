@@ -18,6 +18,9 @@
 #include <arpa/inet.h>
 #include <set>
 
+#include "NumericReply.hpp"
+
+
 class ClientManager;
 class Channel;
 

@@ -205,7 +205,7 @@ void Client::_writeNumeric(const int num, const std::string &servername, const s
 
 void Client::_writeNumeric(const NumericReply &reply, const std::string &servername)
 {
-    _writeNumeric(reply._getnum(), servername, reply._getMsg());
+    _writeNumeric(reply._getNum(), servername, reply._getMsg());
 }
 
 void Client::_appendToBuffer(const char *data, int len)

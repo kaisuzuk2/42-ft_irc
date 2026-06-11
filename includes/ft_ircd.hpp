@@ -21,6 +21,9 @@
 #include "ChannelManager.hpp"
 #include "Numeric.hpp"
 
+#include "NumericReply.hpp"
+#include "NumericHelper.hpp"
+
 class FtIRCd 
 {
     private:

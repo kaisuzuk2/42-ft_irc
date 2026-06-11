@@ -81,7 +81,10 @@ void CmdMessage::_handleChannelTarget(FtIRCd &serverInstance, Client &client, co
     if (!chan)
     {
         if (!this->_isNotice)
-            client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), cname + " :No such channel");
+        {
+            // client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), cname + " :No such channel");
+            client._writeNumeric(Numerics::NoSuchChannel(cname), serverInstance._getServername());
+        }
         return ;
     }
 

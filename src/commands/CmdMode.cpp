@@ -243,7 +243,8 @@ void CmdMode::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     ch = serverInstance._getChannels()._find(cname);
     if (!ch)
     {
-        client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), cname + " :No such channel");
+        // client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), cname + " :No such channel");
+        client._writeNumeric(Numerics::NoSuchChannel(cname), serverInstance._getServername());
         return ;
     }
 

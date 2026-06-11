@@ -13,6 +13,8 @@
 #ifndef NUMERICREPLY_HPP
 # define NUMERICREPLY_HPP
 
+#include <string>
+
 class NumericReply 
 {
     private:

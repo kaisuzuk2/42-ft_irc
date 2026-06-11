@@ -11,6 +11,8 @@ SRCS 		=	$(addprefix src/,\
 					CommandParser.cpp \
 					Channel.cpp \
 					ChannelManager.cpp \
+					NumericReply.cpp \
+					NumericHelper.cpp \
 					$(addprefix commands/,\
 						ACommand.cpp \
 						CmdPass.cpp \

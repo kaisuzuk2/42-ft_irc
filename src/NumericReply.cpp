@@ -12,7 +12,7 @@
 
 #include "NumericReply.hpp"
 
-NumericReply::NumericReply(unsigned int num, const std::stirng &msg)
+NumericReply::NumericReply(unsigned int num, const std::string &msg)
     : _num(num)
     , _msg(msg)
 {}
@@ -22,7 +22,7 @@ unsigned int NumericReply::_getNum() const
     return (this->_num);
 }
 
-const std::stirng &NumericReply::_getMsg() const
+const std::string &NumericReply::_getMsg() const
 {
     return (this->_msg);
 }

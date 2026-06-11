@@ -24,7 +24,7 @@ namespace Numerics
 class Numerics::NoSuchChannel: public NumericReply
 {
     public:
-    NoSuchChannel(const std::string &cname);
-}
+        NoSuchChannel(const std::string &cname);
+};
 
 #endif

@@ -12,7 +12,7 @@
 
 #include "NumericHelper.hpp"
 
-Numerics::NoSuchChannel::NoSuchChannel(cnst std::stirng &cname)
+Numerics::NoSuchChannel::NoSuchChannel(const std::string &cname)
     : NumericReply(ERR_NOSUCHCHANNEL, cname + " :No such channel")
 {}
 
