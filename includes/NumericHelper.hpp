@@ -19,6 +19,7 @@
 namespace Numerics
 {
     class NoSuchChannel;
+    class NoSuchNick;
 }
 
 class Numerics::NoSuchChannel: public NumericReply
