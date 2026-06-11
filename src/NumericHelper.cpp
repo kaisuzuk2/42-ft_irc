@@ -23,3 +23,7 @@ Numerics::NoSuchNick::NoSuchNick(const std::string &nick)
 Numerics::NotOnChannel::NotOnChannel(const std::string &cname)
     : NumericReply(ERR_NOTONCHANNEL, cname + " :You're not on that channel")
 {}
+
+Numerics::ChanOpPrivsNeeded::ChanOpPrivsNeeded(const std::string &cname)
+    : NumericReply(ERR_CHANOPRIVSNEEDED, cname + " ::You're not channel operator")
+{}

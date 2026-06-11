@@ -21,6 +21,7 @@ namespace Numerics
     class NoSuchChannel;
     class NoSuchNick;
     class NotOnChannel;
+    class ChanOpPrivsNeeded
 }
 
 class Numerics::NoSuchChannel: public NumericReply
@@ -40,5 +41,11 @@ class Numerics::NotOnChannel: public NumericReply
     public:
         NotOnChannel(const std::string &cname);
 };
+
+class Numerics::ChanOpPrivsNeeded: public NumericReply
+{
+    public:
+        ChanOpPrivsNeeded(const std::string &cname);
+}
 
 #endif
