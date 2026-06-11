@@ -49,7 +49,9 @@ class Client
         bool                        _getNextLine(std::string &line);
         void                        _send(const std::string &msg);
         void                        _flushSendBuf();
+        
         void                        _writeNumeric(const int num, const std::string &servername, const std::string &msg);
+        void                        _writeNumeric(const NumericReply &reply, const std::string &servername);
 
         void                        _broadcastToNeighbors(const std::string &msg);
 

@@ -203,6 +203,11 @@ void Client::_writeNumeric(const int num, const std::string &servername, const s
     this->_send(oss.str());
 }
 
+void Client::_writeNumeric(const NumericReply &reply, const std::string &servername)
+{
+    _writeNumeric(reply._getnum(), servername, reply._getMsg());
+}
+
 void Client::_appendToBuffer(const char *data, int len)
 {
     this->_recvBuf.append(data, len);
