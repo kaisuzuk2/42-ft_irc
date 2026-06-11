@@ -27,4 +27,10 @@ class Numerics::NoSuchChannel: public NumericReply
         NoSuchChannel(const std::string &cname);
 };
 
+class Numerics::NoSuchNick: public NumericReply
+{
+    public:
+        NoSuchNick(const std::string &nick);
+};
+
 #endif
