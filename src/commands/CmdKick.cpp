@@ -109,5 +109,8 @@ void CmdKick::_execute(FtIRCd &serverInstance, Client &client, const std::vector
             _kickUser(serverInstance, client, channels[i], users[i], reason);
     }
     else
-        client._writeNumeric(ERR_NEEDMOREPARAMS, serverInstance._getServername(), "KICK :Not enough parameters");
+    {
+        //client._writeNumeric(ERR_NEEDMOREPARAMS, serverInstance._getServername(), "KICK :Not enough parameters");
+        client._writeNumeric(Numerics::NeedMoreParams(this->_getName()), serverInstance._getServername());
+    }
 }

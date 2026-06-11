@@ -31,3 +31,7 @@ Numerics::ChanOpPrivsNeeded::ChanOpPrivsNeeded(const std::string &cname)
 Numerics::UserNotInChannel::UserNotInChannel(const std::string &nick, const std::string &cname)
     : NumericReply(ERR_USERNOTINCHANNEL, nick + " " + cname + " :They aren't on that channel")
 {}
+
+Numerics::NeedMoreParams::NeedMoreParams(const std::string &cmd)
+    : NumericReply(ERR_NEEDMOREPARAMS,  cmd + " :Not enough parameters.")
+{}

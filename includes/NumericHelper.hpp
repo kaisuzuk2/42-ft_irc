@@ -23,6 +23,7 @@ namespace Numerics
     class NotOnChannel;
     class ChanOpPrivsNeeded;
     class UserNotInChannel;
+    class NeedMoreParams;
 }
 
 class Numerics::NoSuchChannel: public NumericReply
@@ -53,6 +54,12 @@ class Numerics::UserNotInChannel: public NumericReply
 {
     public:
         UserNotInChannel(const std::string &nick, const std::string &cname);
+};
+
+class Numerics::NeedMoreParams: public NumericReply
+{
+    public:
+        NeedMoreParams(const std::string &cmd);  
 };
 
 #endif

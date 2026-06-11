@@ -74,7 +74,10 @@ std::vector<std::string> CommandParser::_split(const std::string &line, size_t m
         }
         if (line[i] == ':') 
         {
-            params.push_back(line.substr(i + 1));
+            // ### TODO: これ正確かテストしよう
+            std::string trailing = line.substr(i + 1);
+            if (!trailing.empty())
+                params.push_back(trailing);
             break;
         }
 
@@ -143,7 +146,10 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     if (params.size() < command->_getMinParams())
     {
         if (command->_getName() != "NOTICE")
-            client._writeNumeric(ERR_NEEDMOREPARAMS, serverInstance._getServername(), cmd + " :Not enough parameters.");
+        {
+            // client._writeNumeric(ERR_NEEDMOREPARAMS, serverInstance._getServername(), cmd + " :Not enough parameters.");
+            client._writeNumeric(Numerics::NeedMoreParams(command->_getName()), serverInstance._getServername());
+        }
         return ;
     }
     
