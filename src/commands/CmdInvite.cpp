@@ -49,7 +49,8 @@ bool CmdInvite::_preInviteCheck(FtIRCd &serverInstance, Client &client, Channel 
 {
     if (ch->_isModeSet(MODE_INVITE_ONLY) && !ch->_isOper(&client))
     {
-        client._writeNumeric(ERR_CHANOPRIVSNEEDED, serverInstance._getServername(), ch->_getName() + " :You're not channel operator");
+        // client._writeNumeric(ERR_CHANOPRIVSNEEDED, serverInstance._getServername(), ch->_getName() + " :You're not channel operator");
+        client._writeNumeric(Numerics::ChanOpPrivsNeeded(ch->_getName()), serverInstance._getServername()); 
         return (false);
     }
     return (true);

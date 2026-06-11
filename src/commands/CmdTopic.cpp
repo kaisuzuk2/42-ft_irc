@@ -67,7 +67,8 @@ void CmdTopic::_execute(FtIRCd &serverInstance, Client &client, const std::vecto
 
     if (ch->_isModeSet(MODE_TOPIC_OP) && !ch->_isOper(&client))
     {
-        client._writeNumeric(ERR_CHANOPRIVSNEEDED, serverInstance._getServername(), ch->_getName() + " :You're not channel operator");
+        // client._writeNumeric(ERR_CHANOPRIVSNEEDED, serverInstance._getServername(), ch->_getName() + " :You're not channel operator");
+        client._writeNumeric(Numerics::ChanOpPrivsNeeded(ch->_getName()), serverInstance._getServername());
         return ;
     }
 

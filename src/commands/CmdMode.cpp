@@ -264,7 +264,8 @@ void CmdMode::_execute(FtIRCd &serverInstance, Client &client, const std::vector
 
     if (!ch->_isOper(&client))
     {
-        client._writeNumeric(ERR_CHANOPRIVSNEEDED, serverInstance._getServername(), cname + " :You're not channel operator");
+        // client._writeNumeric(ERR_CHANOPRIVSNEEDED, serverInstance._getServername(), cname + " :You're not channel operator");
+        client._writeNumeric(Numerics::ChanOpPrivsNeeded(ch->_getName()), serverInstance._getServername());
         return;
     }
 
