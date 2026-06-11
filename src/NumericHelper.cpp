@@ -25,7 +25,7 @@ Numerics::NotOnChannel::NotOnChannel(const std::string &cname)
 {}
 
 Numerics::ChanOpPrivsNeeded::ChanOpPrivsNeeded(const std::string &cname)
-    : NumericReply(ERR_CHANOPRIVSNEEDED, cname + " ::You're not channel operator")
+    : NumericReply(ERR_CHANOPRIVSNEEDED, cname + " :You're not channel operator")
 {}
 
 Numerics::UserNotInChannel::UserNotInChannel(const std::string &nick, const std::string &cname)
