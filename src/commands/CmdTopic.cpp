@@ -60,7 +60,8 @@ void CmdTopic::_execute(FtIRCd &serverInstance, Client &client, const std::vecto
     // topic設定
     if (!ch->_hasMember(&client))
     {
-        client._writeNumeric(ERR_NOTONCHANNEL, serverInstance._getServername(), ch->_getName() + " :You're not on that channel");
+        // client._writeNumeric(ERR_NOTONCHANNEL, serverInstance._getServername(), ch->_getName() + " :You're not on that channel");
+        client._writeNumeric(Numerics::NotOnChannel(ch->_getName()), serverInstance._getServername());
         return ;
     }
 

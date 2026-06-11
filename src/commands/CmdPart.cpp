@@ -43,7 +43,8 @@ void CmdPart::_partChannel(FtIRCd &serverInstance, Client &client, const std::st
     }
     if (!ch->_hasMember(&client))
     {
-        client._writeNumeric(ERR_NOTONCHANNEL, serverInstance._getServername(), cname + " :You're not on that channel");
+        // client._writeNumeric(ERR_NOTONCHANNEL, serverInstance._getServername(), cname + " :You're not on that channel");
+        client._writeNumeric(Numerics::NotOnChannel(ch->_getName()), serverInstance._getServername());
         return ;
     }
 
