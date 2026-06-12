@@ -55,10 +55,7 @@ void CmdMessage::_handleUserTarget(FtIRCd &serverInstance, Client &client,const 
     if (!target)
     {
         if (!this->_isNotice)
-        {
-            //client._writeNumeric(ERR_NOSUCHNICK, serverInstance._getServername(), nick + " :No such nick");
             client._writeNumeric(Numerics::NoSuchNick(nick), serverInstance._getServername());
-        }
         return ;
     }
     
@@ -84,10 +81,7 @@ void CmdMessage::_handleChannelTarget(FtIRCd &serverInstance, Client &client, co
     if (!chan)
     {
         if (!this->_isNotice)
-        {
-            // client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), cname + " :No such channel");
             client._writeNumeric(Numerics::NoSuchChannel(cname), serverInstance._getServername());
-        }
         return ;
     }
 

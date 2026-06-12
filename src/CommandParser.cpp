@@ -146,10 +146,7 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     if (params.size() < command->_getMinParams())
     {
         if (command->_getName() != "NOTICE")
-        {
-            // client._writeNumeric(ERR_NEEDMOREPARAMS, serverInstance._getServername(), cmd + " :Not enough parameters.");
             client._writeNumeric(Numerics::NeedMoreParams(command->_getName()), serverInstance._getServername());
-        }
         return ;
     }
     

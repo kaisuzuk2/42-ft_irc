@@ -49,7 +49,6 @@ bool CmdInvite::_preInviteCheck(FtIRCd &serverInstance, Client &client, Channel 
 {
     if (ch->_isModeSet(MODE_INVITE_ONLY) && !ch->_isOper(&client))
     {
-        // client._writeNumeric(ERR_CHANOPRIVSNEEDED, serverInstance._getServername(), ch->_getName() + " :You're not channel operator");
         client._writeNumeric(Numerics::ChanOpPrivsNeeded(ch->_getName()), serverInstance._getServername()); 
         return (false);
     }
@@ -77,7 +76,6 @@ void CmdInvite::_execute(FtIRCd &serverInstance, Client &client, const std::vect
     ch = serverInstance._getChannels()._find(cname);
     if (!ch)
     {
-        // client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), cname + " :No such channel");
         client._writeNumeric(Numerics::NoSuchChannel(cname), serverInstance._getServername());
         return ;
     }
@@ -85,14 +83,12 @@ void CmdInvite::_execute(FtIRCd &serverInstance, Client &client, const std::vect
     target = serverInstance._getClients()._findByNick(nick, true);
     if (!target)
     {
-        // client._writeNumeric(ERR_NOSUCHNICK, serverInstance._getServername(), nick + " :No such nick");
         client._writeNumeric(Numerics::NoSuchNick(nick), serverInstance._getServername());
         return ;
     }
 
     if (!ch->_hasMember(&client))
     {
-        // client._writeNumeric(ERR_NOTONCHANNEL, serverInstance._getServername(), ch->_getName() + " :You're not on that channel");
         client._writeNumeric(Numerics::NotOnChannel(ch->_getName()), serverInstance._getServername());
         return ;
     }

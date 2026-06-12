@@ -41,7 +41,6 @@ void CmdTopic::_execute(FtIRCd &serverInstance, Client &client, const std::vecto
     ch = serverInstance._getChannels()._find(cname);
     if (!ch)
     {
-        // client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), cname + " :No such channel");
         client._writeNumeric(Numerics::NoSuchChannel(cname), serverInstance._getServername());
         return ;
     }
@@ -60,14 +59,12 @@ void CmdTopic::_execute(FtIRCd &serverInstance, Client &client, const std::vecto
     // topic設定
     if (!ch->_hasMember(&client))
     {
-        // client._writeNumeric(ERR_NOTONCHANNEL, serverInstance._getServername(), ch->_getName() + " :You're not on that channel");
         client._writeNumeric(Numerics::NotOnChannel(ch->_getName()), serverInstance._getServername());
         return ;
     }
 
     if (ch->_isModeSet(MODE_TOPIC_OP) && !ch->_isOper(&client))
     {
-        // client._writeNumeric(ERR_CHANOPRIVSNEEDED, serverInstance._getServername(), ch->_getName() + " :You're not channel operator");
         client._writeNumeric(Numerics::ChanOpPrivsNeeded(ch->_getName()), serverInstance._getServername());
         return ;
     }

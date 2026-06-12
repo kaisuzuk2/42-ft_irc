@@ -59,7 +59,6 @@ bool CmdMode::_applyKeyMode(const std::string &servername, Client &client, Chann
 {
     if (paramIdx >= params.size()) 
     {
-        // client._writeNumeric(ERR_INVALIDMODEPARAM, servername, ch->_getName() + " k * :You must specify a parameter for the key mode. Syntax: <key>.");
         client._writeNumeric(Numerics::InvalidModeParam(ch->_getName(), 'k', "key", "key"), servername);
         return (false);
     }
@@ -126,7 +125,6 @@ bool CmdMode::_applyLimitMode(const std::string &servername, Client &client, Cha
     {
         if (paramIdx >= params.size())
         {
-            // client._writeNumeric(ERR_INVALIDMODEPARAM, servername, ch->_getName() + " l * :You must specify a parameter for the limit mode. Syntax: <limit>.");
             client._writeNumeric(Numerics::InvalidModeParam(ch->_getName(), 'l', "limit", "limit"), servername);
             return (false);
         }
@@ -171,7 +169,6 @@ bool CmdMode::_applyOperMode(FtIRCd &serverInstance, Client &client, Channel *ch
 
     if (paramIdx >= params.size())
     {
-        // client._writeNumeric(ERR_INVALIDMODEPARAM, serverInstance._getServername(), ch->_getName() + " o * :You must specify a parameter for the op mode. Syntax: <nick>.");
         client._writeNumeric(Numerics::InvalidModeParam(ch->_getName(), 'o', "op", "nick"), serverInstance._getServername());
         return (false);
     }
@@ -180,14 +177,12 @@ bool CmdMode::_applyOperMode(FtIRCd &serverInstance, Client &client, Channel *ch
     target = serverInstance._getClients()._findByNick(nick, false);
     if (!target)
     {
-        // client._writeNumeric(ERR_NOSUCHNICK, serverInstance._getServername(), nick + " :No such nick");
         client._writeNumeric(Numerics::NoSuchNick(nick), serverInstance._getServername());
         ++paramIdx;
         return (false);
     }
     if (!ch->_hasMember(target))
     {
-        // client._writeNumeric(ERR_USERNOTINCHANNEL, serverInstance._getServername(), nick + " " + ch->_getName() + " :They are not on that channel");
         client._writeNumeric(Numerics::UserNotInChannel(target->_getNick(), ch->_getName()), serverInstance._getServername());
         ++paramIdx;
         return (false);
@@ -248,7 +243,6 @@ void CmdMode::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     ch = serverInstance._getChannels()._find(cname);
     if (!ch)
     {
-        // client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), cname + " :No such channel");
         client._writeNumeric(Numerics::NoSuchChannel(cname), serverInstance._getServername());
         return ;
     }
@@ -261,14 +255,12 @@ void CmdMode::_execute(FtIRCd &serverInstance, Client &client, const std::vector
 
     if (!ch->_hasMember(&client))
     {
-        // client._writeNumeric(ERR_NOTONCHANNEL, serverInstance._getServername(), cname + " :You're not on that channel");
         client._writeNumeric(Numerics::NotOnChannel(ch->_getName()), serverInstance._getServername());
         return;
     }
 
     if (!ch->_isOper(&client))
     {
-        // client._writeNumeric(ERR_CHANOPRIVSNEEDED, serverInstance._getServername(), cname + " :You're not channel operator");
         client._writeNumeric(Numerics::ChanOpPrivsNeeded(ch->_getName()), serverInstance._getServername());
         return;
     }

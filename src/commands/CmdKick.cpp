@@ -45,7 +45,6 @@ void CmdKick::_kickUser(FtIRCd &serverInstance, Client &client, const std::strin
     ch = serverInstance._getChannels()._find(cname);
     if (!ch)
     {
-        // client._writeNumeric(ERR_NOSUCHCHANNEL, serverInstance._getServername(), cname + " :No such channel");
         client._writeNumeric(Numerics::NoSuchChannel(cname), serverInstance._getServername());
         return ;
     }
@@ -53,28 +52,24 @@ void CmdKick::_kickUser(FtIRCd &serverInstance, Client &client, const std::strin
     target = serverInstance._getClients()._findByNick(nick, true);
     if (!target)
     {
-        // client._writeNumeric(ERR_NOSUCHNICK, serverInstance._getServername(), nick + " :No such nick");
         client._writeNumeric(Numerics::NoSuchNick(nick), serverInstance._getServername());
         return ;
     }
 
     if (!ch->_hasMember(&client))
     {
-        // client._writeNumeric(ERR_NOTONCHANNEL, serverInstance._getServername(), ch->_getName() + " :You're not on that channel");
         client._writeNumeric(Numerics::NotOnChannel(ch->_getName()) , serverInstance._getServername());
         return ;
     }
 
     if (!ch->_hasMember(target))
     {
-        // client._writeNumeric(ERR_USERNOTINCHANNEL, serverInstance._getServername(), target->_getNick()  + " " + ch->_getName() + " :They aren't on that channel");
         client._writeNumeric(Numerics::UserNotInChannel(target->_getNick(), ch->_getName()), serverInstance._getServername());
         return ;
     }
 
     if (!ch->_isOper(&client))
     {
-        // client._writeNumeric(ERR_CHANOPRIVSNEEDED, serverInstance._getServername(), ch->_getName() + " :You're not channel operator");
         client._writeNumeric(Numerics::ChanOpPrivsNeeded(ch->_getName()), serverInstance._getServername());
         return ;
     }
@@ -110,7 +105,6 @@ void CmdKick::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     }
     else
     {
-        //client._writeNumeric(ERR_NEEDMOREPARAMS, serverInstance._getServername(), "KICK :Not enough parameters");
         client._writeNumeric(Numerics::NeedMoreParams(this->_getName()), serverInstance._getServername());
     }
 }
