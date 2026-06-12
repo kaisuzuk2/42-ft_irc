@@ -35,3 +35,7 @@ Numerics::UserNotInChannel::UserNotInChannel(const std::string &nick, const std:
 Numerics::NeedMoreParams::NeedMoreParams(const std::string &cmd)
     : NumericReply(ERR_NEEDMOREPARAMS,  cmd + " :Not enough parameters.")
 {}
+
+Numerics::AlreadyRegistered::AlreadyRegistered()
+    : NumericReply(ERR_ALREADYREGISTERED, ":Unauthorized command (already registered)")
+{}

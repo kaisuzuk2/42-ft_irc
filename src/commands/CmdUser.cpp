@@ -76,7 +76,8 @@ void CmdUser::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     }
     else
     {
-       client._writeNumeric(ERR_ALREADYREGISTERED, serverInstance._getServername(), ":Unauthorized command (already registered)");
+    //    client._writeNumeric(ERR_ALREADYREGISTERED, serverInstance._getServername(), ":Unauthorized command (already registered)");
+        client._writeNumeric(Numerics::AlreadyRegistered(), serverInstance._getServername());
        return ; 
     }
     

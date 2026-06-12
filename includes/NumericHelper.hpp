@@ -24,6 +24,7 @@ namespace Numerics
     class ChanOpPrivsNeeded;
     class UserNotInChannel;
     class NeedMoreParams;
+    class AlreadyRegistered;
 }
 
 class Numerics::NoSuchChannel: public NumericReply
@@ -60,6 +61,12 @@ class Numerics::NeedMoreParams: public NumericReply
 {
     public:
         NeedMoreParams(const std::string &cmd);  
+};
+
+class Numerics::AlreadyRegistered: public NumericReply
+{
+    public:
+        AlreadyRegistered();
 };
 
 #endif
