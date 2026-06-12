@@ -73,7 +73,7 @@ class Numerics::AlreadyRegistered: public NumericReply
 class Numerics::InvalidModeParam: public NumericReply
 {
     public:
-        InvalidModeParam(const std::string &cname, char mode, const std::string &modeDesc);
-}
+        InvalidModeParam(const std::string &cname, char mode, const std::string &modeDesc, const std::string &syntax);
+};
 
 #endif

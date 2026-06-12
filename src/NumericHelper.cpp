@@ -40,5 +40,6 @@ Numerics::AlreadyRegistered::AlreadyRegistered()
     : NumericReply(ERR_ALREADYREGISTERED, ":Unauthorized command (already registered)")
 {}
 
-Numerics::InvalidModeParam::InvalidModeParam(const std::string &cname, char mode, const std::string &modeDesc)
-    : NumericReply(ERR_INVALIDMODEPARAM, cname + " " + mode + "* :You must specify a parameter for the " + modeDesc + "mode. Syntax: <" + modeDesc + ">");
+Numerics::InvalidModeParam::InvalidModeParam(const std::string &cname, char mode, const std::string &modeDesc, const std::string &syntax)
+    : NumericReply(ERR_INVALIDMODEPARAM, cname + " " + mode + "* :You must specify a parameter for the " + modeDesc + "mode. Syntax: <" + syntax + ">")
+{}
