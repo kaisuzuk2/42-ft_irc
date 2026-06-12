@@ -12,6 +12,19 @@
 
 #include "commands/CmdList.hpp"
 
+/*
+RFC 1459
+パラメータ:  [<channel>{,<channel>} [<server>]]
+
+RFC 2812
+パラメーター: [ <channel> *( "," <channel> ) [ <target> ] ]
+
+[Note]
+LISTコマンドはチャンネルとそのトピックを一覧表示するために使用されます。
+<channel> パラメーターが使用された場合、そのチャンネルの状態のみが表示されます。
+<target> パラメーターが指定された場合、リクエストはそのサーバーに転送され、そのサーバーが返信を生成します。
+*/
+
 CmdList::CmdList()
     : ACommand("LIST", 0, 0, false)
 {}
