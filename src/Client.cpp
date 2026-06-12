@@ -189,7 +189,7 @@ const std::set<Channel *> &Client::_getInvitedChannels() const
 }
 
 
-void Client::_writeNumeric(const int num, const std::string &servername, const std::string &msg)
+void Client::_writeNumeric(unsigned int num, const std::string &servername, const std::string &msg)
 {
     std::ostringstream oss;
     oss << ":" 
