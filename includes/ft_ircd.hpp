@@ -83,6 +83,7 @@ class FtIRCd
         static const char           *kMotdPath;
         static const std::string    kVersion;
         static const size_t         kMaxMsgLen = 510; // RFC 2812 2.3
+        static const size_t         kMaxTopicLen = 330; // inspircd MaxTopic
 
         static char                 _rfcTolower(char c);
 };
