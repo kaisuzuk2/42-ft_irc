@@ -186,7 +186,6 @@ bool Channel::_isInvited(Client *client) const
     return (this->_inviteList.find(client) != this->_inviteList.end());
 }
 
-// ### TODO: invitelistの順番
 void Channel::_addInvite(Client *client)
 {
     this->_inviteList.insert(client);
