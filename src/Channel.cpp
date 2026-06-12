@@ -133,12 +133,10 @@ void Channel::_showTopic(Client &client, const std::string &servername) const
     std::ostringstream oss;
 
     client._writeNumeric(RPL_TOPIC, servername, this->_name + " :" + this->_topic);
-    // ### TODO: もう少しいい感じにできないかな
     oss << this->_topicSetAt;
     client._writeNumeric(RPL_TOPICTIME, servername, this->_name + " " + _topicSetBy + " :" + oss.str());
 }
 
-// ### TODO: もう少しシンプルにしよう
 // ### core_mode.cpp
 void Channel::_displayModes(Client &client, const std::string &servername) const
 {
