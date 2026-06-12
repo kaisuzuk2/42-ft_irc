@@ -16,6 +16,7 @@
 
 #include <string>
 #include <map>
+#include <sstream>
 
 /*
 RFC 1459
@@ -44,7 +45,13 @@ void CmdList::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     {
         for (std::map<std::string, Channel *>::const_iterator it = channels.begin(); it != channels.end(); ++it)
         {
-            
+            std::ostringstream oss;
+            oss << it->second->_getName() 
+            << " "
+            << it->second->_getMemberSize()
+            << " :"
+            << it->second->_getTopic();
+            client._writeNumeric(RPL_LIST, serverInstance._getServername(), oss.str());
         }        
     }
 }

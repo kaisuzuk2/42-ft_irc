@@ -33,8 +33,14 @@ CmdTopic::CmdTopic()
 
 CmdTopic::~CmdTopic() {}
 
+#include <iostream>
 void CmdTopic::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
+    std::cout << "params.size()=" << params.size() << std::endl;
+    for (size_t i = 0; i < params.size(); ++i)
+        std::cout << "params[" << i << "]='" << params[i] << "'" << std::endl;
+
+
     const std::string &cname = params[0];
     Channel *ch;
 
