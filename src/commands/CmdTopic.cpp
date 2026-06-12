@@ -46,7 +46,6 @@ void CmdTopic::_execute(FtIRCd &serverInstance, Client &client, const std::vecto
     }
 
     // topic表示
-    // ### TODO: トピックが設定されていないかどうかをここでやるかshowtopicでやるのがいいか
     if (params.size() == 1)
     {
         if (ch->_getTopic().empty())
