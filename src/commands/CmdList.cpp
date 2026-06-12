@@ -11,6 +11,11 @@
 /* ************************************************************************** */
 
 #include "commands/CmdList.hpp"
+#include "ChannelManager.hpp"
+#include "Channel.hpp"
+
+#include <string>
+#include <map>
 
 /*
 RFC 1459
@@ -33,8 +38,13 @@ CmdList::~CmdList() {}
 
 void CmdList::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
+    std::map<std::string, Channel *> channels = serverInstance._getChannels()._getChannels();
+    
     if (params.empty())
     {
-        
+        for (std::map<std::string, Channel *>::const_iterator it = channels.begin(); it != channels.end(); ++it)
+        {
+            
+        }        
     }
 }
