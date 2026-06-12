@@ -21,18 +21,20 @@ class Channel;
 class ChannelManager 
 {
     private:
-        std::map<std::string, Channel *>    _channels; // キーは小文字
+        std::map<std::string, Channel *>        _channels; // キーは小文字
 
     public:
         ChannelManager();
         ~ChannelManager();
 
-        Channel                             *_find(const std::string &name) const;
-        Channel                             *_create(const std::string &name);
-        void                                _remove(const std::string &name); // ### TODO: channel受け取ってもいいかもね
+        Channel                                 *_find(const std::string &name) const;
+        Channel                                 *_create(const std::string &name);
+        void                                    _remove(const std::string &name); // ### TODO: channel受け取ってもいいかもね
        
-        static bool                         _isPrefix(unsigned char prefix);
-        static bool                         _isStatusPrefix(unsigned char prefix);
+        static bool                             _isPrefix(unsigned char prefix);
+        static bool                             _isStatusPrefix(unsigned char prefix);
+
+        const std::map<std::string, Channel *>  &_getChannels() const;
 };
 
 #endif

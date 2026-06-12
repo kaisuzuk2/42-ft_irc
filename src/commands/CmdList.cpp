@@ -31,3 +31,10 @@ CmdList::CmdList()
 
 CmdList::~CmdList() {}
 
+void CmdList::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
+{
+    if (params.empty())
+    {
+        
+    }
+}

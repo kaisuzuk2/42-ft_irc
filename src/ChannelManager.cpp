@@ -70,3 +70,8 @@ bool ChannelManager::_isStatusPrefix(unsigned char prefix)
 {
     return (prefix == '@');
 }
+
+const std::map<std::string, Channel *> &ChannelManager::_getChannels() const
+{
+    return (this->_channels);
+}
