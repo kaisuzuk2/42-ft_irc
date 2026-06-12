@@ -112,8 +112,6 @@ void Channel::_broadcast(const std::string &msg, Client *except, bool operOnly)
     }
 }
 
-
-// ### TODO: nameListの順番
 void Channel::_sendNames(Client &client, const std::string &servername) const
 {
     std::string nameList;
