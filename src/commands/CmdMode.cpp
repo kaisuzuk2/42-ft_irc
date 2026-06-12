@@ -291,8 +291,8 @@ void CmdMode::_execute(FtIRCd &serverInstance, Client &client, const std::vector
         }
 
         std::string outParam;
-        if (_applyMode(serverInstance, client, ch, c, adding, paramIdx, params, outParam)) // ### TODO: 引数が多い　なんとかならないか
-            _appendMode(c, adding, outParam, appliedStr, appliedParams, lastSign); // ### TODO: 引数が多い　なんとかならないか
+        if (_applyMode(serverInstance, client, ch, c, adding, paramIdx, params, outParam))
+            _appendMode(c, adding, outParam, appliedStr, appliedParams, lastSign); 
     }
     if (!appliedStr.empty())
         ch->_broadcast(":" + client._getPrefix() + " MODE " + ch->_getName() + " " + appliedStr + appliedParams, NULL, false);
