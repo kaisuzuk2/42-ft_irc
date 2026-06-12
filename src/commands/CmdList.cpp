@@ -37,6 +37,17 @@ CmdList::CmdList()
 
 CmdList::~CmdList() {}
 
+std::string CmdList::_makeChannelInfo(const Channel *ch) const
+{
+    std::ostringstream oss;
+    oss << ch->_getName()
+    << " "
+    << ch->_getMemberSize()
+    << " :"
+    << ch->_getTopic();
+    return (oss.str());
+}
+
 void CmdList::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
     std::map<std::string, Channel *> channels = serverInstance._getChannels()._getChannels();
@@ -45,13 +56,20 @@ void CmdList::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     {
         for (std::map<std::string, Channel *>::const_iterator it = channels.begin(); it != channels.end(); ++it)
         {
-            std::ostringstream oss;
-            oss << it->second->_getName() 
-            << " "
-            << it->second->_getMemberSize()
-            << " :"
-            << it->second->_getTopic();
-            client._writeNumeric(RPL_LIST, serverInstance._getServername(), oss.str());
+            client._writeNumeric(RPL_LIST, serverInstance._getServername(), this->_makeChannelInfo(it->second));
         }        
     }
+    else
+    {
+        std::vector<std::string> cnames = _splitByComma(params[0], true);
+        for (size_t i = 0; i < cnames.size(); ++i)
+        {
+            Channel *ch = serverInstance._getChannels()._find(cnames[i]);
+            if (!ch)
+                continue;
+            client._writeNumeric(RPL_LIST, serverInstance._getServername(), this->_makeChannelInfo(ch));
+        }
+    }
+    
+    client._writeNumeric(RPL_LISTEND, serverInstance._getServername(), ":End of LIST");
 }

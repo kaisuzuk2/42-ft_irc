@@ -23,6 +23,9 @@ class CmdList: public ACommand
         ~CmdList();
 
         void    _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params);
+    
+    private:
+        std::string     _makeChannelInfo(const Channel *ch) const;
 };
 
 #endif
