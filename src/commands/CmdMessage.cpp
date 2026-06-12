@@ -37,9 +37,6 @@ solanum(libera.chat)ではエラーを返さない
 */
 
 
-/*
-### TODO: チャンネルの大文字小文字のエラーメッセージ
-*/
 CmdMessage::CmdMessage(bool isNotice) 
     : ACommand(isNotice ? "NOTICE" : "PRIVMSG", 2, 2, false)
     , _isNotice(isNotice)
