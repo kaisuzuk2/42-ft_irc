@@ -21,6 +21,7 @@ enum Numeric
     RPL_MYINFO              = 4,
 
     RPL_LIST                = 322,
+    RPL_LISTEND             = 323,
     RPL_CHANNELMODEIS       = 324,
     RPL_NOTOPIC             = 331,
     RPL_TOPIC               = 332,
