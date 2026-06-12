@@ -25,6 +25,7 @@ namespace Numerics
     class UserNotInChannel;
     class NeedMoreParams;
     class AlreadyRegistered;
+    class InvalidModeParam;
 }
 
 class Numerics::NoSuchChannel: public NumericReply
@@ -68,5 +69,11 @@ class Numerics::AlreadyRegistered: public NumericReply
     public:
         AlreadyRegistered();
 };
+
+class Numerics::InvalidModeParam: public NumericReply
+{
+    public:
+        InvalidModeParam(const std::string &cname, char mode, const std::string &modeDesc);
+}
 
 #endif
