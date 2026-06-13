@@ -15,7 +15,7 @@
 #include "Client.hpp"
 
 CmdPass::CmdPass() 
-    : ACommand("PASS", 1, 1, true)
+    : ACommand("PASS", 1, 1, true, false)
 {};
 
 CmdPass::~CmdPass() {}
