@@ -28,6 +28,7 @@ SRCS 		=	$(addprefix src/,\
 						CmdMode.cpp \
 						CmdMotd.cpp \
 						CmdList.cpp \
+						CmdNames.cpp \
 				))
 
 OBJS		=	$(SRCS:.cpp=.o)

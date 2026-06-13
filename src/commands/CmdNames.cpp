@@ -38,10 +38,36 @@ CmdNames::~CmdNames() {}
 
 void CmdNames::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
+    const std::string &servername = serverInstance._getServername();
     if (params.empty())
     {
+        const std::map<std::string, Channel *> channels = serverInstance._getChannels()._getChannels();
+        for (std::map<std::string, Channel *>::const_iterator it = channels.begin(); it != channels.end(); ++it)
+        {
+            it->second->_sendNames(client, servername);
+        }
+
+        const std::map<int, Client *> clients = serverInstance._getClients()._getClients();
+        std::string nameList;
+        for (std::map<int, Client *>::const_iterator it = clients.begin(); it != clients.end(); ++it)
+        {
+            if (!it->second->_isregistered() || it->second->_getChannelSize())
+                continue ;
+            nameList += it->second->_getNick() + " ";
+        }
+        if (!nameList.empty())
+            client._writeNumeric(RPL_NAMREPLY, servername, "* * :" + nameList);
         
+        client._writeNumeric(RPL_ENDOFNAMES, servername, "* :End of NAMES list");
+        return ;
     }   
     
-
+    std::vector<std::string> cnames = this->_splitByComma(params[0], true);
+    for (size_t i = 0; i < cnames.size(); ++i)
+    {
+        Channel *ch = serverInstance._getChannels()._find(cnames[i]);
+        if (ch)
+            ch->_sendNames(client, servername);
+    }
+    client._writeNumeric(RPL_ENDOFNAMES, servername, params[0] + " :End of NAMES list");
 }
