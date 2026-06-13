@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_ircd.hpp"
+#include "Channel.hpp"
 #include "commands/CmdNames.hpp"
 
 /*
@@ -51,7 +53,7 @@ void CmdNames::_execute(FtIRCd &serverInstance, Client &client, const std::vecto
         std::string nameList;
         for (std::map<int, Client *>::const_iterator it = clients.begin(); it != clients.end(); ++it)
         {
-            if (!it->second->_isregistered() || it->second->_getChannelSize())
+            if (!it->second->_isRegistered() || it->second->_getChannelSize())
                 continue ;
             nameList += it->second->_getNick() + " ";
         }
