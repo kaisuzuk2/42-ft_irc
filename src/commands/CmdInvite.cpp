@@ -40,7 +40,7 @@ inspircdでは三つ目のパラメータは招待の有効期限を指定する
 */
 
 CmdInvite::CmdInvite() 
-    : ACommand("INVITE", 0, 0, false)
+    : ACommand("INVITE", 0, 0, false, false)
 {}
 
 CmdInvite::~CmdInvite() {}
