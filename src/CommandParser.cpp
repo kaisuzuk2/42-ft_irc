@@ -24,6 +24,7 @@
 #include "commands/CmdMode.hpp"
 #include "commands/CmdMotd.hpp"
 #include "commands/CmdList.hpp"
+#include "commands/CmdNames.hpp"
 
 #include "ft_ircd.hpp"
 #include "Client.hpp"
@@ -47,6 +48,7 @@ CommandParser::CommandParser()
     this->_commands["MODE"] = new CmdMode();
     this->_commands["MOTD"] = new CmdMotd();
     this->_commands["LIST"] = new CmdList();
+    this->_commands["NAMES"] = new CmdNames();
 }
 
 CommandParser::~CommandParser() 
