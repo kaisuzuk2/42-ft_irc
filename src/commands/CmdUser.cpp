@@ -25,7 +25,7 @@ RFC 2812
 */
 
 CmdUser::CmdUser()
-    : ACommand("USER", 4, 4, true)
+    : ACommand("USER", 4, 4, true, false)
 {}
 
 CmdUser::~CmdUser() {}
