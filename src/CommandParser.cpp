@@ -78,12 +78,6 @@ std::vector<std::string> CommandParser::_split(const std::string &line, size_t m
         }
         if (line[i] == ':') 
         {
-            // ### TODO: これ正確かテストしよう
-            /*
-                ### TODO コマンドごとにから文字を許容するのかフラグがあるね
-                if ((!command_p.empty()) && (command_p.back().empty()) && (!handler->allow_empty_last_param))
-                command_p.pop_back();
-            */
             std::string trailing = line.substr(i + 1);
             if (!trailing.empty() || allow_empty_last_param)
                 params.push_back(trailing);
