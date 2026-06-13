@@ -50,7 +50,7 @@ l - チャンネルへのユーザー数制限を設定・削除する
 */
 
 CmdMode::CmdMode()
-    : ACommand("MODE", 1, 0, false)
+    : ACommand("MODE", 1, 0, false, false)
 {}
 
 CmdMode::~CmdMode() {}
