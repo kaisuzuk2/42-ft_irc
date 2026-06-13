@@ -36,7 +36,7 @@ https://github.com/inspircd/inspircd/blob/5b5be2721fe408ffc13c0558b93037e6994461
 */
 
 CmdJoin::CmdJoin()
-    : ACommand("JOIN", 1, 2, false)
+    : ACommand("JOIN", 1, 2, false, false)
 {}
 
 CmdJoin::~CmdJoin() {}
