@@ -16,7 +16,7 @@
 #include "ft_ircd.hpp"
 
 CmdQuit::CmdQuit()
-    : ACommand("QUIT", 0, 1, true)
+    : ACommand("QUIT", 0, 1, true, true)
 {}
 
 CmdQuit::~CmdQuit() {}
