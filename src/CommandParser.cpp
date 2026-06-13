@@ -62,7 +62,7 @@ CommandParser::~CommandParser()
     this->_commands.clear();
 }
 
-std::vector<std::string> CommandParser::_split(const std::string &line, size_t max_params)
+std::vector<std::string> CommandParser::_split(const std::string &line, size_t max_params, bool allow_empty_last_param)
 {
     std::vector<std::string> params;
     std::string::size_type i;
@@ -142,7 +142,7 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     if (sp != std::string::npos)
     {
         args = line.substr(sp + 1);
-        params = this->_split(args, command->_getMaxParams());
+        params = this->_split(args, command->_getMaxParams(), command->_allow_empty_last_param);
     }
     // 登録前に使えない
     if (!command->_getWorksBeforeReg() && !client._isRegistered())

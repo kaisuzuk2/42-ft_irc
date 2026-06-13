@@ -34,7 +34,7 @@ class CommandParser
 
         void                        _callExecute(FtIRCd &serverInstance, Client &client, const std::string &cmd, const std::vector<std::string> &params);
     private:
-        std::vector<std::string>    _split(const std::string &line, size_t max_params = 0);
+        std::vector<std::string>    _split(const std::string &line, size_t max_params, bool allow_empty_last_param);
 };
 
 #endif
