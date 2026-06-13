@@ -17,7 +17,7 @@ ACommand::ACommand(const std::string &name, const unsigned int min_params, const
     , _min_params(min_params)
     , _max_params(max_params)
     , _works_before_reg(works_before_reg)
-    , _allow_empty_last_param(allow_empty_last_param);
+    , _allow_empty_last_param(allow_empty_last_param)
 {}
 
 ACommand::~ACommand() {}
@@ -40,6 +40,11 @@ unsigned int ACommand::_getMaxParams() const
 bool ACommand::_getWorksBeforeReg() const
 {
     return (this->_works_before_reg);
+}
+
+bool ACommand::_getAllowEmptyLastParam() const
+{
+    return (this->_allow_empty_last_param);
 }
 
 std::vector<std::string> ACommand::_splitByComma(std::string str, bool skipEmpty)

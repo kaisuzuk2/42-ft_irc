@@ -38,6 +38,7 @@ class ACommand
         unsigned int                _getMinParams() const;
         unsigned int                _getMaxParams() const;
         bool                        _getWorksBeforeReg() const;
+        bool                        _getAllowEmptyLastParam() const;
 
     protected:
         std::vector<std::string>    _splitByComma(const std::string str, bool skipEmpty);

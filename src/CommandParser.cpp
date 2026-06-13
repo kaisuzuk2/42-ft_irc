@@ -108,6 +108,7 @@ std::vector<std::string> CommandParser::_split(const std::string &line, size_t m
     return (params);
 }
 
+// ### TODO : ::::::連続でエラー出さない
 void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::string &line)
 {
     std::vector<std::string> tokens;
@@ -119,7 +120,7 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     if (line.empty())
         return ;
     
-    tokens = this->_split(line);
+    tokens = this->_split(line, 0, false);
     if (tokens.empty())
         return ;
 
@@ -142,7 +143,7 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     if (sp != std::string::npos)
     {
         args = line.substr(sp + 1);
-        params = this->_split(args, command->_getMaxParams(), command->_allow_empty_last_param);
+        params = this->_split(args, command->_getMaxParams(), command->_getAllowEmptyLastParam());
     }
     // 登録前に使えない
     if (!command->_getWorksBeforeReg() && !client._isRegistered())
