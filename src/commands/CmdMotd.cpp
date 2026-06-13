@@ -26,7 +26,7 @@ RFC 2812
 */
 
 CmdMotd::CmdMotd() 
-    : ACommand("MOTD", 0, 0, false)
+    : ACommand("MOTD", 0, 0, false, false)
 {}
 
 CmdMotd::~CmdMotd() {}
