@@ -85,7 +85,7 @@ std::vector<std::string> CommandParser::_split(const std::string &line, size_t m
                 command_p.pop_back();
             */
             std::string trailing = line.substr(i + 1);
-            if (!trailing.empty())
+            if (!trailing.empty() || allow_empty_last_param)
                 params.push_back(trailing);
             break;
         }
