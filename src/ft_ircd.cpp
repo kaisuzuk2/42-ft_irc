@@ -164,7 +164,7 @@ int FtIRCd::_parsePort(const char *str) const
     if (*endptr != '\0')
         throw std::invalid_argument("Error: Port contains invalid characters: " + std::string(str));
     if (res < kPortMin || res > kPortMax) 
-        throw std::out_of_range("Error: Port out of range (1024 - 65535): " + std::string(str));
+        throw std::out_of_range("Error: Port out of range (1024 - 65535): " + std::string(str)); // ### TODO: 定数使う
     return (static_cast<int>(res));
 }
 
