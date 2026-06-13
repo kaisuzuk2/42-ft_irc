@@ -33,7 +33,7 @@ NAMESコマンドを使用することで、ユーザーは自分に見えるす
 */
 
 CmdNames::CmdNames() 
-    : ACommand("NAMES", 0, 0, false)
+    : ACommand("NAMES", 0, 0, false, false)
 {}
 
 CmdNames::~CmdNames() {}
