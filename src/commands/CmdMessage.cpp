@@ -38,7 +38,7 @@ solanum(libera.chat)ではエラーを返さない
 
 
 CmdMessage::CmdMessage(bool isNotice) 
-    : ACommand(isNotice ? "NOTICE" : "PRIVMSG", 2, 2, false)
+    : ACommand(isNotice ? "NOTICE" : "PRIVMSG", 2, 2, false, true)
     , _isNotice(isNotice)
 {}
 
