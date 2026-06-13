@@ -12,11 +12,12 @@
 
 #include "commands/ACommand.hpp"
 
-ACommand::ACommand(const std::string &name, const unsigned int min_params, const unsigned int max_params, const bool works_before_reg)
+ACommand::ACommand(const std::string &name, const unsigned int min_params, const unsigned int max_params, const bool works_before_reg, bool allow_empty_last_param)
     : _name(name)
     , _min_params(min_params)
     , _max_params(max_params)
     , _works_before_reg(works_before_reg)
+    , _allow_empty_last_param(allow_empty_last_param);
 {}
 
 ACommand::~ACommand() {}

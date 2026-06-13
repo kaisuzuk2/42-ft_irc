@@ -26,9 +26,10 @@ class ACommand
         const unsigned int          _min_params;
         const unsigned int          _max_params;
         bool                        _works_before_reg;
+        bool                        _allow_empty_last_param;
     public:
 
-        ACommand(const std::string &name, const unsigned int min_params, const unsigned int max_params, const bool works_before_reg);
+        ACommand(const std::string &name, const unsigned int min_params, const unsigned int max_params, const bool works_before_reg, bool allow_empty_last_param);
         virtual ~ACommand();
 
         virtual void                _execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params) = 0;
