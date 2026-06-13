@@ -25,7 +25,7 @@ RFC 2812
 */
 
 CmdPart::CmdPart() 
-    : ACommand("PART", 1, 2, false)
+    : ACommand("PART", 1, 2, false, true)
 {}
 
 CmdPart::~CmdPart() {}
