@@ -132,7 +132,7 @@ void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::
     {
         // 登録が済んでいたらエラーにする
         if (client._isRegistered())
-            client._writeNumeric(ERR_UNKNOWNCOMMAND, serverInstance._getServername(), ":Unknown commmand");
+            client._writeNumeric(ERR_UNKNOWNCOMMAND, serverInstance._getServername(), cmd + " :Unknown commmand");
         return ;
     }
 
