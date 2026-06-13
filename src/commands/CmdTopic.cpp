@@ -28,7 +28,7 @@ TOPICコマンドはチャンネルのトピックを変更または表示する
 */
 
 CmdTopic::CmdTopic()
-    : ACommand("TOPIC", 1, 2, false)
+    : ACommand("TOPIC", 1, 2, false, true)
 {}
 
 CmdTopic::~CmdTopic() {}
