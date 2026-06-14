@@ -314,7 +314,7 @@ FtIRCd::FtIRCd(int argc, char **argv)
     
     bind(this->_serverFd, (struct sockaddr *)&addr, sizeof(addr));
 
-    listen(this->_serverFd, 10);
+    listen(this->_serverFd, 10); //### TODO: SOMAXCONN
     std::cout << "Listening on port " << this->_port << std::endl;
 
     this->_socketEngine._addFd(this->_serverFd, EPOLLIN);

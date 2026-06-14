@@ -68,7 +68,7 @@ void CmdNick::_execute(FtIRCd &serverInstance, Client &client, const std::vector
 
     if (!this->_isValidNick(newnick))
     {
-        client._writeNumeric(ERR_ERRONEUSNICKNAME, serverInstance._getServername(), ":Erroneous nickname");
+        client._writeNumeric(ERR_ERRONEUSNICKNAME, serverInstance._getServername(), newnick + " :Erroneous nickname");
         return ;
     }
 
