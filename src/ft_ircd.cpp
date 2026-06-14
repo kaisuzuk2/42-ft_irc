@@ -257,9 +257,6 @@ void FtIRCd::_acceptClient()
     this->_clients._addClient(client_fd, new Client(client_fd, client_addr));
 
     std::cout << "client connected: " << this->_clients._findByFd(client_fd)->_getHostname() << std::endl;
-
-    this->_clients._findByFd(client_fd)->_send("hello");
-    this->_clients._findByFd(client_fd)->_flushSendBuf();
 }
 
 void FtIRCd::_run() 
