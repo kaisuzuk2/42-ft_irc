@@ -53,11 +53,17 @@ def wrong_passwd():
     ok("wrong pass -> 464", alice.r, "464")
     alice.close()
 
-def invalid_nick():
+def invalid_toolong_nick():
     alice = Client("toolongnick", passwd)
     ok("long nick -> 432", alice.r, "432")
     alice.close()
 
+def invalid_special_nick():
+    alice = Client("hello!", passwd)
+    ok("special nick -> 432", alice.r, "432")
+    alice.close()
+
 connection()
 wrong_passwd()
-invalid_nick()
+invalid_toolong_nick()
+invalid_special_nick()
