@@ -85,7 +85,7 @@ bool CmdJoin::_preJoinCheck(FtIRCd &serverInstance, Client &client, const std::s
     // 上限数チェック
     if (client._getChannelSize() >= FtIRCd::kMaxChannels)
     {
-        client._writeNumeric(ERR_TOOMANYCHANNELS, serverInstance._getServername(), ch ? ch->_getName() : cname + " :You have joined too many channels");
+        client._writeNumeric(ERR_TOOMANYCHANNELS, serverInstance._getServername(), (ch ? ch->_getName() : cname) + " :You have joined too many channels");
         return (false);
     }
 

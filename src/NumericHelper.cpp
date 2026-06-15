@@ -13,7 +13,7 @@
 #include "NumericHelper.hpp"
 
 Numerics::NoSuchChannel::NoSuchChannel(const std::string &cname)
-    : NumericReply(ERR_NOSUCHCHANNEL, cname.empty() ? "* :No such channel" : cname + " :No such channel")
+    : NumericReply(ERR_NOSUCHCHANNEL, (cname.empty() ? "*" : cname) + " :No such channel")
 {}
 
 Numerics::NoSuchNick::NoSuchNick(const std::string &nick)
