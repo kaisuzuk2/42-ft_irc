@@ -59,6 +59,7 @@ std::vector<std::string> ACommand::_splitByComma(std::string str, bool skipEmpty
             res.push_back(str.substr(0, pos));
         str.erase(0, pos + 1);
     }
-    res.push_back(str);
+    if (!str.empty() || !skipEmpty)
+        res.push_back(str);
     return (res);
 }

@@ -202,6 +202,7 @@ nick_starts_with_number()
 nick_number_in_second()
 
 ## join test
+# TODO: join 0
 print("========== join test ==========")
 join_channel()
 join_invalid_channel()

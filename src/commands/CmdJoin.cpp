@@ -37,7 +37,6 @@ https://github.com/inspircd/inspircd/blob/5b5be2721fe408ffc13c0558b93037e6994461
 
 
 /*
-### TODO: JOIN #1,#2,#3,#4,#5,#6,#7,#8,#9,#10,#11 セグフォする
 ### TODO: JOIN #1, の時、エラーが出るのはおかしい
 */
 
