@@ -1,5 +1,7 @@
 from helper import *
 
+### TODO: ERR_USERNOTINCHANNEL            ERR_NOTONCHANNEL
+
 def kick_no_param():
     alice = Client(nick, passwd)
     alice.send("KICK")

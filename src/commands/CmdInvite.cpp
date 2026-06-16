@@ -27,7 +27,6 @@ RFC 2182
 ただし、チャンネルが存在する場合、そのチャンネルのメンバーのみが他のユーザーを招待できます。
 チャンネルに招待制フラグが設定されている場合、チャンネルオペレーターのみがINVITEコマンドを実行できます。
 
-
 [Note] RFC2188 4.2.2
 チャンネルフラグ 'i' が設定されている場合、
 新しいメンバーは、そのマスクが招待リスト（セクション4.3.2を参照）に一致するか、
@@ -37,6 +36,7 @@ RFC 2182
 
 [Note]
 inspircdでは三つ目のパラメータは招待の有効期限を指定する。
+inspircdではパラメータがない場合、自分が招待されているチャンネルのリストを表示する。
 */
 
 CmdInvite::CmdInvite() 
@@ -112,5 +112,5 @@ void CmdInvite::_execute(FtIRCd &serverInstance, Client &client, const std::vect
 
 
     target->_send(":" + client._getPrefix() + " INVITE " + target->_getNick() + " :" + ch->_getName());
-    client._writeNumeric(RPL_INVITING, serverInstance._getServername(), target->_getNick() + " " + ch->_getName());        
+    client._writeNumeric(RPL_INVITING, serverInstance._getServername(), ch->_getName() + " " + target->_getNick());        
 }

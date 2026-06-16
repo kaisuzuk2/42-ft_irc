@@ -65,6 +65,7 @@ class Channel
         bool                                _isInvited(Client *client) const;
         void                                _addInvite(Client *client);
         void                                _removeInvite(Client *client);
+        const std::set<Client *>            &_getInviteList() const;
 
         void                                _broadcast(const std::string &msg, Client *except, bool operOnly);
         

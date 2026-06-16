@@ -196,6 +196,11 @@ void Channel::_removeInvite(Client *client)
     this->_inviteList.erase(client);
 }
 
+const std::set<Client *> &Channel::_getInviteList() const
+{
+    return (this->_inviteList);
+}
+
 size_t Channel::_getMemberSize() const
 {
     return (this->_members.size());

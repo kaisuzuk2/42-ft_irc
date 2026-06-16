@@ -1,6 +1,6 @@
 from helper import *
 
-### TODO: tモード
+### TODO: tモード ERR_NOTONCHANNEL 
 def topic_no_param():
     alice = Client(nick, passwd)
     alice.send("TOPIC")

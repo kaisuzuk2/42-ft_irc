@@ -57,7 +57,15 @@ void ChannelManager::_remove(const std::string &name)
     std::map<std::string, Channel *>::iterator it = this->_channels.find(name);
     if (it == this->_channels.end())
         return ;
-    delete it->second;
+
+    Channel *ch = it->second;
+    const std::set<Client *> &inviteList = ch->_getInviteList();
+    for (std::set<Client *>::const_iterator cit = inviteList.begin(); cit != inviteList.end(); ++cit)
+    {
+        (*cit)->_removeInvitedChannel(ch);
+    }
+
+    delete ch;
     this->_channels.erase(it);
 }
 

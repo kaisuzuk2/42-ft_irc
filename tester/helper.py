@@ -1,5 +1,7 @@
 import socket
 
+port = 6667
+ip = "127.0.0.1"
 nick = "alice"
 passwd = "pass"
 
@@ -10,7 +12,7 @@ RESET = "\033[0m"
 ##############################################################################
 
 def connect():
-    s = socket.create_connection(("127.0.0.1", 6667))
+    s = socket.create_connection((f"{ip}", port))
     return (s)
 
 def login(s, nick, passwd):
