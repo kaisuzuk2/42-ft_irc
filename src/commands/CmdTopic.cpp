@@ -33,7 +33,6 @@ CmdTopic::CmdTopic()
 
 CmdTopic::~CmdTopic() {}
 
-#include <iostream>
 void CmdTopic::_execute(FtIRCd &serverInstance, Client &client, const std::vector<std::string> &params)
 {
     const std::string &cname = params[0];
