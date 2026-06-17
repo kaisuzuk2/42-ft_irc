@@ -125,7 +125,7 @@ void Channel::_sendNames(Client &client, const std::string &servername) const
     }
     
     // ### TODO:  = はチャンネルの種類によるもの
-    client._writeNumeric(RPL_NAMREPLY, servername, " = " + this->_name + " :" + nameList);
+    client._writeNumeric(RPL_NAMREPLY, servername, "= " + this->_name + " :" + nameList);
 }
 
 void Channel::_showTopic(Client &client, const std::string &servername) const

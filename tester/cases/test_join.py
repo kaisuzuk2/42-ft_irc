@@ -1,6 +1,9 @@
 from helper import *
 
 ### TODO: key
+### TODO: チャンネルの文字数
+### TODO: チャンネルの大文字小文字
+### TODO: チャンネル名に使える文字
 def join_no_param():
     alice = Client(nick, passwd)
     alice.send("JOIN")

@@ -15,6 +15,18 @@
 #include "Channel.hpp"
 #include "ft_ircd.hpp"
 
+/*\
+RFC 1459
+パラメータ:  [<Quit message>]
+
+RFC 2812
+パラメーター: [ <Quit Message> ]
+
+[Note]
+クライアントセッションはQUITメッセージによって終了します。
+サーバーはクライアントにERRORメッセージを送信することでこれを確認します。
+*/
+
 CmdQuit::CmdQuit()
     : ACommand("QUIT", 0, 1, true, true)
 {}
