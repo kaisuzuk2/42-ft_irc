@@ -55,7 +55,6 @@ void CmdPart::_partChannel(FtIRCd &serverInstance, Client &client, const std::st
         return ;
     }
 
-
     std::ostringstream msg;
     msg << ":"
         << client._getPrefix()
