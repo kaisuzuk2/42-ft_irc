@@ -17,7 +17,7 @@ Numerics::NoSuchChannel::NoSuchChannel(const std::string &cname)
 {}
 
 Numerics::NoSuchNick::NoSuchNick(const std::string &nick)
-    : NumericReply(ERR_NOSUCHNICK, nick + " :No such nick")
+    : NumericReply(ERR_NOSUCHNICK, (nick.empty() ? "*" : nick) + " :No such nick")
 {}
 
 Numerics::NotOnChannel::NotOnChannel(const std::string &cname)

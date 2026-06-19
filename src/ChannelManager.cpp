@@ -54,7 +54,9 @@ Channel *ChannelManager::_create(const std::string &name)
 
 void ChannelManager::_remove(const std::string &name)
 {
-    std::map<std::string, Channel *>::iterator it = this->_channels.find(name);
+    std::string lowerName = name;
+    std::transform(lowerName.begin(), lowerName.end(), lowerName.begin(), FtIRCd::_rfcTolower);
+    std::map<std::string, Channel *>::iterator it = this->_channels.find(lowerName);
     if (it == this->_channels.end())
         return ;
 

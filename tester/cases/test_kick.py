@@ -1,7 +1,5 @@
 from helper import *
 
-### TODO: ERR_USERNOTINCHANNEL            ERR_NOTONCHANNEL
-
 def kick_no_param():
     alice = Client(nick, passwd)
     alice.send("KICK")
@@ -20,7 +18,7 @@ def kick_no_user():
     alice.close()
 
 def kick_empty_user():
-    channel = "test1"
+    channel = "#test1"
     alice = Client(nick, passwd)
     alice.send(f"JOIN {channel}")
     alice.recv()
@@ -46,15 +44,45 @@ def kick_no_such_user():
     ok("kick_no_such_user", r, "401")
     alice.close()
 
+def kick_user_not_in_channel():
+    channel = "#test"
+    bo = "bob"
+    alice = Client(nick, passwd)
+    bob = Client(f"{bo}", passwd)
+    alice.send(f"JOIN {channel}")
+    alice.recv()
+    alice.send(f"KICK {channel} {bo}")
+    r = alice.recv()
+    ok("kick_user_not_in_channel", r, "441")
+    alice.close()
+    bob.close()
+
+import time
+def kick_not_on_channel():
+    channel = "#test"
+    bo = "bob"
+    alice = Client(nick, passwd)
+    bob = Client(f"{bo}", passwd)
+    bob.send(f"JOIN {channel}")
+    bob.recv()
+    alice.send(f"KICK {channel} {bo}")
+    r = alice.recv()
+    ok("kick_not_on_channel", r, "442")
+    bob.close()
+    alice.close()
+    time.sleep(2)
+
 def kick():
     channel = "#test"
+    bo = "bob"
     alice = Client(nick, passwd)
-    bob = Client("bob", passwd)
+    bob = Client(f"{bo}", passwd)
     alice.send(f"JOIN {channel}")
     alice.recv()
     bob.send(f"JOIN {channel}")
     bob.recv()
-    alice.send(f"KICK {channel} bob")
+    alice.recv()
+    alice.send(f"KICK {channel} {bo}")
     r = bob.recv()
     ok_all("kick", r, ["KICK", f"{nick}"])
     alice.close()
@@ -97,8 +125,11 @@ def kick_multiple_users():
     alice.recv()
     bob.send(f"JOIN {channel}")
     bob.recv()
+    alice.recv()
     charlie.send(f"JOIN {channel}")
     charlie.recv()
+    alice.recv()
+    bob.recv()
     alice.send(f"KICK {channel} bob,charlie")
     r_bob = bob.recv()
     r_charlie = charlie.recv()
@@ -122,6 +153,8 @@ def kick_multiple_channels_users():
     bob.recv()
     charlie.send(f"JOIN {channel2}")
     charlie.recv()
+    bob.recv()
+    alice.recv()
     alice.send(f"KICK {channel1},{channel2} {bo},{ch}")
     r_bob = bob.recv()
     r_ch = charlie.recv()
@@ -157,6 +190,8 @@ def run():
     kick_empty_user()
     kick_no_such_channel()
     kick_no_such_user()
+    kick_user_not_in_channel()
+    kick_not_on_channel()
     kick()
     kick_with_comment()
     kick_not_operator()

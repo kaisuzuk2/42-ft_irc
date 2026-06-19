@@ -49,6 +49,11 @@ l - チャンネルへのユーザー数制限を設定・削除する
     I - 招待制フラグを自動的に上書きする招待マスクを設定・削除する
 */
 
+
+/*
+### TODO: #f +ntk :<key> チャンネルに所属していないユーザーにパスを見せない(RFC 2811 4.2.10)
+*/
+
 CmdMode::CmdMode()
     : ACommand("MODE", 1, 0, false, false)
 {}
@@ -253,11 +258,13 @@ void CmdMode::_execute(FtIRCd &serverInstance, Client &client, const std::vector
         return ;
     }
 
-    if (!ch->_hasMember(&client))
-    {
-        client._writeNumeric(Numerics::NotOnChannel(ch->_getName()), serverInstance._getServername());
-        return;
-    }
+
+    // ### TODO: RFC的にはnotonchannelは帰らない 削除しても問題ないかテストする
+    // if (!ch->_hasMember(&client))
+    // {
+    //     client._writeNumeric(Numerics::NotOnChannel(ch->_getName()), serverInstance._getServername());
+    //     return;
+    // }
 
     if (!ch->_isOper(&client))
     {

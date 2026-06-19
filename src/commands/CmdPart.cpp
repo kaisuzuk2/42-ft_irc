@@ -89,6 +89,12 @@ void CmdPart::_execute(FtIRCd &serverInstance, Client &client, const std::vector
 
     channels = this->_splitByComma(params[0], true);
 
+    if (channels.empty())
+    {
+        client._writeNumeric(Numerics::NoSuchChannel(""), serverInstance._getServername());
+        return ;
+    }
+
     for (size_t i = 0; i < channels.size(); ++i)
         _partChannel(serverInstance, client, channels[i], reason);
 }

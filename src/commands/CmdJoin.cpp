@@ -74,6 +74,7 @@ bool CmdJoin::_isValidChannelName(const std::string &name) const
             case 0x07: // BELL 
             case 0x20: // SPACE
             case 0x2C: // COMMA
+            case 0x3A:
                 return (false);
         }
     }
@@ -92,6 +93,13 @@ bool CmdJoin::_preJoinCheck(FtIRCd &serverInstance, Client &client, const std::s
     // 新規チャンネル
     if (!ch)
         return (true);
+
+    /* Already on the channel */
+    if (ch->_hasMember(&client))
+        return (false);
+
+    if (ch->_hasMember(&client))
+        return (false);
 
     // キーチェック
     if (!ch->_getKey().empty() && ch->_getKey() != key)
@@ -130,12 +138,6 @@ void CmdJoin::_joinChannel(FtIRCd &serverInstance, Client &client, const std::st
         return ;
     if (isNew)
         ch = serverInstance._getChannels()._create(cname); 
-    else
-    {
-        /* Already on the channel */
-        if (ch->_hasMember(&client))
-            return ;
-    }
 
     // TODO: セットでやるようにした方がいいかね
     // TODO: whois <nick> 最新のチャンネルから表示される　順番があるね
@@ -145,7 +147,7 @@ void CmdJoin::_joinChannel(FtIRCd &serverInstance, Client &client, const std::st
     client._removeInvitedChannel(ch);
 
 
-    ch->_broadcast(":" + client._getPrefix() + " JOIN :" + cname, NULL, false);
+    ch->_broadcast(":" + client._getPrefix() + " JOIN :" + ch->_getName(), NULL, false);
 
     if (!ch->_getTopic().empty())
         ch->_showTopic(client, serverInstance._getServername());

@@ -1,6 +1,5 @@
 from helper import *
 
-### TODO: iモードの時のテスト
 def invite_no_such_user():
     channel = "#test"
     alice = Client(nick, passwd)

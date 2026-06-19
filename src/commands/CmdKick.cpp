@@ -98,6 +98,11 @@ void CmdKick::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     channels = this->_splitByComma(params[0], true);
     users = this->_splitByComma(params[1], true);
 
+    if (users.empty())
+    {
+        client._writeNumeric(Numerics::NoSuchNick(""), serverInstance._getServername());
+        return ;
+    }
     if (channels.size() == 1)
     {
         for (size_t i = 0; i < users.size(); ++i)

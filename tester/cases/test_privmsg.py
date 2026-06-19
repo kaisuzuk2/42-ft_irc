@@ -1,4 +1,4 @@
-from helper import *
+from helper import *            
 
 def privmsg_no_target():
     alice = Client(nick, passwd)

@@ -1,9 +1,5 @@
 from helper import *
 
-### TODO: key
-### TODO: チャンネルの文字数
-### TODO: チャンネルの大文字小文字
-### TODO: チャンネル名に使える文字
 def join_no_param():
     alice = Client(nick, passwd)
     alice.send("JOIN")
@@ -74,6 +70,73 @@ def join_notify():
     alice.close()
     bob.close()
 
+def join_with_topic():
+    channel = "#test"
+    bo = "bob"
+    topic = "hello world"
+    alice = Client(nick, passwd)
+    bob = Client(f"{bo}", passwd)
+    alice.send(f"JOIN {channel}")
+    alice.recv()
+    alice.send(f"TOPIC {channel} :{topic}")
+    alice.recv()
+    bob.send(f"JOIN {channel}")
+    r = bob.recv()
+    ok_all("join_with_topic", r, ["332", f"{topic}"])
+    alice.close()
+    bob.close()
+
+def join_with_names():
+    channel = "#test"
+    bo = "bob"
+    alice = Client(nick, passwd)
+    bob = Client(f"{bo}", passwd)
+    alice.send(f"JOIN {channel}")
+    alice.recv()
+    bob.send(f"JOIN {channel}")
+    r = bob.recv()
+    ok_all("join_with_names", r, ["353", f"{bo}"])
+    alice.close()
+    bob.close()
+
+def join_channel_too_long():
+    channel = "#" + "a" * 50
+    alice = Client(nick, passwd)
+    alice.send(f"JOIN {channel}")
+    r = alice.recv()
+    ok("join_channel_too_long", r, "476")
+    alice.close()
+
+def join_channel_max_length():
+    channel = "#" + "a" * 49
+    alice = Client(nick, passwd)
+    alice.send(f"JOIN {channel}")
+    r = alice.recv()
+    ok("join_channel_max_length", r, "JOIN")
+    alice.close()
+
+def join_channel_case_insensitive():
+    bo = "bob"
+    alice = Client(nick, passwd)
+    bob = Client(f"{bo}", passwd)
+    alice.send("JOIN #TEST")
+    alice.recv()
+    bob.send("JOIN #test")
+    r = alice.recv()
+    ok_all("join_channel_case_insensitive", r, [f"{bo}", "JOIN"])
+    alice.close()
+    bob.close()
+
+def join_channel_invalid_char():
+    alice = Client(nick, passwd)
+    alice.send(f"JOIN :#te::::st")
+    r = alice.recv()
+    ok("join_channel_invalid_char", r, "476")
+    alice.close()
+
+
+
+
 
 
 
@@ -87,3 +150,9 @@ def run():
     join_over_limit()
     join_zero()
     join_notify()
+    join_with_topic()
+    join_with_names()
+    join_channel_too_long()
+    join_channel_max_length()  
+    join_channel_case_insensitive()
+    join_channel_invalid_char()

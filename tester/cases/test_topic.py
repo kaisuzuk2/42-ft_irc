@@ -1,6 +1,5 @@
 from helper import *
 
-### TODO: tモード ERR_NOTONCHANNEL 
 def topic_no_param():
     alice = Client(nick, passwd)
     alice.send("TOPIC")
@@ -21,6 +20,19 @@ def topic_empty_channel():
     r = alice.recv()
     ok("topic_empty_channel", r, "403")
     alice.close()
+
+def topic_not_on_channel():
+    channel = "#test"
+    bo = "bob"
+    alice = Client(nick, passwd)
+    bob = Client(f"{bo}", passwd)
+    bob.send(f"JOIN {channel}")
+    bob.recv()
+    alice.send(f"TOPIC {channel} :hello")
+    r = alice.recv()
+    ok("topic_not_on_channel", r, "442")
+    alice.close()
+    bob.close()
 
 def topic_not_set():
     channel = "#test"
@@ -90,6 +102,7 @@ def run():
     topic_no_param()
     topic_no_channel()
     topic_empty_channel()
+    topic_not_on_channel()
     topic_not_set()
     topic_set()
     topic_get()
