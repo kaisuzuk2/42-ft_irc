@@ -32,9 +32,6 @@ PARTコマンドを送信したユーザーを、
 クライアントへPARTメッセージを送信する際にリストを使用するべきではありません（SHOULD NOT）。
 */
 
-/*
-### TODO: メッセージが指定されなかった時、デフォルトはニックネームになる
- */
 
 CmdPart::CmdPart() 
     : ACommand("PART", 1, 2, false, true)
@@ -65,13 +62,14 @@ void CmdPart::_partChannel(FtIRCd &serverInstance, Client &client, const std::st
         << " "
         << "PART"
         << " "
-        << cname;   
+        << cname
+        << " "
+        << ":";
     if (!reason.empty())
-    {
-        msg << " "
-            << ":"
-            << reason;
-    }
+        msg << reason;
+    else
+        msg << client._getNick();
+
     ch->_broadcast(msg.str(), NULL, false);
 
     ch->_removeMember(&client);

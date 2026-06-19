@@ -30,11 +30,6 @@ RFC 2812
 KICKを実行したユーザーのニックネームというデフォルトメッセージの代わりにそれが送信されます。
 */
 
-/*
-### TODO: kick #a : から文字のケースで何も出力されない　空文字許容するからそのケースがない？
-### TODO: kick #a nouser の時のエラーメッセージ nickのところ*かな
-*/
-
 CmdKick::CmdKick() 
     : ACommand("KICK", 2, 3, false, true)
 {}

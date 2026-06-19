@@ -102,7 +102,6 @@ std::vector<std::string> CommandParser::_split(const std::string &line, size_t m
     return (params);
 }
 
-// ### TODO : ::::::連続でエラー出さない
 void CommandParser::_process(FtIRCd &serverInstance, Client &client, const std::string &line)
 {
     std::vector<std::string> tokens;

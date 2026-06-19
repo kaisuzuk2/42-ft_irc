@@ -156,7 +156,11 @@ void Channel::_displayModes(Client &client, const std::string &servername) const
     if (this->_isModeSet(MODE_KEY))
     {
         modes << "k";
-        params << " :" << this->_key;
+        params << " :";
+        if (this->_hasMember(&client))
+            params << this->_key;
+        else
+            params << "<key>";
     }
 
     client._writeNumeric(RPL_CHANNELMODEIS, servername, this->_name + " " + modes.str()  + params.str());

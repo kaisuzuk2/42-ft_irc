@@ -37,7 +37,6 @@ const std::string FtIRCd::kVersion = "ft-irc-1.0";
 
 /*
 ### TODO: ctrl + D -> nc -Nオプションで治った　なぜか考えよう
-### TODO:　コマンドのパラメータ :だったときにneedmoreparamsになるのでは　検証しよう
 */
 
 /*

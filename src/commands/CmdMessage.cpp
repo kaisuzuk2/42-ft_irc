@@ -22,7 +22,6 @@ RFC 2812
 NOTICE  パラメーター: <msgtarget> <text>
 PRIVMSG パラメーター: <msgtarget> <text to be sent>
 
-### TODO: receiverのマスク(ワイルドカード)
 */
 
 /*
