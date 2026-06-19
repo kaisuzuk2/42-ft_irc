@@ -28,7 +28,7 @@ enum ChannelMode
     MODE_TOPIC_OP       = 0x02, // +t
     MODE_KEY            = 0x04, // +k
     MODE_LIMIT          = 0x08, // +l
-    MODE_NO_EXTERNAL    = 0x10, // +n
+    MODE_NO_EXTERNAL    = 0x10 // +n
 };
 
 class Channel

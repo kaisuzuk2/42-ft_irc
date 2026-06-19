@@ -16,7 +16,7 @@
 
 CmdPass::CmdPass() 
     : ACommand("PASS", 1, 1, true, false)
-{};
+{}
 
 CmdPass::~CmdPass() {}
 
