@@ -149,7 +149,7 @@ int epoll_wait(int epfd, struct epoll_event *events,
 - Linux専用
 
 以上の特徴から、`select`と`poll`では監視対象ファイルディスクリプタが増加すると効率よくスケールしません。
-そのため、ft_ircでは`epoll`を採用しました。
+そのため、本プロジェクトでは`epoll`を採用しました。
 
 ## アーキテクチャ
 
