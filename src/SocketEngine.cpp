@@ -53,7 +53,7 @@ std::vector<int> SocketEngine::_dispatch(int timeout_ms)
     std::vector<int> ready;
     int nfds;
 
-    nfds = epoll_wait(this->_epfd, this->_events, 64, timeout_ms); // ### TODO: 64が適切か考える
+    nfds = epoll_wait(this->_epfd, this->_events, 64, timeout_ms); 
     if (nfds < 0)
     {
         if (errno == EINTR)

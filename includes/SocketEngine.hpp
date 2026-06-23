@@ -23,7 +23,7 @@ class SocketEngine
 {
     private:
         int                 _epfd;
-        struct epoll_event  _events[64]; // ### TODO: 数が適切かな
+        struct epoll_event  _events[64]; 
         std::set<int>       _fds;
     public:
         SocketEngine();

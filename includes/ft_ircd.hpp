@@ -61,7 +61,7 @@ class FtIRCd
         void                        _onUserConnect(Client &client);
 
         static const int            kPortMin = 1024;
-        static const int            kPortMax = 65535; // ### TODO: これ正しいかチェックする
+        static const int            kPortMax = 65535;
         static const int            kArgNum = 3;
         static const int            kArgIdxPort = 1;
         static const int            kArgIdxPassword = 2;

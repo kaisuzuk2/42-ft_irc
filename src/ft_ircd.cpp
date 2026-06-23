@@ -34,11 +34,6 @@
 const char *FtIRCd::kMotdPath = "conf/motd.example.txt";
 const std::string FtIRCd::kVersion = "ft-irc-1.0";
 
-
-/*
-### TODO: ctrl + D -> nc -Nオプションで治った　なぜか考えよう
-*/
-
 /*
 RFC 2812 2.2
 IRCのスカンジナビア起源により、
@@ -102,9 +97,6 @@ const CommandParser &FtIRCd::_getParser() const
     return (this->_parser);
 }
 
-
-// ### TODO: 起動時のメッセージ
-
 void FtIRCd::_onUserConnect(Client &client)
 {
     client._writeNumeric(RPL_WELCOME, this->_servername, ":Welcome to the Internet Relay Network " + client._getPrefix());
@@ -121,7 +113,6 @@ void FtIRCd::_onUserConnect(Client &client)
     this->_parser._callExecute(*this, client, "MOTD", std::vector<std::string>());
 }
 
-// ### TODO: 接続時にmodeコマンド実行している？ 501リプライが返ってきているね
 void FtIRCd::_checkRegister(Client &client)
 {
     if (client._getNick() == "*" || client._getUsername().empty())
@@ -130,7 +121,6 @@ void FtIRCd::_checkRegister(Client &client)
     if (!this->_password.empty() && client._getPassword() != this->_password)
     {
         client._writeNumeric(ERR_PASSWDMISMATCH, this->_servername, ":Password incorrect");
-        // ### TODO: quitが文字列につくけどいらないね
         std::vector<std::string> params;
         params.push_back("You are not allowed to connect to this server");
         this->_parser._callExecute(*this, client, "QUIT", params);
@@ -163,7 +153,7 @@ int FtIRCd::_parsePort(const char *str) const
     if (*endptr != '\0')
         throw std::invalid_argument("Error: Port contains invalid characters: " + std::string(str));
     if (res < kPortMin || res > kPortMax) 
-        throw std::out_of_range("Error: Port out of range (1024 - 65535): " + std::string(str)); // ### TODO: 定数使う
+        throw std::out_of_range("Error: Port out of range (1024 - 65535): " + std::string(str)); 
     return (static_cast<int>(res));
 }
 
@@ -187,7 +177,7 @@ void FtIRCd::_quitUser(Client &client, const std::string &reason)
         ch->_removeMember(&client);
         ch->_removeInvite(&client);
         if (ch->_isEmpty())
-            this->_channels._remove(ch->_getName()); // ### TODO: チャンネルオブジェクト渡そうかな
+            this->_channels._remove(ch->_getName());
     }
 
     const std::set<Channel *> invitedChannels = client._getInvitedChannels();
@@ -207,7 +197,7 @@ void FtIRCd::_disconnectClient(int fd)
     Client *client = this->_clients._findByFd(fd);
     if (client && !client->_isQuitting())
     {
-        this->_quitUser(*client, "Connection closed"); // ### TODO: エラーメッセージ適切かな
+        this->_quitUser(*client, "Connection closed"); 
     }
     this->_socketEngine._delFd(fd);
     this->_clients._removeClient(fd);
@@ -244,8 +234,6 @@ void FtIRCd::_acceptClient()
     int client_fd;
 
     client_len = sizeof(client_addr);
-    // ### TODO: accept4使っていいかな
-    // client_fd = accept4(this->_serverFd, (struct sockaddr *)&client_addr, &client_len, SOCK_NONBLOCK);
     client_fd = accept(this->_serverFd, (struct sockaddr *)&client_addr, &client_len);
     if (client_fd < 0)
     {
@@ -264,7 +252,6 @@ void FtIRCd::_run()
 
     while (g_running)
     {
-        // ### TODO: -1でいいか再考すること
         std::vector<int> readyFds = this->_socketEngine._dispatch(-1);
 
         for (size_t i = 0; i < readyFds.size(); ++i)

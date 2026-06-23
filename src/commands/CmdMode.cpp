@@ -253,14 +253,6 @@ void CmdMode::_execute(FtIRCd &serverInstance, Client &client, const std::vector
         return ;
     }
 
-
-    // ### TODO: RFC的にはnotonchannelは帰らない 削除しても問題ないかテストする
-    // if (!ch->_hasMember(&client))
-    // {
-    //     client._writeNumeric(Numerics::NotOnChannel(ch->_getName()), serverInstance._getServername());
-    //     return;
-    // }
-
     if (!ch->_isOper(&client))
     {
         client._writeNumeric(Numerics::ChanOpPrivsNeeded(ch->_getName()), serverInstance._getServername());

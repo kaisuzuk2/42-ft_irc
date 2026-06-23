@@ -125,7 +125,6 @@ bool CmdJoin::_preJoinCheck(FtIRCd &serverInstance, Client &client, const std::s
     return (true);
 }
 
-// ### TODO: これらはchannelクラスにあるべきかな
 void CmdJoin::_joinChannel(FtIRCd &serverInstance, Client &client, const std::string &cname, const std::string &key)
 {
     Channel *ch;
@@ -139,8 +138,6 @@ void CmdJoin::_joinChannel(FtIRCd &serverInstance, Client &client, const std::st
     if (isNew)
         ch = serverInstance._getChannels()._create(cname); 
 
-    // TODO: セットでやるようにした方がいいかね
-    // TODO: whois <nick> 最新のチャンネルから表示される　順番があるね
     ch->_addMember(&client, isNew);
     client._joinChannel(ch);
     ch->_removeInvite(&client);
@@ -152,7 +149,6 @@ void CmdJoin::_joinChannel(FtIRCd &serverInstance, Client &client, const std::st
     if (!ch->_getTopic().empty())
         ch->_showTopic(client, serverInstance._getServername());
 
-    // TODO: onpostjoin
     ch->_sendNames(client, serverInstance._getServername());
     client._writeNumeric(RPL_ENDOFNAMES, serverInstance._getServername(), ch->_getName() + " :End of NAMES list" );
 
