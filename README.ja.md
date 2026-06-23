@@ -45,21 +45,111 @@ QUIT :Done for the day, leaving
 
 
 ## ソケット
+インターネットはTCP/IPと呼ぶ通信プロトコルを利用しますが、そのTCP/IPをプログラムから利用するには、プログラムの世界とTCP/IPの世界を結ぶ特別な出入り口が必要となります。その出入り口となるのがソケット (Socket)です。
+
+ソケットを介してデータを送受信するときには、ファイルの入出力と同じ要領で行うことができます。つまり送信したいデータをソケットに書き込むと、通信相手のコンピューターのソケットに届きます。また、受信はソケットからデータを読み出します。データの送受信はOSが担当します。
+
+
+
+### ソケットの種類
+``` text
+SOCK_STREAM     -> TCP(信頼性あり・順番保証・コネクション型)
+SOCK_DGRAM      -> UDP(信頼性なし・順番保証なし・コネクションレス)
+```
+
+### サーバー側の流れ
+```bash
+# 1. ソケット作成
+int fd = socket(AF_INET, SOCK_STREAM, 0);
+
+# 2. ソケットに名前をつける(ポートに紐付け)
+## addrにポートなどを設定
+bind(fd, (struct sockaddr*) &addr, sizeof(addr));
+
+# 3. 接続待機開始
+listen(fd, 10);
+
+# 4. 接続受け入れ
+int client_fd = accept(fd, (struct sockaddr*)&client_addr, &len);
+
+# 5. データ送受信
+recv(client_fd, buf, sizeof(buf), 0);
+send(client_fd, buf, len, 0);
+
+# 6. 切断
+close(client_fd);
+```
+
+### クライアント側の流れ
+```bash
+# 1. ソケット作成
+int fd = socket(AF_INET, SOCK_STREAM, 0);
+
+# 2. サーバーに接続
+connect(fd, (struct sockaddr*)&addr, sizeof(addr));
+
+# 3. データ送受信
+send(fd, buf, len, 0);
+recv(fd, buf, sizeof(buf, 0));
+
+# 4. 切断
+close(fd);
+```
 
 ## ノンブロッキング
 
 通常のブロッキングI/Oでは、`read`や`write`などのシステムコールを呼び出すと、処理が完了するまでプログラムの実行が止まります。例えば、クライアントからのデータを待っている間、他のクライアントの処理が一切できなくなります。
 ノンブロッキングI/Oでは、システムコールは処理をブロックすることなく、すぐに返ってきます。そのため、データがきていない場合でも他の処理を続けることができます。これにより、1つのプロセスで複数のクライアントを同時に処理することが可能になります。
 
-しかし、ノンブロッキングI/Oを単純なループで実装すると、データがきていない場合でもCPUがループし続ける「ビジーウェイト」状態になります。これはCPUリソースを無駄に消費するため、効率的ではありません。
+しかし、ノンブロッキングI/Oを単純なループで実装することは、通常期待通りには機能しません。
+ループの間隔を長くすれば、アプリケーションがI/Oイベントに反応するのが遅れることになり、その時間差が許容できない場合もあります。逆にループの間隔を短くすると、ビジーウェイト状態になります。これはCPUリソースを無駄に消費するため、効率的ではありません。<br>
 この問題を解決するのが多重I/Oです。
+
 
 ## 多重I/O
 
 多重I/Oでは、複数のファイルディスクリプ他を指定し、そのうちの一部でもI/Oが可能になったか否かを監視できます。これにより、処理がブロックすることはなく、I/Oが可能になったものだけを処理することができます。ビジーウェイトを避けながら、複数のクライアントを効率的に処理できます。
 
-多重I/Oは、本質的に同機能の2種類のシステムコールにより実現できます。`select`と`poll`です。それに加え、Linux専用の`epoll`があります。
+多重I/Oは、本質的に同機能の2種類のシステムコールにより実現できます。`select`と`poll`です。それに加え、Linux専用の`epoll`があります。それぞれのシステムコールには、以下のような特徴があります。
 
+### select
+```bash
+int select(int nfds, fd_set *readfds, fd_set *writefds,
+           fd_set *exceptfds, struct timeval *timeout);
+```
+- fd_set(ビットセット)を用いて管理する。
+- 監視対象ファイルディスクリプタ数に上限がある。
+- fd_setに監視対象ファフィルディスクリプタを指定して呼び出す。リターン時にはfd_setの内容が変更され、I/O可能と判定したファイルディスクリプタのみが残された状態になる。これにより、ループで繰り返し実行する場合は、毎回再初期化する必要がある。
+- 結果を確認するために、fdを全探索する必要がある。
+
+### poll
+```bash
+int poll(struct pollfd *fds, nfds_t nfds, int timeout);
+
+struct pollfd {
+    int   fd;         /* file descriptor */
+    short events;     /* requested events */
+    short revents;    /* returned events */
+};
+```
+- 構造体を使って管理する。eventを通知したら、構造体のメンバ(revents)にビットをセットする。
+- 監視対象ファイルディスクリプタ数に上限はない。
+- 結果を確認するために、構造体を全探索する必要がある。
+
+### epoll
+```bash
+int epoll_create1(int flags);
+int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event);
+int epoll_wait(int epfd, struct epoll_event *events,
+               int maxevents, int timeout);
+```
+- 監視対象ファイルディスクリプタ数に上限はない。
+- eventが発生したfdの返るため、全探索する必要がない。
+- epoll_create1でインスタンスを作成し、epoll_ctlで監視するfdを登録・変更・削除する。epoll_waitでイベント発生までブロックする。
+- Linux専用
+
+以上の特徴から、`select`と`poll`では監視対象ファイルディスクリプタが増加すると効率よくスケールしません。
+そのため、ft_ircでは`epoll`を採用しました。
 
 ## アーキテクチャ
 
@@ -73,8 +163,8 @@ QUIT :Done for the day, leaving
 |`ChannelManager`|チャンネルの作成・削除・参加者を管理する|
 |`CommandParser`|クライアントから受け取ったメッセージを解析し、対応するコマンドに振り分ける|
 |`ACommand`(+各サブクラス)|各IRCコマンドを実装したクラス群|
-|`NumericReply`|サーバーからクライアントへの数値リプライを定義
-|
+|`NumericReply`|サーバーからクライアントへの数値リプライを定義|
+
 ## 対応コマンド
 
 |カテゴリ|コマンド|
@@ -137,7 +227,7 @@ nc -C localhost <password>
 - inspircdのソースコード読解サポート
 - クラス設計のサポート
 - epoll・poll・selectなどI/O多重化とノンブロッキングに関する概念理解のための壁打ち
-- テスト項目の洗い出しとpythonの文法チェック
+- テスト項目の洗い出しとpythonの文法
 - READMEの翻訳
 
 # Command Reference
