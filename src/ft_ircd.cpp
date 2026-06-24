@@ -6,7 +6,7 @@
 /*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 00:22:58 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026/06/24 09:39:27 by kaisuzuk         ###   ########.fr       */
+/*   Updated: 2026/06/24 10:39:07 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ void FtIRCd::_acceptClient()
     client_fd = accept(this->_serverFd, (struct sockaddr *)&client_addr, &client_len);
     if (client_fd < 0)
     {
-        std::cerr << "accept4() failed: " << std::strerror(errno) << std::endl;
+        std::cerr << "accept() failed: " << std::strerror(errno) << std::endl;
         return ;
     }
     this->_socketEngine._addFd(client_fd, EPOLLIN);
