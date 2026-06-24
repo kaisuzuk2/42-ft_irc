@@ -6,7 +6,7 @@
 /*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/23 23:23:24 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026/06/24 09:38:59 by kaisuzuk         ###   ########.fr       */
+/*   Updated: 2026/06/24 10:25:23 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ enum ChannelMode
     MODE_TOPIC_OP       = 0x02, // +t
     MODE_KEY            = 0x04, // +k
     MODE_LIMIT          = 0x08, // +l
-    MODE_NO_EXTERNAL    = 0x10 // +n
+    MODE_NO_EXTERNAL    = 0x10  // +n
 };
 
 class Channel

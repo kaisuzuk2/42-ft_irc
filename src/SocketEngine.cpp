@@ -6,14 +6,16 @@
 /*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 01:02:29 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026/06/24 09:39:43 by kaisuzuk         ###   ########.fr       */
+/*   Updated: 2026/06/24 10:26:58 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "SocketEngine.hpp"
 #include <unistd.h>
 #include <stdexcept>
 #include <cstring>
+#include <cerrno>
+
+#include "SocketEngine.hpp"
 
 SocketEngine::SocketEngine()
 {

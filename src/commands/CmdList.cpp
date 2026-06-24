@@ -6,17 +6,17 @@
 /*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 02:59:06 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026/06/24 09:43:52 by kaisuzuk         ###   ########.fr       */
+/*   Updated: 2026/06/24 10:21:51 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "commands/CmdList.hpp"
-#include "ChannelManager.hpp"
-#include "Channel.hpp"
 
 #include <string>
 #include <map>
 #include <sstream>
+
+#include "commands/CmdList.hpp"
+#include "ChannelManager.hpp"
+#include "Channel.hpp"
 
 /*
 RFC 1459

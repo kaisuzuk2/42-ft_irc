@@ -6,7 +6,7 @@
 /*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 03:11:41 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026/06/24 09:44:38 by kaisuzuk         ###   ########.fr       */
+/*   Updated: 2026/06/24 10:22:30 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "Channel.hpp"
 #include "ft_ircd.hpp"
 
-/*\
+/*
 RFC 1459
 パラメータ:  [<Quit message>]
 

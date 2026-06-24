@@ -6,12 +6,13 @@
 /*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/31 23:30:24 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026/06/24 09:44:08 by kaisuzuk         ###   ########.fr       */
+/*   Updated: 2026/06/24 10:24:52 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <climits>
 #include <sstream>
+#include <cerrno>
 
 #include "commands/CmdMode.hpp"
 

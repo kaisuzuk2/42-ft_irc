@@ -6,7 +6,7 @@
 /*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/31 23:28:25 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026/06/24 09:41:32 by kaisuzuk         ###   ########.fr       */
+/*   Updated: 2026/06/24 10:24:47 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include "Channel.hpp"
 #include "Client.hpp"
 #include "ft_ircd.hpp"
-
-#include <cerrno>
 
 class CmdMode: public ACommand
 {

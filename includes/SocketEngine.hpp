@@ -6,7 +6,7 @@
 /*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 00:58:07 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026/06/24 09:37:26 by kaisuzuk         ###   ########.fr       */
+/*   Updated: 2026/06/24 10:26:56 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include <set>
 #include <vector>
 #include <sys/epoll.h>
-
-#include <cerrno>
 
 class SocketEngine 
 {

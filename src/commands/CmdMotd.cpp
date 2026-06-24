@@ -6,14 +6,13 @@
 /*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 23:39:34 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026/06/24 09:44:12 by kaisuzuk         ###   ########.fr       */
+/*   Updated: 2026/06/24 10:21:10 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fstream>
 
 #include "commands/CmdMotd.hpp"
-
 #include "ft_ircd.hpp"
 
 /*

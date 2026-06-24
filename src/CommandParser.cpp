@@ -6,9 +6,12 @@
 /*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 03:07:50 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026/06/24 09:42:14 by kaisuzuk         ###   ########.fr       */
+/*   Updated: 2026/06/24 10:23:08 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <iostream>
+#include <algorithm>
 
 #include "CommandParser.hpp"
 #include "commands/CmdPass.hpp"
@@ -28,9 +31,6 @@
 
 #include "ft_ircd.hpp"
 #include "Client.hpp"
-#include <iostream>
-
-#include <algorithm>
 
 CommandParser::CommandParser() 
 {
