@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "commands/CmdMessage.hpp"
-#include "ft_ircd.hpp"
+#include "FtIRCd.hpp"
 
 /*
 RFC 1459

@@ -21,7 +21,7 @@
 #include <sys/types.h>
 #include <sys/socket.h> 
 
-#include "ft_ircd.hpp"
+#include "FtIRCd.hpp"
 #include "ClientManager.hpp"
 #include "Channel.hpp"
 

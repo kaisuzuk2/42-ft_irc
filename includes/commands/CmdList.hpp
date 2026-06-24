@@ -13,7 +13,7 @@
 #ifndef CMDLIST_HPP
 # define CMDLIST_HPP
 
-#include "ft_ircd.hpp"
+#include "FtIRCd.hpp"
 #include "ACommand.hpp"
 
 class CmdList: public ACommand

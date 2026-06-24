@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ircd.hpp"
+#include "FtIRCd.hpp"
 #include "Channel.hpp"
 #include "commands/CmdNames.hpp"
 

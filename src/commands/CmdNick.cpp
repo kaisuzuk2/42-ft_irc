@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "commands/CmdNick.hpp"
-#include "ft_ircd.hpp"
+#include "FtIRCd.hpp"
 #include "Client.hpp"
 
 /*

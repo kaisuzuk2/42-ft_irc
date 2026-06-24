@@ -29,7 +29,7 @@
 #include "commands/CmdList.hpp"
 #include "commands/CmdNames.hpp"
 
-#include "ft_ircd.hpp"
+#include "FtIRCd.hpp"
 #include "Client.hpp"
 
 CommandParser::CommandParser() 

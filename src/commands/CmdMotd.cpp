@@ -13,7 +13,7 @@
 #include <fstream>
 
 #include "commands/CmdMotd.hpp"
-#include "ft_ircd.hpp"
+#include "FtIRCd.hpp"
 
 /*
 RFC 2812

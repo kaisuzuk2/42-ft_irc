@@ -13,7 +13,7 @@
 #ifndef CMDJOIN_HPP
 # define CMDJOIN_HPP
 
-#include "ft_ircd.hpp"
+#include "FtIRCd.hpp"
 #include "ACommand.hpp"
 #include "Channel.hpp"
 

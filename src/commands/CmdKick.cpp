@@ -12,7 +12,7 @@
 
 #include "commands/CmdKick.hpp"
 #include "Channel.hpp"
-#include "ft_ircd.hpp"
+#include "FtIRCd.hpp"
 
 /*
 RFC 1459 (inspircd)

@@ -12,7 +12,7 @@
 
 #include "commands/CmdInvite.hpp"
 #include "Client.hpp"
-#include "ft_ircd.hpp"
+#include "FtIRCd.hpp"
 
 /*
 RFC 1459

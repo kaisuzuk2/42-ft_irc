@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ircd.cpp                                        :+:      :+:    :+:   */
+/*   FtIRCd.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -25,7 +25,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
-#include "ft_ircd.hpp"
+#include "FtIRCd.hpp"
 #include "SocketEngine.hpp"
 #include "Client.hpp"
 #include "CommandParser.hpp"

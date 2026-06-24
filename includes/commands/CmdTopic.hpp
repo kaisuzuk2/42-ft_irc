@@ -15,7 +15,7 @@
 
 #include "ACommand.hpp"
 #include "Channel.hpp"
-#include "ft_ircd.hpp"
+#include "FtIRCd.hpp"
 
 class CmdTopic: public ACommand
 {

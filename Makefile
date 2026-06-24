@@ -4,7 +4,7 @@ CXXFLAGS	=	-Wall -Werror -Wextra -std=c++98
 INC			=	-Iincludes
 
 SRCS 		=	$(addprefix src/,\
-					ft_ircd.cpp \
+					FtIRCd.cpp \
 					SocketEngine.cpp \
 					Client.cpp \
 					ClientManager.cpp \

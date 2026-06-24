@@ -16,7 +16,7 @@
 #include "ACommand.hpp"
 #include "Channel.hpp"
 #include "Client.hpp"
-#include "ft_ircd.hpp"
+#include "FtIRCd.hpp"
 
 class CmdMode: public ACommand
 {

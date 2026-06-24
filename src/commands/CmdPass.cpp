@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "commands/CmdPass.hpp"
-#include "ft_ircd.hpp"
+#include "FtIRCd.hpp"
 #include "Client.hpp"
 
 CmdPass::CmdPass() 

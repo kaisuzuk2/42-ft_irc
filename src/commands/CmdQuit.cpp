@@ -13,7 +13,7 @@
 #include "commands/CmdQuit.hpp"
 #include "Client.hpp"
 #include "Channel.hpp"
-#include "ft_ircd.hpp"
+#include "FtIRCd.hpp"
 
 /*
 RFC 1459
