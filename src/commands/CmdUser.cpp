@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CmdUser.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaisuzuk <kaisuzuk@student.42.fr>          #+#  +:+       +#+        */
+/*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026-05-21 23:18:14 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026-05-21 23:18:14 by kaisuzuk         ###   ########.fr       */
+/*   Created: 2026/05/21 23:18:14 by kaisuzuk          #+#    #+#             */
+/*   Updated: 2026/06/24 09:44:48 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,3 @@ void CmdUser::_execute(FtIRCd &serverInstance, Client &client, const std::vector
     if (!client._isRegistered())
         serverInstance._checkRegister(client);
 }
-
-
-
-
-

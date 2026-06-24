@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ClientManager.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaisuzuk <kaisuzuk@student.42.fr>          #+#  +:+       +#+        */
+/*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026-05-14 23:30:19 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026-05-14 23:30:19 by kaisuzuk         ###   ########.fr       */
+/*   Created: 2026/05/14 23:30:19 by kaisuzuk          #+#    #+#             */
+/*   Updated: 2026/06/24 09:42:57 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,3 @@ const std::map<int, Client *> &ClientManager::_getClients() const
 {
     return (this->_clients);   
 }
-

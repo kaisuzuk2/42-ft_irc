@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CmdTopic.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaisuzuk <kaisuzuk@student.42.fr>          #+#  +:+       +#+        */
+/*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026-05-31 01:15:00 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026-05-31 01:15:00 by kaisuzuk         ###   ########.fr       */
+/*   Created: 2026/05/31 01:15:00 by kaisuzuk          #+#    #+#             */
+/*   Updated: 2026/06/24 09:44:43 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,3 @@ void CmdTopic::_execute(FtIRCd &serverInstance, Client &client, const std::vecto
     if (ch->_getTopic() != t)
         ch->_setTopic(t, client._getPrefix(), std::time(NULL));
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ChannelManager.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaisuzuk <kaisuzuk@student.42.fr>          #+#  +:+       +#+        */
+/*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026-05-24 00:13:56 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026-05-24 00:13:56 by kaisuzuk         ###   ########.fr       */
+/*   Created: 2026/05/24 00:13:56 by kaisuzuk          #+#    #+#             */
+/*   Updated: 2026/06/24 09:37:57 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
