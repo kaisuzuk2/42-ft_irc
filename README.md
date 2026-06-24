@@ -198,7 +198,7 @@ make re         # Rebuild
 
 ## Connecting
 ```bash
-nc -C localhost <port>
+nc -NC localhost <port>
 ```
 
 # Resources

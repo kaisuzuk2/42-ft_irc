@@ -201,7 +201,7 @@ make re         # 再ビルド
 
 ## 接続
 ```bash
-nc -C localhost <port>
+nc -NC localhost <port>
 ```
 
 # Resources
