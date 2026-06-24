@@ -6,7 +6,7 @@
 /*   By: kaisuzuk <kaisuzuk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 00:22:58 by kaisuzuk          #+#    #+#             */
-/*   Updated: 2026/06/24 10:39:07 by kaisuzuk         ###   ########.fr       */
+/*   Updated: 2026/06/24 10:42:50 by kaisuzuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,7 +288,7 @@ FtIRCd::FtIRCd(int argc, char **argv)
 
     this->_parseConfig(argc, argv);
 
-    this->_serverFd = socket(AF_INET, SOCK_STREAM, 0);
+    this->_serverFd = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
 
     int opt = 1;
     setsockopt(this->_serverFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
